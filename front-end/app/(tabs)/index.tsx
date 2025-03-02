@@ -6,28 +6,13 @@ import axios from 'axios';
 export default function Chatbot() {
   const [messages, setMessages] = useState([]);
 
-  // Initialize with a default message from the bot
-  React.useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello! How can I assist you today?',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'Chatbot',
-        },
-      },
-    ]);
-  }, []);
-
   // Handle sending messages
   const onSend = useCallback((newMessages = []) => {
     setMessages((previousMessages) =>
       GiftedChat.append(previousMessages, newMessages)
     );
 
-    const userMessage = newMessages[0].text;
+    const userMessage = newMessages[0];
 
     // Example API call to fetch a response
     axios
@@ -42,10 +27,6 @@ export default function Chatbot() {
             name: 'Chatbot',
           },
         };
-
-        setMessages((previousMessages) =>
-          GiftedChat.append(previousMessages, [botMessage])
-        );
       })
       .catch((error) => {
         console.error(error);
@@ -58,21 +39,11 @@ export default function Chatbot() {
             name: 'Chatbot',
           },
         };
-        setMessages((previousMessages) =>
-          GiftedChat.append(previousMessages, [errorMessage])
-        );
       });
   }, []);
 
   return (
     <View style={styles.container}>
-      <GiftedChat
-        messages={messages}
-        onSend={(messages) => onSend(messages)}
-        user={{
-          _id: 1, // User ID of the app user
-        }}
-      />
     </View>
   );
 }
