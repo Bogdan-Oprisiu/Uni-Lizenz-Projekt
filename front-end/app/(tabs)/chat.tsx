@@ -5,13 +5,15 @@ import {
   Text,
   TextInput,
   FlatList,
-  StyleSheet,
   TouchableOpacity,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import styles from "../styles/chat.styles";  
 
 const Chat = () => {
-  const [messages, setMessages] = useState<{ text: string; user: boolean; error?: boolean }[]>([]);
+  const [messages, setMessages] = useState([
+    { text: "", user: false }
+  ]);
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -67,7 +69,7 @@ const Chat = () => {
     }
   };
 
-  const renderMessage = ({ item }: { item: { text: string; user: boolean; error?: boolean } }) => (
+  const renderMessage = ({ item }) => (
     <View style={[styles.messageContainer, item.user ? styles.userMessageContainer : styles.aiMessageContainer]}>
       <Text style={[styles.messageText, item.error ? styles.errorMessage : item.user ? styles.userMessage : styles.aiMessage]}>
         {item.text}
@@ -80,7 +82,7 @@ const Chat = () => {
       <FlatList
         data={messages}
         renderItem={renderMessage}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => index.toString()}
         inverted
       />
       <View style={styles.inputContainer}>
@@ -100,70 +102,5 @@ const Chat = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    paddingTop: 50,
-    backgroundColor: "#1e1d31", // Dark greyish purple
-  },
-  messageContainer: {
-    padding: 12,
-    marginVertical: 5,
-    borderRadius: 12,
-    maxWidth: "75%",
-  },
-  userMessageContainer: {
-    backgroundColor: "#5a4fcf",
-    alignSelf: "flex-start", // Align user messages to the left
-  },
-  aiMessageContainer: {
-    backgroundColor: "#2f2e41",
-    alignSelf: "flex-end", // Align AI responses to the right
-  },
-  messageText: {
-    fontSize: 16,
-  },
-  userMessage: {
-    color: "#fff",
-    textAlign: "left",
-  },
-  aiMessage: {
-    color: "#ddd",
-    textAlign: "right",
-  },
-  errorMessage: {
-    color: "#ff6961", // Red for error messages
-    fontWeight: "bold",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    borderRadius: 15,
-    backgroundColor: "#2f2e41",
-  },
-  input: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#1e1d31",
-    borderRadius: 10,
-    height: 50,
-    color: "white",
-  },
-  sendButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    backgroundColor: "#5a4fcf",
-    borderRadius: 10,
-    marginLeft: 5,
-  },
-  sendButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
 
 export default Chat;
