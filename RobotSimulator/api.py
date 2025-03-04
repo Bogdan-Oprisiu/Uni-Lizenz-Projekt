@@ -4,11 +4,11 @@ from game import Game
 
 app = FastAPI()
 
-# Create a global game instance
+# Create a global game instance.
 game = Game()
 
 # Define a request model for commands.
-# Commands now support an optional magnitude/angle.
+# Commands support an optional numeric parameter.
 # Examples:
 #   "forward 50"      => Move forward with 50× the base acceleration.
 #   "rotate_left 45"  => Rotate left by 45 degrees.
@@ -18,7 +18,7 @@ class Command(BaseModel):
 
 @app.get("/state")
 def get_state():
-    """Return the current game state."""
+    """Return the current game state, including sensor data and score."""
     return game.get_state()
 
 @app.post("/command")
@@ -35,7 +35,7 @@ def send_command(cmd: Command):
       - "rotate_right [angle]": Rotate right (e.g. "rotate_right 45")
 
     If no numeric parameter is provided, a default value of 1.0 is used.
-    Returns the updated game state.
+    Returns the updated game state, including the current score.
     """
     if game.game_over:
         raise HTTPException(status_code=400, detail="Game Over. Please reset the game.")

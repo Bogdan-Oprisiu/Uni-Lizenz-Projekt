@@ -1,10 +1,9 @@
 import pygame
-
+import math
 from controls import RobotController  # Import the controller class
 from obstacle import generate_obstacle
 from robot import Robot
 
-# Initialize Pygame
 pygame.init()
 screen = pygame.display.set_mode((1200, 750))
 pygame.display.set_caption("Robot Simulator")
@@ -14,13 +13,19 @@ clock = pygame.time.Clock()
 robot = Robot(400, 300)
 # Generate a list of obstacles (e.g., 15 obstacles)
 obstacles = [generate_obstacle(robot) for _ in range(15)]
-
 # Create a RobotController instance for handling controls
 controller = RobotController(acceleration_multiplier=1.05, rotation_speed=2)
 
+# Initialize score and a font to display it.
+score = 0.0  # score as a float representing seconds survived while moving
+score_font = pygame.font.Font(None, 36)  # smaller font for in-game display
+movement_threshold = 0.1  # Only count movement if velocity is above this value
+
 running = True
 while running:
-    clock.tick(60)  # 60 frames per second
+    # dt is the time in seconds for this frame.
+    dt = clock.tick(60) / 1000  # 60 frames per second
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -30,11 +35,14 @@ while running:
     if hasattr(robot, 'vx') and hasattr(robot, 'vy'):
         old_vx, old_vy = robot.vx, robot.vy
 
-    # Update robot state using the controller
+    # Update robot state using the controller and physics update
     controller.update(robot)
-    # If you have physics, update the robot's position based on velocity & friction:
-    if hasattr(robot, 'update'):
-        robot.update()
+    robot.update()
+
+    # Increase score only if the robot is moving (velocity magnitude above threshold)
+    velocity = math.hypot(robot.vx, robot.vy)
+    if velocity > movement_threshold:
+        score += dt
 
     # Collision detection using masks
     robot_mask, robot_offset = robot.get_mask()
@@ -56,15 +64,18 @@ while running:
             robot_rect.right > screen_width or robot_rect.bottom > screen_height):
         collision = True
 
-    # If a collision occurs, display "Game Over" and end the game
     if collision:
+        # Display "Game Over" screen with final score
         font = pygame.font.Font(None, 74)
-        text = font.render("Game Over", True, (255, 255, 255))
-        text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+        game_over_text = font.render("Game Over", True, (255, 255, 255))
+        game_over_rect = game_over_text.get_rect(center=(screen_width // 2, screen_height // 2 - 50))
+        score_text = font.render(f"Score: {int(score)}", True, (255, 255, 255))
+        score_rect = score_text.get_rect(center=(screen_width // 2, screen_height // 2 + 50))
         screen.fill((0, 0, 0))
-        screen.blit(text, text_rect)
+        screen.blit(game_over_text, game_over_rect)
+        screen.blit(score_text, score_rect)
         pygame.display.flip()
-        pygame.time.delay(2000)  # Display the message for 2 seconds
+        pygame.time.delay(2000)  # Display message for 2 seconds
         running = False
         continue
 
@@ -73,6 +84,12 @@ while running:
     for obs in obstacles:
         obs.draw(screen)
     robot.draw(screen)
+
+    # Draw the score in the bottom right corner
+    score_disp = score_font.render(f"Score: {int(score)}", True, (255, 255, 255))
+    score_rect = score_disp.get_rect(bottomright=(screen_width - 10, screen_height - 10))
+    screen.blit(score_disp, score_rect)
+
     pygame.display.flip()
 
 pygame.quit()

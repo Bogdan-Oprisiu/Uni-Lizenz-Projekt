@@ -1,5 +1,6 @@
 import pygame
 import math
+import time
 from controls import RobotController  # existing controller code
 from obstacle import generate_obstacle
 from robot import Robot
@@ -29,7 +30,6 @@ class ExtendedRobotController(RobotController):
         except ValueError:
             magnitude = 1.0
 
-        # Compute the robot's current orientation.
         angle_rad = math.radians(robot.angle)
         forward_dx = -math.sin(angle_rad)
         forward_dy = -math.cos(angle_rad)
@@ -53,33 +53,47 @@ class ExtendedRobotController(RobotController):
             robot.rotate(self.rotation_speed * magnitude)
         elif cmd == "rotate_right":
             robot.rotate(-self.rotation_speed * magnitude)
-        # You can add additional commands as needed.
+        # Additional commands can be added here.
 
 class Game:
     def __init__(self):
         pygame.init()
         self.width = 1200
         self.height = 750
-        # Create a dummy surface (we won't open an actual window for API-based simulation)
+        # Create a dummy surface for simulation (no actual window is opened)
         self.screen = pygame.Surface((self.width, self.height))
         self.robot = Robot(400, 300)
         self.obstacles = [generate_obstacle(self.robot) for _ in range(15)]
         self.controller = ExtendedRobotController(acceleration_multiplier=1.05, rotation_speed=2)
         self.game_over = False
+        self.score = 0.0
+        self.last_time = time.time()  # For timing score updates
+        self.movement_threshold = 0.1  # Only count score if robot's velocity exceeds this
 
     def reset(self):
         self.robot = Robot(400, 300)
         self.obstacles = [generate_obstacle(self.robot) for _ in range(15)]
         self.game_over = False
+        self.score = 0.0
+        self.last_time = time.time()
 
     def update(self, command: str):
         if self.game_over:
             return
 
+        # Update robot using the command and physics.
         self.controller.update_with_command(self.robot, command)
         self.robot.update()
 
-        # Check for collisions using masks.
+        # Update score: increase only if the robot is moving.
+        current_time = time.time()
+        dt = current_time - self.last_time
+        self.last_time = current_time
+        velocity = math.hypot(self.robot.vx, self.robot.vy)
+        if velocity > self.movement_threshold:
+            self.score += dt
+
+        # Collision detection using masks.
         robot_mask, robot_offset = self.robot.get_mask()
         collision = False
         for obs in self.obstacles:
@@ -89,7 +103,7 @@ class Game:
                 collision = True
                 break
 
-        # Check for boundary collisions.
+        # Boundary collision check.
         robot_surface = pygame.Surface((self.robot.width, self.robot.height), pygame.SRCALPHA)
         robot_surface.fill((255, 0, 0))
         rotated_surface = pygame.transform.rotate(robot_surface, self.robot.angle)
@@ -110,10 +124,8 @@ class Game:
         """
         sensors = {"front": None, "left": None, "right": None, "back": None}
         angle_rad = math.radians(self.robot.angle)
-        # Our robot's forward vector.
         forward_dx = -math.sin(angle_rad)
         forward_dy = -math.cos(angle_rad)
-        # Compute the robot's forward angle (in degrees).
         robot_forward_angle = math.degrees(math.atan2(forward_dy, forward_dx))
         for obs in self.obstacles:
             dx = obs.x - self.robot.x
@@ -121,25 +133,19 @@ class Game:
             if dx == 0 and dy == 0:
                 continue
             obs_angle = math.degrees(math.atan2(dy, dx))
-            # Compute the signed difference in degrees.
             diff = obs_angle - robot_forward_angle
             diff = ((diff + 180) % 360) - 180  # Normalize to (-180, 180]
             distance = math.hypot(dx, dy)
-            # Determine sensor sector.
             if abs(diff) <= 45:
-                # Front sensor.
                 if sensors["front"] is None or distance < sensors["front"]:
                     sensors["front"] = distance
             elif 45 < diff <= 135:
-                # Left sensor.
                 if sensors["left"] is None or distance < sensors["left"]:
                     sensors["left"] = distance
             elif -135 <= diff < -45:
-                # Right sensor.
                 if sensors["right"] is None or distance < sensors["right"]:
                     sensors["right"] = distance
             else:
-                # Back sensor.
                 if sensors["back"] is None or distance < sensors["back"]:
                     sensors["back"] = distance
         return sensors
@@ -153,10 +159,7 @@ class Game:
                 "vx": self.robot.vx,
                 "vy": self.robot.vy,
             },
-            # "obstacles": [
-            #     {"x": obs.x, "y": obs.y, "width": obs.width, "height": obs.height}
-            #     for obs in self.obstacles
-            # ],
             "game_over": self.game_over,
-            "sensors": self.get_sensor_data()
+            "sensors": self.get_sensor_data(),
+            "score": int(self.score)  # Returning score as an integer (seconds survived)
         }
