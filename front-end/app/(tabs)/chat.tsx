@@ -1,75 +1,70 @@
 import React, { useState, useEffect } from "react";
-import * as GoogleGenerativeAI from "@google/generative-ai";
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TextInput, FlatList, TouchableOpacity } from "react-native";
 import Toast from "react-native-toast-message";
-import styles from "../styles/chat.styles";  
+import styles from "../styles/chat.styles";
+
+// URL of your FastAPI server
+const API_URL = "http://127.0.0.1:8000";
 
 const Chat = () => {
-  const [messages, setMessages] = useState([
-    { text: "", user: false }
-  ]);
-  const [userInput, setUserInput] = useState("");
+  // We store game state as returned by our API.
+  const [gameState, setGameState] = useState(null);
+  // We use messages for a chat-style log.
+  const [messages, setMessages] = useState<{ text: string; user: boolean; error?: boolean }[]>([]);
+  const [commandInput, setCommandInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const API_KEY = ""; 
-
+  // When the component mounts, fetch the initial game state.
   useEffect(() => {
-    const startChat = async () => {
-      if (!API_KEY) {
-        setMessages([{ text: "⚠️ API Key Missing! Please add your key to continue.", user: false, error: true }]);
-        return;
-      }
-
-      try {
-        const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-        const prompt = "Hello! ";
-        const result = await model.generateContent(prompt);
-        const response = result.response;
-        const text = response.text();
-
-        setMessages([{ text, user: false }]);
-      } catch (error) {
-        setMessages([{ text: "⚠️ Error connecting to AI model. Please try again later.", user: false, error: true }]);
-      }
-    };
-
-    startChat();
+    fetch(`${API_URL}/state`)
+      .then((response) => response.json())
+      .then((data) => {
+        setGameState(data);
+        setMessages([{ text: `Game started. Score: ${data.score}`, user: false }]);
+      })
+      .catch((error) => {
+        console.error("Error fetching game state", error);
+        setMessages([{ text: "Error fetching game state", user: false, error: true }]);
+      });
   }, []);
 
-  const sendMessage = async () => {
-    if (!userInput.trim()) return;
-
+  const sendCommand = async () => {
+    if (!commandInput.trim()) return;
     setLoading(true);
-    const userMessage = { text: userInput, user: true };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-    setUserInput("");
-
+    // Log the user's command.
+    setMessages((prev) => [...prev, { text: `Command: ${commandInput}`, user: true }]);
+    
     try {
-      const genAI = new GoogleGenerativeAI.GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-      const result = await model.generateContent(userMessage.text);
-      const response = result.response;
-      const text = response.text();
-
-      setMessages((prevMessages) => [...prevMessages, { text, user: false }]);
-      setLoading(false);
-    } catch (error) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { text: "⚠️ AI failed to generate a response. Please try again.", user: false, error: true }
+      const response = await fetch(`${API_URL}/command`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ command: commandInput }),
+      });
+      
+      if (!response.ok) {
+        throw new Error("Game API error");
+      }
+      const updatedState = await response.json();
+      setGameState(updatedState);
+      // Optionally, log the updated score and sensor data.
+      setMessages((prev) => [
+        ...prev,
+        { text: `Score: ${updatedState.score}`, user: false },
+        { text: `Sensors: ${JSON.stringify(updatedState.sensors)}`, user: false }
       ]);
-      setLoading(false);
+    } catch (error) {
+      console.error("Error sending command", error);
+      setMessages((prev) => [
+        ...prev,
+        { text: "Error sending command. Please try again.", user: false, error: true }
+      ]);
     }
+    
+    setCommandInput("");
+    setLoading(false);
   };
 
-  const renderMessage = ({ item }) => (
+  const renderMessage = ({ item }: { item: { text: string; user: boolean; error?: boolean } }) => (
     <View style={[styles.messageContainer, item.user ? styles.userMessageContainer : styles.aiMessageContainer]}>
       <Text style={[styles.messageText, item.error ? styles.errorMessage : item.user ? styles.userMessage : styles.aiMessage]}>
         {item.text}
@@ -87,14 +82,14 @@ const Chat = () => {
       />
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Type a message"
-          onChangeText={setUserInput}
-          value={userInput}
-          onSubmitEditing={sendMessage}
+          placeholder="Enter command (e.g., 'forward 50')"
+          onChangeText={setCommandInput}
+          value={commandInput}
+          onSubmitEditing={sendCommand}
           style={styles.input}
           placeholderTextColor="#fff"
         />
-        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
+        <TouchableOpacity style={styles.sendButton} onPress={sendCommand}>
           <Text style={styles.sendButtonText}>Send</Text>
         </TouchableOpacity>
       </View>

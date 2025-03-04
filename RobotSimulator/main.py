@@ -1,5 +1,7 @@
-import pygame
 import math
+
+import pygame
+
 from controls import RobotController  # Import the controller class
 from obstacle import generate_obstacle
 from robot import Robot

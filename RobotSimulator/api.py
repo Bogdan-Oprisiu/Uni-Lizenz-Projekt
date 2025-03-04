@@ -1,11 +1,22 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
 from game import Game
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Create a global game instance.
 game = Game()
+
 
 # Define a request model for commands.
 # Commands support an optional numeric parameter.
@@ -16,10 +27,12 @@ game = Game()
 class Command(BaseModel):
     command: str
 
+
 @app.get("/state")
 def get_state():
     """Return the current game state, including sensor data and score."""
     return game.get_state()
+
 
 @app.post("/command")
 def send_command(cmd: Command):
@@ -41,6 +54,7 @@ def send_command(cmd: Command):
         raise HTTPException(status_code=400, detail="Game Over. Please reset the game.")
     game.update(cmd.command)
     return game.get_state()
+
 
 @app.post("/reset")
 def reset_game():
