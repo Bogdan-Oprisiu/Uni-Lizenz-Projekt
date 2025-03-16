@@ -1,0 +1,115 @@
+{
+  "commandLanguage": {
+    "commands": [
+      {
+        "name": "forward",
+        "description": "Move the robot ahead.",
+        "parameters": {
+          "distance": {
+            "type": "number",
+            "unit": "cm",
+            "required": true,
+            "description": "The linear distance to move forward."
+          },
+          "acceleration": {
+            "type": "number",
+            "unit": "cm/s^2",
+            "required": false,
+            "default": 10,
+            "description": "Optional acceleration value for forward motion."
+          }
+        }
+      },
+      {
+        "name": "back",
+        "description": "Move the robot backward.",
+        "parameters": {
+          "distance": {
+            "type": "number",
+            "unit": "cm",
+            "required": true,
+            "description": "The linear distance to move backward."
+          },
+          "acceleration": {
+            "type": "number",
+            "unit": "cm/s^2",
+            "required": false,
+            "default": 10,
+            "description": "Optional acceleration value for backward motion."
+          }
+        }
+      },
+      {
+        "name": "left",
+        "description": "Turn or move left.",
+        "parameters": {
+          "angle": {
+            "type": "number",
+            "unit": "radians",
+            "required": true,
+            "description": "The angle in radians to turn or move left."
+          },
+          "acceleration": {
+            "type": "number",
+            "unit": "rad/s^2",
+            "required": false,
+            "default": 0.5,
+            "description": "Optional angular acceleration for left turns."
+          }
+        }
+      },
+      {
+        "name": "right",
+        "description": "Turn or move right.",
+        "parameters": {
+          "angle": {
+            "type": "number",
+            "unit": "radians",
+            "required": true,
+            "description": "The angle in radians to turn or move right."
+          },
+          "acceleration": {
+            "type": "number",
+            "unit": "rad/s^2",
+            "required": false,
+            "default": 0.5,
+            "description": "Optional angular acceleration for right turns."
+          }
+        }
+      },
+      {
+        "name": "stop",
+        "description": "Halt all robot motion.",
+        "parameters": {}
+      }
+    ]
+  },
+  "errors": {
+    "definitions": [
+      {
+        "code": "INVALID_COMMAND",
+        "description": "The provided command does not match any known commands."
+      },
+      {
+        "code": "MISSING_PARAMETER",
+        "description": "A required parameter for the command is missing."
+      },
+      {
+        "code": "INVALID_PARAMETER_TYPE",
+        "description": "The parameter value type is incorrect (e.g., a string provided instead of a number)."
+      },
+      {
+        "code": "OUT_OF_RANGE",
+        "description": "The parameter value is outside the acceptable range."
+      },
+      {
+        "code": "SYNTAX_ERROR",
+        "description": "The command syntax is malformed or not parsable."
+      },
+      {
+        "code": "UNSUPPORTED_UNIT",
+        "description": "The unit specified for a parameter is not supported or recognized."
+      }
+    ]
+  }
+}
