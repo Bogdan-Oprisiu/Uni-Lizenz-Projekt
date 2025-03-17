@@ -5,7 +5,7 @@ from transformers.utils import move_cache
 move_cache()
 
 # Load the abstract command structure from the JSON file
-with open("training_data/possible_commands.json", "r") as f:
+with open("../training_data/possible_commands.json", "r") as f:
     possible_commands_str = f.read()
 
 # Set the teacher model name and load T5-Large along with its tokenizer.

@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tokenizer/bpe_tokenizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher/evaluate_data_for_student.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/generate_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/possible_commands.json" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/possible_commands.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/teacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher/teacher.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +40,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Python.TalkToGPT.executor": "Run",
     "Python.bpe_tokenizer.executor": "Run",
+    "Python.evaluate_data_for_student.executor": "Run",
     "Python.generate_data.executor": "Run",
     "Python.main.executor": "Run",
     "Python.teacher.executor": "Run",
@@ -61,6 +60,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\teacher" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\tokenizer" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\training_data" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM" />
@@ -92,7 +92,7 @@
           <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
         </ENTRIES>
       </EXTENSION>
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/teacher.py" />
+      <option name="SCRIPT_NAME" value="C:\MyProjects\Uni Lizenz Projekt\LLM\teacher\teacher.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -129,7 +129,7 @@
       <workItem from="1742192126492" duration="3128000" />
       <workItem from="1742196099042" duration="984000" />
       <workItem from="1742202600640" duration="1935000" />
-      <workItem from="1742211171698" duration="689000" />
+      <workItem from="1742211171698" duration="1814000" />
     </task>
     <servers />
   </component>
@@ -140,6 +140,7 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/LLM$evaluate_data_for_student.coverage" NAME="evaluate_data_for_student Coverage Results" MODIFIED="1742212438447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$main.coverage" NAME="main Coverage Results" MODIFIED="1740938400874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/LLM$teacher.coverage" NAME="teacher Coverage Results" MODIFIED="1742203652720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/LLM$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1742194578065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
