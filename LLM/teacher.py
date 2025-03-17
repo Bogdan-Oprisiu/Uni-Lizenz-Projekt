@@ -5,7 +5,7 @@ from transformers.utils import move_cache
 move_cache()
 
 # Load the abstract command structure from the JSON file
-with open("possible_commands.json", "r") as f:
+with open("training_data/possible_commands.json", "r") as f:
     possible_commands_str = f.read()
 
 # Set the teacher model name and load T5-Large along with its tokenizer.
@@ -42,7 +42,7 @@ def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=100):
     )
 
     # outputs.sequences contains the generated tokens.
-    # outputs.scores is a tuple with one tensor per generated token, each of shape (batch_size, vocab_size).
+    # outputs.scores is a tuple with one tensor per generated token, each of shapes (batch_size, vocab_size).
     # We convert each score tensor to soft target probabilities using softmax with temperature scaling.
     soft_targets_list = []
     for score in outputs.scores:
