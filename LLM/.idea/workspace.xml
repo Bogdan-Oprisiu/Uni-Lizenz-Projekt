@@ -61,6 +61,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\tokenizer" />
+      <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\training_data" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM" />
     </key>
   </component>
@@ -141,6 +143,7 @@
     <SUITE FILE_PATH="coverage/LLM$main.coverage" NAME="main Coverage Results" MODIFIED="1740938400874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/LLM$teacher.coverage" NAME="teacher Coverage Results" MODIFIED="1742203652720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/LLM$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1742194578065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/LLM$bpe_tokenizer.coverage" NAME="bpe_tokenizer Coverage Results" MODIFIED="1742211946243" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tokenizer" />
     <SUITE FILE_PATH="coverage/LLM$TalkToGPT.coverage" NAME="TalkToGPT Coverage Results" MODIFIED="1740938955844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
