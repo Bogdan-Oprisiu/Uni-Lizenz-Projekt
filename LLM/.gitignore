@@ -1,2 +1,4 @@
 training_data/*.json
 teacher/*.json
+training_data/*.txt
+teacher/*.txt

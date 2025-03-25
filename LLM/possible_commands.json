@@ -41,39 +41,67 @@
       },
       {
         "name": "left",
-        "description": "Turn or move left.",
+        "description": "Strafe left using mecanum wheels (lateral movement, not rotation).",
         "parameters": {
-          "angle": {
+          "distance": {
             "type": "number",
-            "unit": "radians",
+            "unit": "cm",
             "required": true,
-            "description": "The angle in radians to turn or move left."
+            "description": "The lateral distance to move left."
           },
           "acceleration": {
             "type": "number",
-            "unit": "rad/s^2",
+            "unit": "cm/s^2",
             "required": false,
-            "default": 0.5,
-            "description": "Optional angular acceleration for left turns."
+            "default": 10,
+            "description": "Optional acceleration value for leftward movement."
           }
         }
       },
       {
         "name": "right",
-        "description": "Turn or move right.",
+        "description": "Strafe right using mecanum wheels (lateral movement, not rotation).",
         "parameters": {
-          "angle": {
+          "distance": {
             "type": "number",
-            "unit": "radians",
+            "unit": "cm",
             "required": true,
-            "description": "The angle in radians to turn or move right."
+            "description": "The lateral distance to move right."
           },
           "acceleration": {
             "type": "number",
-            "unit": "rad/s^2",
+            "unit": "cm/s^2",
             "required": false,
-            "default": 0.5,
-            "description": "Optional angular acceleration for right turns."
+            "default": 10,
+            "description": "Optional acceleration value for rightward movement."
+          }
+        }
+      },
+      {
+        "name": "rotate",
+        "description": "Rotate the robot on its axis.",
+        "parameters": {
+          "angle": {
+            "type": "number",
+            "unit": "degrees",
+            "required": true,
+            "description": "The angle in degrees by which to rotate the robot."
+          },
+          "direction": {
+            "type": "string",
+            "required": true,
+            "enum": [
+              "left",
+              "right"
+            ],
+            "description": "The direction to rotate the robot."
+          },
+          "acceleration": {
+            "type": "number",
+            "unit": "deg/s^2",
+            "required": false,
+            "default": 28.65,
+            "description": "Optional angular acceleration for rotation."
           }
         }
       },

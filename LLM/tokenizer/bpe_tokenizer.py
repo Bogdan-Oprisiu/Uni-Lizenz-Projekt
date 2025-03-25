@@ -13,10 +13,10 @@ tokenizer.decoder = decoders.ByteLevel()
 special_tokens = ["[PAD]", "[UNK]", "[SOS]", "[EOS]", "[SEP]", "{", "}", "[", "]", ":", ","]
 
 # 5. Create a trainer with your desired vocabulary size and special tokens.
-trainer = trainers.BpeTrainer(vocab_size=10000, special_tokens=special_tokens)
+trainer = trainers.BpeTrainer(vocab_size=1000, special_tokens=special_tokens)
 
 # 6. Provide your training data (list of files).
-files = ["..\\training_data\\synthetic_robot_commands.json"]
+files = ["..\\training_data\\synthetic_labeled_robot_commands.json", "..\\training_data\\"]
 
 # 7. Train the tokenizer
 tokenizer.train(files, trainer)
