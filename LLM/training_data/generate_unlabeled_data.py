@@ -90,7 +90,7 @@ for _ in range(num_unlabeled):
     unlabeled_commands.append(command)
 
 # Save the unlabeled commands to a plain text file (one command per line)
-with open("unlabeled_robot_commands.txt", "w", encoding="utf-8") as f:
+with open("synthetic_unlabeled_robot_commands.txt", "w", encoding="utf-8") as f:
     for command in unlabeled_commands:
         f.write(command + "\n")
 
