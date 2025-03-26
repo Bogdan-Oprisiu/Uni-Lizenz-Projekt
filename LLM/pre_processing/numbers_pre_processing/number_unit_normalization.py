@@ -1,7 +1,7 @@
 # number_unit_normalization.py
 
-import re
 from phrase_to_number import convert_spelled_numbers_phrases
+
 
 def normalize_units(text: str) -> str:
     """
@@ -37,8 +37,9 @@ def normalize_units(text: str) -> str:
 
     # Normalize rotation units
     # First, handle degree symbols attached to digits.
-    text = re.sub(r"(\d)°", r"\1 deg", text)
-    # Then, replace any remaining textual degree words.
+    # Convert "NN°" => "NN deg" (handles multiple digits, decimals)
+    text = re.sub(r"(\d+(?:\.\d+)?)°", r"\1 deg", text)
+    # Then textual 'degrees?' => 'deg'
     text = re.sub(r"\b(degrees?|degree)\b", "deg", text, flags=re.IGNORECASE)
     # Finally, replace any standalone degree symbols (if any remain).
     text = re.sub(r"°", "deg", text, flags=re.IGNORECASE)
@@ -67,44 +68,52 @@ def normalize_units(text: str) -> str:
     return text
 
 
+import re
+
+
 def infer_default_units(text: str) -> str:
     """
-    Append default units to bare numbers based on context:
-      - rotate/turn -> deg
-      - accelerate -> cm/s^2
-      - drive/speed -> cm/s
-      - move/go/strafe -> cm
+    A more context-aware approach:
+      - If we see "turn" or "rotate", we find the first number after
+        those words (optionally skipping "left"/"right" or punctuation),
+        and if that number has no angle unit, we append 'deg'.
+      - If we see "accelerate" or "acceleration", find the next number and append "cm/s^2".
+      - If we see "drive" or "speed", find the next number and append "cm/s".
+      - If we see "move", "go", or "strafe", find the next number and append "cm".
 
-    This function looks for whole numeric tokens and, if not already followed by a known unit (even when punctuation is present),
-    appends the default unit.
+    This no longer applies to every number in the text, only the number
+    that follows each command word.
     """
-    lower_text = text.lower()
+    # 1) Rotation: ("turn|rotate") [possible directions] + number => "deg"
+    #    E.g. "turn right 45" -> "turn right 45 deg"
+    #    We'll skip if we already see deg/rad, etc. after the number.
+    pattern_rotate = re.compile(
+        r"(?:turn|rotate)\s+(?:left|right\s+)?(\d+(?:\.\d+)?)(?!\s*(?:deg|rad|°|['’]{1,2}))",
+        flags=re.IGNORECASE
+    )
+    text = pattern_rotate.sub(r"\1 deg", text)
 
-    if "rotate" in lower_text or "turn" in lower_text:
-        # Append "deg" if a number is not already followed (after optional spaces) by one of the units.
-        text = re.sub(
-            r"\b(\d+(?:\.\d+)?)\b(?!\s*(?:deg|rad|°|['’]{1,2})\b)",
-            r"\1 deg",
-            text
-        )
-    elif "accelerat" in lower_text:
-        text = re.sub(
-            r"\b(\d+(?:\.\d+)?)\b(?!\s*(?:cm/s\^?2|m/s\^?2)\b)",
-            r"\1 cm/s^2",
-            text
-        )
-    elif "drive" in lower_text or "speed" in lower_text:
-        text = re.sub(
-            r"\b(\d+(?:\.\d+)?)\b(?!\s*(?:cm/s|m/s|km/h)\b)",
-            r"\1 cm/s",
-            text
-        )
-    elif any(word in lower_text for word in ["move", "go", "strafe"]):
-        text = re.sub(
-            r"\b(\d+(?:\.\d+)?)\b(?!\s*(?:cm|m|km)\b)",
-            r"\1 cm",
-            text
-        )
+    # 2) Acceleration: ("accelerate" or "acceleration") + next number => "cm/s^2"
+    pattern_accel = re.compile(
+        r"(?:accelerat\w*)\s+(?:at\s+)?(\d+(?:\.\d+)?)(?!\s*(?:cm/s\^?2|m/s\^?2))",
+        flags=re.IGNORECASE
+    )
+    text = pattern_accel.sub(r"\1 cm/s^2", text)
+
+    # 3) Speed: ("drive" or "speed") + next number => "cm/s"
+    pattern_speed = re.compile(
+        r"(?:\bspeed\b|\bdrive\b)\s+(?:at\s+)?(\d+(?:\.\d+)?)(?!\s*(?:cm/s|m/s|km/h))",
+        flags=re.IGNORECASE
+    )
+    text = pattern_speed.sub(r"\1 cm/s", text)
+
+    # 4) Distance: ("move"|"go"|"strafe") + next number => "cm"
+    #    e.g. "move 50" => "move 50 cm"
+    pattern_dist = re.compile(
+        r"(?:\bmove\b|\bgo\b|\bstrafe\b)\s+(?:ahead\s+)?(\d+(?:\.\d+)?)(?!\s*(?:cm|m|km))",
+        flags=re.IGNORECASE
+    )
+    text = pattern_dist.sub(r"\1 cm", text)
 
     return text
 
@@ -157,16 +166,16 @@ if __name__ == "__main__":
         "Drive at 60 kilometers per hour.",
         "Rotate 180 degrees.",
         "Halt immediately!",
-        "Move 50 with no unit.",         # → "50 cm"
-        "Accelerate 10 with no unit.",     # → "10 cm/s^2"
-        "Turn 45 with no unit.",           # → "45 deg"
-        "Drive 20 with no unit.",          # → "20 cm/s"
-        "Rotate pi.",                      # → "3.14"
-        "Rotate π.",                       # → "3.14"
-        "Rotate tau.",                     # → "6.28"
-        "Turn 45° to face north.",         # → "Turn 45 deg to face north."
-        "Turn 30' to face east.",          # → "Turn 0.5 degrees to face east."
-        "Turn 15'' for precision."         # → "Turn 0.5 degrees for precision."
+        "Move 50 with no unit.",  # → "50 cm"
+        "Accelerate 10 with no unit.",  # → "10 cm/s^2"
+        "Turn 45 with no unit.",  # → "45 deg"
+        "Drive 20 with no unit.",  # → "20 cm/s"
+        "Rotate pi.",  # → "3.14"
+        "Rotate π.",  # → "3.14"
+        "Rotate tau.",  # → "6.28"
+        "Turn 45° to face north.",  # → "Turn 45 deg to face north."
+        "Turn 30' to face east.",  # → "Turn 0.5 degrees to face east."
+        "Turn 15'' for precision."  # → "Turn 0.5 degrees for precision."
     ]
 
     for text in sample_texts:

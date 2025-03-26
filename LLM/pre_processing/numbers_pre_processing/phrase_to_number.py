@@ -2,46 +2,51 @@
 
 import re
 from typing import List
-
 from word2number import w2n
 
-# A small set of recognized spelled-out number words.
 NUMBER_WORDS = {
-    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
-    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
-    "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty",
-    "sixty", "seventy", "eighty", "ninety", "hundred", "thousand", "million",
-    "billion", "trillion", "and"
+    "zero","one","two","three","four","five","six","seven","eight","nine",
+    "ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen",
+    "seventeen","eighteen","nineteen","twenty","thirty","forty","fifty",
+    "sixty","seventy","eighty","ninety","hundred","thousand","million",
+    "billion","trillion","and"
 }
 
 
 def tokenize_with_punctuation(text: str) -> List[str]:
     """
-    Splits the text into tokens, separating punctuation from words.
-    E.g. "one hundred and twenty." -> ["one", "hundred", "and", "twenty", "."]
+    Splits the text into tokens, ensuring:
+      - decimals remain intact (e.g. '9.81')
+      - known unit strings (e.g. 'm/s^2', 'km/h') remain single tokens
+      - spelled-out words remain tokens
+      - punctuation remains separate
     """
-    pattern = r"[a-zA-Z]+|\d+|[^\w\s]"
+    pattern = (
+        r"(?:m/s\^?2|m/s²|cm/s\^?2|cm/s²|km/h|m/s|cm/s)"  # recognized short unit strings
+        r"|(?:\d+(?:\.\d+)?)"                           # decimal numbers
+        r"|[a-zA-Z]+"                                   # pure alphabetic
+        r"|[^\w\s]"                                     # single punctuation (commas, etc.)
+    )
     return re.findall(pattern, text)
 
 
 def is_spelled_number_word(token: str) -> bool:
-    """
-    Return True if token is a recognized spelled-out number word
-    (including 'and' for w2n compatibility).
-    """
+    """Return True if token is in the spelled-out number set (e.g. 'twenty', 'hundred')."""
     return token.lower() in NUMBER_WORDS
 
 
 def convert_spelled_numbers_phrases(text: str) -> str:
     """
-    Convert multi-word spelled-out numbers (e.g., "one hundred and twenty") into digits ("120").
+    Convert multi-word spelled-out numbers (like "one hundred and twenty")
+    into digits ("120"). Leaves decimal numbers alone, and keeps recognized
+    units (like "m/s^2") as one token.
     """
     tokens = tokenize_with_punctuation(text)
     result_tokens = []
     buffer = []
 
     def flush_buffer():
-        """Attempt to parse accumulated spelled-out words with word2number."""
+        """Try to parse the buffered spelled-out words with word2number."""
         if not buffer:
             return
         phrase = " ".join(buffer)
@@ -49,24 +54,23 @@ def convert_spelled_numbers_phrases(text: str) -> str:
             number_value = w2n.word_to_num(phrase.lower())
             result_tokens.append(str(number_value))
         except ValueError:
-            # Parsing failed; put them back as original words
+            # If it fails, just keep them as-is
             result_tokens.extend(buffer)
         buffer.clear()
 
     for token in tokens:
+        # If the token is a spelled-out number word, accumulate in buffer
         if is_spelled_number_word(token):
-            # Accumulate numbery words
             buffer.append(token)
         else:
-            # Flush any number phrase we've built so far
+            # Flush any number-phrase before adding non-number token
             flush_buffer()
-            # Non-number token goes straight to result
             result_tokens.append(token)
 
-    # End of loop: flush remaining buffer
+    # End: flush leftover buffer
     flush_buffer()
 
-    # Rejoin tokens; remove spaces before punctuation
+    # Join tokens back; remove spaces before punctuation
     raw_text = " ".join(result_tokens)
     final_text = re.sub(r"\s+([^\w\s])", r"\1", raw_text)
     return final_text
