@@ -1,14 +1,16 @@
 import re
 from typing import List
+
 from word2number import w2n
 
 NUMBER_WORDS = {
-    "zero","one","two","three","four","five","six","seven","eight","nine",
-    "ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen",
-    "seventeen","eighteen","nineteen","twenty","thirty","forty","fifty",
-    "sixty","seventy","eighty","ninety","hundred","thousand","million",
-    "billion","trillion","and"
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+    "seventeen", "eighteen", "nineteen", "twenty", "thirty", "forty", "fifty",
+    "sixty", "seventy", "eighty", "ninety", "hundred", "thousand", "million",
+    "billion", "trillion", "and"
 }
+
 
 def tokenize_with_punctuation(text: str) -> List[str]:
     """
@@ -26,11 +28,12 @@ def tokenize_with_punctuation(text: str) -> List[str]:
     """
     pattern = (
         r"(?:m/s\^?2|m/s²|cm/s\^?2|cm/s²|km/h|m/s|cm/s)"  # recognized short unit strings
-        r"|(?:\d+(?:\.\d+)?)"                           # decimal numbers
-        r"|[a-zA-Z]+(?:-[a-zA-Z]+)*"                     # spelled words, possibly hyphenated (fifty-six)
-        r"|[^\w\s]"                                     # single punctuation, e.g. commas, !
+        r"|(?:\d+(?:\.\d+)?)"  # decimal numbers
+        r"|[a-zA-Z]+(?:-[a-zA-Z]+)*"  # spelled words, possibly hyphenated (fifty-six)
+        r"|[^\w\s]"  # single punctuation, e.g. commas, !
     )
     return re.findall(pattern, text)
+
 
 def is_spelled_number_word(token: str) -> bool:
     """
@@ -39,6 +42,7 @@ def is_spelled_number_word(token: str) -> bool:
     """
     parts = token.lower().split('-')
     return all(part in NUMBER_WORDS for part in parts)
+
 
 def convert_spelled_numbers_phrases(text: str) -> str:
     """
@@ -87,6 +91,7 @@ def convert_spelled_numbers_phrases(text: str) -> str:
     raw_text = " ".join(result_tokens)
     final_text = re.sub(r"\s+([^\w\s])", r"\1", raw_text)
     return final_text
+
 
 if __name__ == "__main__":
     examples = [
