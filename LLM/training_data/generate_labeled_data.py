@@ -1,15 +1,13 @@
 import json
 import random
 
+from pre_processing.processing import full_text_processing
+
 # Define parameter ranges and synonyms
 directions_forward = ["forward", "ahead", "advance"]
 directions_back = ["back", "reverse", "backward"]
 
-# For lateral movement, left/right
-# (Now they indicate strafing, not rotation)
-# We won't use synonyms in the generated text for lateral commands,
-# as our templates clearly indicate the movement type.
-# For rotate command, the direction parameter is used to indicate turning direction.
+# For lateral movement, left/right (strafe)
 rotate_directions = ["left", "right"]
 
 # Updated templates for valid commands
@@ -48,11 +46,16 @@ def generate_valid_command(command_type):
         distance = random.randint(10, 500)
         acceleration = random.choice([None, random.randint(5, 20)])  # Occasionally trigger default use
         template = random.choice(templates[command_type])
-        command_str = template.format(direction=direction, distance=distance,
-                                      acceleration=acceleration if acceleration is not None else "")
+        command_str = template.format(
+            direction=direction,
+            distance=distance,
+            acceleration=acceleration if acceleration is not None else ""
+        )
+        # Clean up extra spaces and then preprocess the command string
         command_str = " ".join(command_str.split())
+        processed_str = full_text_processing(command_str)
         return {
-            "input_text": command_str,
+            "input_text": processed_str,
             "expected_output": {
                 "action": command_type,
                 "parameters": {
@@ -62,15 +65,17 @@ def generate_valid_command(command_type):
             }
         }
     elif command_type in ["left", "right"]:
-        # Lateral movement commands: use distance instead of angle
         distance = random.randint(10, 500)
         acceleration = random.choice([None, random.randint(5, 20)])
         template = random.choice(templates[command_type])
-        command_str = template.format(distance=distance,
-                                      acceleration=acceleration if acceleration is not None else "")
+        command_str = template.format(
+            distance=distance,
+            acceleration=acceleration if acceleration is not None else ""
+        )
         command_str = " ".join(command_str.split())
+        processed_str = full_text_processing(command_str)
         return {
-            "input_text": command_str,
+            "input_text": processed_str,
             "expected_output": {
                 "action": command_type,
                 "parameters": {
@@ -80,16 +85,19 @@ def generate_valid_command(command_type):
             }
         }
     elif command_type == "rotate":
-        # Rotation command: use angle in degrees and a directional parameter.
         direction = random.choice(rotate_directions)
         angle = random.randint(10, 180)  # degrees
         acceleration = random.choice([None, round(random.uniform(20, 40), 2)])
         template = random.choice(templates["rotate"])
-        command_str = template.format(direction=direction, angle=angle,
-                                      acceleration=acceleration if acceleration is not None else "")
+        command_str = template.format(
+            direction=direction,
+            angle=angle,
+            acceleration=acceleration if acceleration is not None else ""
+        )
         command_str = " ".join(command_str.split())
+        processed_str = full_text_processing(command_str)
         return {
-            "input_text": command_str,
+            "input_text": processed_str,
             "expected_output": {
                 "action": "rotate",
                 "parameters": {
@@ -101,8 +109,9 @@ def generate_valid_command(command_type):
         }
     elif command_type == "stop":
         template = random.choice(templates["stop"])
+        processed_str = full_text_processing(template)
         return {
-            "input_text": template,
+            "input_text": processed_str,
             "expected_output": {
                 "action": "stop",
                 "parameters": {}
@@ -110,58 +119,51 @@ def generate_valid_command(command_type):
         }
 
 
-# Generate a set of valid examples including the new rotate command
-valid_examples = [
-    generate_valid_command(random.choice(["forward", "back", "left", "right", "rotate", "stop"]))
-    for _ in range(1_000_000)
-]
-
-
-# Optionally: Generate error cases (similar approach, but inject mistakes)
+# Updated error cases: Instead of just minor grammatical issues, these errors now
+# generate commands that are truly nonsensical or lack any coherent structure.
 def generate_invalid_command():
-    error_type = random.choice(["misspelling", "missing_parameter", "invalid_value"])
-    if error_type == "misspelling":
-        # For example, "florward" instead of "forward"
+    error_type = random.choice(["nonsense", "invalid_value"])
+    if error_type == "nonsense":
+        # Generate a completely nonsensical command string.
+        nonsense_str = "asdfghjkl 1234 zxcvbnm"
+        processed_str = full_text_processing(nonsense_str)
         return {
-            "input_text": "florward 100",
+            "input_text": processed_str,
             "expected_output": {
                 "errors": [
                     {
-                        "rawCommand": "florward 100",
+                        "rawCommand": nonsense_str,
                         "code": "INVALID_COMMAND",
-                        "description": "Unknown command 'florward'. Did you mean 'forward'?"
-                    }
-                ]
-            }
-        }
-    elif error_type == "missing_parameter":
-        return {
-            "input_text": "move forward",
-            "expected_output": {
-                "errors": [
-                    {
-                        "rawCommand": "move forward",
-                        "code": "MISSING_PARAMETER",
-                        "description": "The 'distance' parameter is missing."
+                        "description": "The command is nonsensical and does not match any known pattern."
                     }
                 ]
             }
         }
     elif error_type == "invalid_value":
+        # Use an invalid, non-numeric value for a parameter.
+        invalid_value_str = "turn left by banana"
+        processed_str = full_text_processing(invalid_value_str)
         return {
-            "input_text": "turn left by fast",
+            "input_text": processed_str,
             "expected_output": {
                 "errors": [
                     {
-                        "rawCommand": "turn left by fast",
+                        "rawCommand": invalid_value_str,
                         "code": "INVALID_PARAMETER_TYPE",
-                        "description": "Expected a numeric value for parameter, but received a string."
+                        "description": "Expected a numeric value for parameter, but received a non-numeric string."
                     }
                 ]
             }
         }
 
 
+# Generate a set of valid examples
+valid_examples = [
+    generate_valid_command(random.choice(["forward", "back", "left", "right", "rotate", "stop"]))
+    for _ in range(1_000_000)
+]
+
+# Generate a smaller set of invalid examples
 invalid_examples = [generate_invalid_command() for _ in range(20)]
 
 # Combine and shuffle the dataset
@@ -172,4 +174,4 @@ random.shuffle(dataset)
 with open("synthetic_labeled_robot_commands.json", "w") as f:
     json.dump(dataset, f, indent=2)
 
-print("Synthetic data generated and saved as synthetic_robot_commands.json")
+print("Synthetic data generated and saved as synthetic_labeled_robot_commands.json")

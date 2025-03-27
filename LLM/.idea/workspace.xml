@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/pre_processing/processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/processing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +108,8 @@
       <workItem from="1742920176439" duration="6396000" />
       <workItem from="1742998117620" duration="2060000" />
       <workItem from="1743017065951" duration="3853000" />
-      <workItem from="1743065585884" duration="357000" />
+      <workItem from="1743065585884" duration="393000" />
+      <workItem from="1743076805514" duration="2911000" />
     </task>
     <servers />
   </component>
@@ -119,7 +120,7 @@
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.bat" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/LLM$processing.coverage" NAME="processing Coverage Results" MODIFIED="1742993197560" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
+    <SUITE FILE_PATH="coverage/LLM$processing.coverage" NAME="processing Coverage Results" MODIFIED="1743065911071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$test_unit_conversions.coverage" NAME="test_unit_conversions Coverage Results" MODIFIED="1743017857590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$spell_checker.coverage" NAME="spell_checker Coverage Results" MODIFIED="1742915121448" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$teacher.coverage" NAME="teacher Coverage Results" MODIFIED="1742203652720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

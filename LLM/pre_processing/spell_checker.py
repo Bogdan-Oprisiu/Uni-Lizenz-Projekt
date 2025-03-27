@@ -14,26 +14,18 @@ def basic_spell_checker(text: str) -> str:
     """
     Check each word in the text and replace it with its most likely correction.
     This function only corrects alphabetic words; numbers and punctuation are left untouched.
-
-    Parameters:
-        text (str): The input text to be spell-checked.
-
-    Returns:
-        str: The text with spelling corrections applied.
     """
-    # Simple whitespace tokenization
     words = text.split()
     corrected_words = []
-
     for word in words:
-        # We only correct words that are fully alphabetic.
-        # This avoids changing numbers, special symbols, or mixed strings.
         if word.isalpha():
             correction = spell.correction(word)
+            # Fallback to the original word if no correction is found
+            if correction is None:
+                correction = word
             corrected_words.append(correction)
         else:
             corrected_words.append(word)
-
     return " ".join(corrected_words)
 
 

@@ -1,9 +1,8 @@
 # processing.py
-
-from normalization_and_noise_removal import preprocess_text
+from pre_processing.normalization_and_noise_removal import preprocess_text
 from pre_processing.numbers_pre_processing.number_unit_normalization import normalize_numbers_units
 from pre_processing.numbers_pre_processing.unit_conversion import normalize_all_units
-from spell_checker import basic_spell_checker
+from pre_processing.spell_checker import basic_spell_checker
 
 
 def full_text_processing(text: str) -> str:

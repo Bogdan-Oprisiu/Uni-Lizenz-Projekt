@@ -41,7 +41,7 @@ def topk_float16(prob_tensor: torch.Tensor, k=10):
     """
     # 1. Select top-k
     top_values, top_indices = torch.topk(prob_tensor, k)
-    # 2. (Optional) Renormalize to sum=1
+    # 2. Normalize to sum=1
     top_values = top_values / top_values.sum()
     # 3. Convert to float16
     top_values_16 = top_values.half()  # Float16 quantization
@@ -54,7 +54,7 @@ def topk_float16(prob_tensor: torch.Tensor, k=10):
 # 5. Teacher generation function
 #    - Builds a prompt from your "possible_commands" instructions
 #    - Generates with the quantized T5 model
-#    - Collects top-10 float16 probabilities for each decoder step
+#    - Collects top-5 float16 probabilities for each decoder step
 ##############################################################################
 def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=100):
     """
@@ -93,7 +93,7 @@ def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=100):
         # shape: [batch_size=1, vocab_size]
         probs = torch.softmax(step_score / temperature, dim=-1)
         # 1 batch row -> take probs[0]
-        top10_16 = topk_float16(probs[0], k=10)
+        top10_16 = topk_float16(probs[0], k=5)
         step_probs_top10.append(top10_16)
 
     return generated_text, step_probs_top10
@@ -102,7 +102,7 @@ def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=100):
 ##############################################################################
 # 6. Load training data commands & process each
 ##############################################################################
-with open("../training_data/synthetic_robot_commands.json", "r", encoding="utf-8") as f:
+with open("../training_data/synthetic_labeled_robot_commands.json", "r", encoding="utf-8") as f:
     commands = json.load(f)
 
 # Limit to first 5 for demonstration

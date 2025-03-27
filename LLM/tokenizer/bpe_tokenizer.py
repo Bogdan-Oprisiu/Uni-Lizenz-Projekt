@@ -9,14 +9,27 @@ tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=True)
 # 3. Set a decoder to convert tokens back into text.
 tokenizer.decoder = decoders.ByteLevel()
 
-# 4. Define special tokens, now including [SEP]
-special_tokens = ["[PAD]", "[UNK]", "[SOS]", "[EOS]", "[SEP]", "{", "}", "[", "]", ":", ","]
+# 4. Define special tokens, including JSON punctuation and domain-specific tokens.
+special_tokens = [
+    "[PAD]", "[UNK]", "[SOS]", "[EOS]", "[SEP]",
+    "{", "}", "[", "]", ":", ",",
+    "\"commandLanguage\"", "\"errors\"", "\"commands\"", "\"parameters\"",
+    "\"name\"", "\"description\"", "\"distance\"", "\"acceleration\"",
+    "\"angle\"", "\"direction\""
+]
 
-# 5. Create a trainer with your desired vocabulary size and special tokens.
-trainer = trainers.BpeTrainer(vocab_size=1000, special_tokens=special_tokens)
+# 5. Create a trainer with an increased vocabulary size and the special tokens.
+trainer = trainers.BpeTrainer(vocab_size=10000, special_tokens=special_tokens)
 
 # 6. Provide your training data (list of files).
-files = ["..\\training_data\\synthetic_labeled_robot_commands.json", "..\\training_data\\"]
+files = ["..\\training_data\\synthetic_unlabeled_robot_commands.txt",
+         "..\\possible_commands.json"]
+
+import os
+
+for f in files:
+    if not os.path.exists(f):
+        print(f"File not found: {f}")
 
 # 7. Train the tokenizer
 tokenizer.train(files, trainer)
