@@ -1,9 +1,9 @@
 # processing.py
 
 from normalization_and_noise_removal import preprocess_text
-from spell_checker import basic_spell_checker
 from pre_processing.numbers_pre_processing.number_unit_normalization import normalize_numbers_units
 from pre_processing.numbers_pre_processing.unit_conversion import normalize_all_units
+from spell_checker import basic_spell_checker
 
 
 def full_text_processing(text: str) -> str:
@@ -30,16 +30,48 @@ def full_text_processing(text: str) -> str:
     return text
 
 
-# For testing
 if __name__ == "__main__":
+    # A broader set of test lines, checking spelled-out numbers, default units, angles, speed, acceleration, etc.
     tests = [
+        # Basic spelled-out + distance
         "Move Fifty centimeters forward!!!",
-        "Accelerate 10 with no unit.",
+        "Go ahead four hundred eighteen centimeters.",
+        "Walk one hundred and twenty meters.",
+        "Run two thousand five hundred kilometres!",
+        "Move 50 with no unit.",
+        "Go 10.0 with no unit?",
+
+        # Angles + spelled-out
+        "Turn right ninety degrees.",
+        "Rotate 180 degrees!",
         "Turn 45 with no unit.",
-        "Drive 20 with no unit.",
         "Rotate pi.",
-        "Rotate 180 degrees.",
-        "Accelerate at 9.81 m/s^2."
+        "Rotate 180 deg.",
+        "Rotate τ.",  # if typed as 'π' or "tau" => "6.28"
+
+        # Speed
+        "Drive 20 with no unit.",
+        "Drive at 60 kilometers per hour.",
+        "Run at 10 m/s.",
+        "Speed is 2.5 m/s??",
+        "Drive 100 cm/s or 0.5 km/h??",
+
+        # Acceleration
+        "Accelerate 10 with no unit.",
+        "Accelerate at ten meters per second squared.",
+        "Accelerate at 9.81 m/s^2.",
+        "We had 1 cm/s^2 motion.",
+        "What if it's 0.1 m/s^2 or 0.05 cm/s^2?",
+        "Acceleration is 3.33 m/s² for test.",
+
+        # Mixed scenario
+        "Accelerate at 9.81 m/s^2, then rotate 180 deg and move 2.5m!",
+        "He turned 45 deg, walked 3 kilometers, then drove 10 kilometers per hour.",
+
+        # Checking minutes/seconds ticks in angles
+        "Turn 45° to face north.",
+        "Turn 30' to face east.",
+        "Turn 15'' for precision.",
     ]
 
     for t in tests:

@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/number_unit_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/number_unit_normalization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/numbers_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/numbers_processing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/phrase_to_number.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/phrase_to_number.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/test_unit_conversions.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/test_unit_conversions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pre_processing/processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/processing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,6 +108,7 @@
       <workItem from="1742920176439" duration="6396000" />
       <workItem from="1742998117620" duration="2060000" />
       <workItem from="1743017065951" duration="3853000" />
+      <workItem from="1743065585884" duration="357000" />
     </task>
     <servers />
   </component>
