@@ -1,4 +1,5 @@
 import json
+import math
 import random
 
 from pre_processing.processing import full_text_processing
@@ -29,8 +30,8 @@ templates = {
         "Move right {distance} centimeters."
     ],
     "rotate": [
-        "Rotate {direction} by {angle} degrees with acceleration {acceleration}.",
-        "Turn {direction} {angle} degrees."
+        "Rotate {direction} by {angle} rad with acceleration {acceleration}.",
+        "Turn {direction} {angle} rad."
     ],
     "stop": [
         "Stop.",
@@ -86,12 +87,13 @@ def generate_valid_command(command_type):
         }
     elif command_type == "rotate":
         direction = random.choice(rotate_directions)
-        angle = random.randint(10, 180)  # degrees
+        angle_deg = random.randint(10, 180)
+        angle_rad = math.radians(angle_deg)
         acceleration = random.choice([None, round(random.uniform(20, 40), 2)])
         template = random.choice(templates["rotate"])
         command_str = template.format(
             direction=direction,
-            angle=angle,
+            angle=angle_rad,
             acceleration=acceleration if acceleration is not None else ""
         )
         command_str = " ".join(command_str.split())
@@ -101,7 +103,7 @@ def generate_valid_command(command_type):
             "expected_output": {
                 "action": "rotate",
                 "parameters": {
-                    "angle": angle,
+                    "angle": angle_rad,
                     "direction": direction,
                     "acceleration": acceleration if acceleration is not None else "default"
                 }
@@ -160,7 +162,7 @@ def generate_invalid_command():
 # Generate a set of valid examples
 valid_examples = [
     generate_valid_command(random.choice(["forward", "back", "left", "right", "rotate", "stop"]))
-    for _ in range(1_000_000)
+    for _ in range(100_000)
 ]
 
 # Generate a smaller set of invalid examples

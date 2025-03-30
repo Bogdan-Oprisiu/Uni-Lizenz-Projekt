@@ -22,8 +22,10 @@ special_tokens = [
 trainer = trainers.BpeTrainer(vocab_size=10000, special_tokens=special_tokens)
 
 # 6. Provide your training data (list of files).
-files = ["..\\training_data\\synthetic_unlabeled_robot_commands.txt",
-         "..\\possible_commands.json"]
+files = ["..\\possible_commands.json",
+         "..\\training_data\\synthetic_unlabeled_robot_commands.txt",
+         "..\\training_data\\synthetic_basic_unlabeled_robot_commands.txt"
+         ]
 
 import os
 

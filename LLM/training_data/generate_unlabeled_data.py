@@ -1,5 +1,6 @@
 import random
 
+import math
 from pre_processing.processing import full_text_processing
 
 # Define synonyms and templates for valid commands
@@ -26,8 +27,8 @@ templates = {
         "Move right {distance} centimeters."
     ],
     "rotate": [
-        "Rotate {direction} by {angle} degrees with acceleration {acceleration}.",
-        "Turn {direction} {angle} degrees."
+        "Rotate {direction} by {angle} rad with acceleration {acceleration}.",
+        "Turn {direction} {angle} rad."
     ],
     "stop": [
         "Stop.",
@@ -67,12 +68,14 @@ def generate_command_text(command_type):
 
     elif command_type == "rotate":
         direction = random.choice(rotate_directions)
-        angle = random.randint(10, 180)  # in degrees
+        angle_deg = random.randint(10, 180)
+        angle_rad = math.radians(angle_deg)
+
         acceleration = random.choice([None, round(random.uniform(20, 40), 2)])
         template = random.choice(templates["rotate"])
         command_str = template.format(
             direction=direction,
-            angle=angle,
+            angle=angle_rad,
             acceleration=acceleration if acceleration is not None else ""
         )
         return " ".join(full_text_processing(command_str).split())
@@ -109,8 +112,8 @@ def generate_invalid_command_text():
 
 
 # Number of unlabeled commands to generate
-num_unlabeled = 3_000_000
-error_probability = 0.02
+num_unlabeled = 10_000
+error_probability = 0.001
 
 # List to store command strings
 unlabeled_commands = []
