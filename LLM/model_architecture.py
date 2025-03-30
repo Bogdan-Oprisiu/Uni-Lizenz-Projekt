@@ -28,16 +28,16 @@ class PositionalEncoding(nn.Module):
 
 
 class StudentTransformer(nn.Module):
-    def __init__(self, vocab_size, d_model=128, nhead=4,
+    def __init__(self, vocabulary_size, d_model=128, num_head=4,
                  num_encoder_layers=4, num_decoder_layers=4,
                  dim_feedforward=128, dropout=0.1):
         """
         Initializes the student transformer.
 
         Args:
-          vocab_size (int): Size of the vocabulary (from your custom tokenizer).
+          vocabulary_size (int): Size of the vocabulary (from your custom tokenizer).
           d_model (int): Model (hidden) dimension.
-          nhead (int): Number of attention heads.
+          num_head (int): Number of attention heads.
           num_encoder_layers (int): Number of encoder layers.
           num_decoder_layers (int): Number of decoder layers.
           dim_feedforward (int): Dimension of the feed-forward network.
@@ -46,17 +46,17 @@ class StudentTransformer(nn.Module):
         super().__init__()
         self.d_model = d_model
         # Embedding layer shared by encoder and decoder.
-        self.embedding = nn.Embedding(vocab_size, d_model)
+        self.embedding = nn.Embedding(vocabulary_size, d_model)
         self.pos_encoder = PositionalEncoding(d_model, dropout)
         self.pos_decoder = PositionalEncoding(d_model, dropout)
 
-        self.transformer = nn.Transformer(d_model=d_model, nhead=nhead,
+        self.transformer = nn.Transformer(d_model=d_model, nhead=num_head,
                                           num_encoder_layers=num_encoder_layers,
                                           num_decoder_layers=num_decoder_layers,
                                           dim_feedforward=dim_feedforward,
                                           dropout=dropout)
         # Final projection layer to the vocabulary.
-        self.fc_out = nn.Linear(d_model, vocab_size)
+        self.fc_out = nn.Linear(d_model, vocabulary_size)
 
     def forward(self, src, tgt, src_mask=None, tgt_mask=None,
                 memory_mask=None, src_key_padding_mask=None,
@@ -91,5 +91,5 @@ class StudentTransformer(nn.Module):
 if __name__ == "__main__":
     # Example: assume a custom vocabulary size of 10,000
     vocab_size = 10000
-    model = StudentTransformer(vocab_size=vocab_size)
+    model = StudentTransformer(vocabulary_size=vocab_size)
     print(model)
