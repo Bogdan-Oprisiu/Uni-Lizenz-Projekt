@@ -33,7 +33,7 @@ quantized_model = torch.quantization.quantize_dynamic(
 ##############################################################################
 # 4. Helper: top-k extraction + float16 quantization of probabilities
 ##############################################################################
-def topk_float16(prob_tensor: torch.Tensor, k=10):
+def topk_float16(prob_tensor: torch.Tensor, k=5):
     """
     Extract the top-k probabilities from `prob_tensor` and quantize them
     from 32-bit float to 16-bit float. Return a list of (token_id, prob16) pairs.
@@ -41,7 +41,7 @@ def topk_float16(prob_tensor: torch.Tensor, k=10):
     """
     # 1. Select top-k
     top_values, top_indices = torch.topk(prob_tensor, k)
-    # 2. Normalize to sum=1
+    # 2. Renormalize so they sum to 1 (since softmax can have numerical variance)
     top_values = top_values / top_values.sum()
     # 3. Convert to float16
     top_values_16 = top_values.half()  # Float16 quantization
@@ -52,19 +52,19 @@ def topk_float16(prob_tensor: torch.Tensor, k=10):
 
 ##############################################################################
 # 5. Teacher generation function
-#    - Builds a prompt from your "possible_commands" instructions
-#    - Generates with the quantized T5 model
-#    - Collects top-5 float16 probabilities for each decoder step
+#    - Builds a prompt from your "possible_commands" instructions,
+#    - Generates with the quantized T5 model, and
+#    - Collects top-5 float16 probabilities for each decoding step.
 ##############################################################################
-def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=100):
+def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=50):
     """
-    Constructs a prompt with the abstract command structure, tokenizes it,
+    Constructs a prompt using the abstract command structure, tokenizes it,
     and then generates output using the quantized T5 model.
 
     Returns:
-      generated_text (str): The generated output text (e.g., JSON command).
-      top10_distributions (list): For each generated token, a list of top-10
-        (token_id, float16_probability) pairs.
+      generated_text (str): The final generated text.
+      step_probs_top5 (list): For each generated token, a list of top-5
+                              (token_id, float16_probability) pairs.
     """
     # Prepare the prompt
     prompt = (
@@ -74,69 +74,63 @@ def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=100):
     # Tokenize
     inputs = tokenizer(prompt, return_tensors="pt", max_length=512, truncation=True)
 
-    # Generate (use no_grad to reduce overhead)
+    # Generate output (no_grad to reduce overhead)
     with torch.no_grad():
         outputs = quantized_model.generate(
             **inputs,
             max_new_tokens=max_new_tokens,
             output_scores=True,
             return_dict_in_generate=True,
-            do_sample=False  # beam-search or greedy
+            do_sample=False  # using greedy decoding
         )
 
-    # Decode final text
+    # Decode the final generated text
     generated_text = tokenizer.decode(outputs.sequences[0], skip_special_tokens=True)
 
-    # For each step's logits, convert to probabilities & keep top-10 float16
-    step_probs_top10 = []
-    for step_score in outputs.scores:
-        # shape: [batch_size=1, vocab_size]
+    # For each step's logits, convert to probabilities & keep top-5 float16
+    step_probs_top5 = []
+    for step_score in outputs.scores:  # each is [batch_size=1, vocab_size]
         probs = torch.softmax(step_score / temperature, dim=-1)
-        # 1 batch row -> take probs[0]
-        top10_16 = topk_float16(probs[0], k=5)
-        step_probs_top10.append(top10_16)
+        top5_16 = topk_float16(probs[0], k=5)
+        step_probs_top5.append(top5_16)
 
-    return generated_text, step_probs_top10
+    return generated_text, step_probs_top5
 
 
 ##############################################################################
-# 6. Load training data commands & process each
+# 6. Load the basic unlabeled data & process each command (from a text file)
 ##############################################################################
-with open("../training_data/synthetic_labeled_robot_commands.json", "r", encoding="utf-8") as f:
-    commands = json.load(f)
-
-# Limit to first 5 for demonstration
-commands = commands[:5]
+with open("../training_data/synthetic_basic_unlabeled_robot_commands.txt", "r", encoding="utf-8") as f:
+    # Each line is one command; filter out empty lines.
+    commands = [line.strip() for line in f if line.strip()]
 
 results = []
 
-for idx, command in enumerate(commands):
-    input_text = command["input_text"]
-    expected_output = command["expected_output"]
+for idx, input_text in enumerate(commands):
     print(f"Processing command {idx + 1} of {len(commands)}: {input_text}")
 
     try:
-        # Generate + get top-10 probabilities
-        generated_text, top10_distributions = get_teacher_outputs(input_text, temperature=2.0)
+        # Generate final command text and get top-5 probabilities for each decoding step
+        generated_text, probs_stepwise = get_teacher_outputs(input_text, temperature=2.0)
     except RuntimeError as e:
         print(f"Runtime error at command index {idx}: {e}")
         break
 
-    # Store all info in results
+    # Store both the generated text and the probability distributions with the input index.
     results.append({
-        "input_text": input_text,
-        "expected_output": expected_output,
+        "input_index": idx,
         "generated_text": generated_text,
-        "soft_targets_top10_float16": top10_distributions
+        "soft_targets_top5_float16": probs_stepwise
     })
 
-    # If you're on GPU, you can free GPU cache:
+    # Optionally free GPU cache
     torch.cuda.empty_cache()
 
 ##############################################################################
-# 7. Write the final results (with compressed top-10 float16) to JSON
+# 7. Write the final results to JSON
 ##############################################################################
-with open("teacher_outputs.json", "w", encoding="utf-8") as f:
+with open("teacher_outputs_basic.json", "w", encoding="utf-8") as f:
     json.dump(results, f, indent=2)
 
-print("Teacher outputs (with top-10 float16 probabilities) have been saved to teacher_outputs.json")
+print(
+    "Teacher outputs have been saved to teacher_outputs_basic.json")
