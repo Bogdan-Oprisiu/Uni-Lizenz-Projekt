@@ -4,7 +4,7 @@ import random
 
 from pre_processing.processing import full_text_processing
 
-# Define synonyms and simpler templates for basic labelled commands (without acceleration)
+# Define synonyms and simpler templates for basic labeled commands (without acceleration)
 directions_forward = ["forward", "ahead", "advance"]
 directions_back = ["back", "reverse", "backward"]
 rotate_directions = ["left", "right"]
@@ -125,7 +125,7 @@ def generate_basic_labelled_command(command_type):
 
 
 # Number of basic labeled commands to generate
-num_basic_labelled = 1000
+num_basic_labelled = 10_000
 valid_command_types = ["forward", "back", "left", "right", "rotate", "stop", "strafing"]
 
 basic_labelled_commands = [

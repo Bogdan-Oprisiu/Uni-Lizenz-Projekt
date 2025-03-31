@@ -80,7 +80,7 @@ def generate_basic_command_text(command_type):
 
 
 # Set the number of basic unlabeled commands to generate
-num_unlabeled = 10000
+num_unlabeled = 10_000
 valid_command_types = ["forward", "back", "left", "right", "rotate", "stop", "strafing"]
 
 # Generate the basic unlabeled commands
