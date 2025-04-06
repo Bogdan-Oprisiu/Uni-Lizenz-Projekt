@@ -251,7 +251,7 @@ def generate_improved_labeled_command(command_type):
 # =========================================================================================
 
 if __name__ == "__main__":
-    num_labeled = 1_000
+    num_labeled = 10_000
     valid_command_types = ["forward", "back", "left", "right", "rotate", "stop", "strafing"]
 
     labeled_commands = []
