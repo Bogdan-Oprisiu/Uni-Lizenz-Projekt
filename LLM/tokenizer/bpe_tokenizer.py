@@ -1,61 +1,8 @@
-"""
-bpe_tokenizer.py
-
-Below are some ideas and best practices to consider for improving your tokenizer and
-making it more likely for an LLM to reliably generate JSON of the desired structure.
-
-----------------------------------------------------------------
-1. Add More Domain-Specific Special Tokens
-----------------------------------------------------------------
-    - For keys like "commandLanguage", "errors", "parameters", "distance", "acceleration", etc.
-    - For punctuation used in JSON: '{', '}', '[', ']', ':', ','.
-    - This prevents the BPE merge steps from splitting them incorrectly and helps
-      preserve the exact JSON structure in generation.
-
-----------------------------------------------------------------
-2. Include a Richer JSON “Skeleton” in the Training Data
-----------------------------------------------------------------
-    - Provide full, well-formed JSON examples to your tokenizer during training.
-    - Repeated usage of braces, quotes, colons, commas, and typical JSON fields helps the
-      tokenizer treat these as significant tokens or subwords.
-
-----------------------------------------------------------------
-3. Experiment with Vocab Size
-----------------------------------------------------------------
-    - 10k tokens is a reasonable starting point, but verify if it properly handles
-      domain terms (e.g., “acceleration” remains one token or a small set of subwords).
-    - Adjust up or down depending on your domain’s complexity.
-
-----------------------------------------------------------------
-4. Consider a Custom Normalizer or Post-Processor
-----------------------------------------------------------------
-    - Tokenizer post-processing can add [SOS], [EOS], [SEP], etc.
-    - Potentially auto-insert certain JSON punctuation if desired.
-    - Be cautious not to over-constrain or hamper the model’s ability to adapt.
-
-----------------------------------------------------------------
-5. Add Additional Special Tokens for JSON-Level Control
-----------------------------------------------------------------
-    - If you have repeated patterns or blocks, consider using tokens like <CMD>...</CMD>.
-    - Train the model to understand these tags, though this is optional/advanced.
-
-----------------------------------------------------------------
-6. Remember Coverage of User Inputs
-----------------------------------------------------------------
-    - Make sure your tokenizer sees examples of user inputs (e.g., “move forward 100cm”).
-    - The model can then better parse and respond with the correct JSON schema.
-
-----------------------------------------------------------------
-7. Validate the JSON Output Post-Generation
-----------------------------------------------------------------
-    - Even with perfect tokenization, LLMs can generate invalid JSON.
-    - Use a JSON parser or schema validator on the output, catch errors,
-      and respond with appropriate error codes if needed.
-"""
-
 import os
+import tempfile
 
 from tokenizers import Tokenizer, models, pre_tokenizers, decoders, trainers, processors
+from tokenizers.normalizers import Lowercase, Replace, Sequence
 
 
 class HFTokenizerWrapper:
@@ -92,35 +39,42 @@ class HFTokenizerWrapper:
         # 1. Initialize a BPE model.
         tokenizer = Tokenizer(models.BPE())
 
+        # 1.1. Set a normalizer to:
+        #      - convert text to lowercase, and
+        #      - remove non-ASCII characters.
+        tokenizer.normalizer = Sequence([
+            Lowercase(),
+            Replace(pattern=r"[^\x00-\x7F]+", content=""),
+        ])
+
         # 2. Set a pre-tokenizer that splits text into initial tokens.
         tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(add_prefix_space=True)
 
         # 3. Set a decoder to convert tokens back into text.
         tokenizer.decoder = decoders.ByteLevel()
 
-        # 4. Define special tokens (including punctuation and domain-specific tokens).
-        #    Here, you might consider adding even more domain-specific tokens or JSON structure tokens.
+        # 4. Define special tokens for JSON punctuation and domain-specific keys.
         special_tokens = [
             "[PAD]", "[UNK]", "[SOS]", "[EOS]", "[SEP]",
             "{", "}", "[", "]", ":", ",",
             "\"commandLanguage\"", "\"errors\"", "\"commands\"", "\"parameters\"",
             "\"name\"", "\"description\"", "\"distance\"", "\"acceleration\"",
             "\"angle\"", "\"direction\"",
-            # Add more here if needed...
+            "\"INVALID_COMMAND\"", "\"MISSING_PARAMETER\"", "\"INVALID_PARAMETER_TYPE\"",
+            "\"OUT_OF_RANGE\"", "\"SYNTAX_ERROR\"", "\"UNSUPPORTED_UNIT\""
         ]
 
-        # 5. Create a trainer with a vocabulary size and special tokens.
         trainer = trainers.BpeTrainer(vocab_size=10000, special_tokens=special_tokens)
 
-        # 6. Check if the files exist and print a warning if any are missing.
+        # 5. Check if files exist
         for f in files:
             if not os.path.exists(f):
                 print(f"File not found: {f}")
 
-        # 7. Train the tokenizer on the given files.
+        # 6. Train the tokenizer on the given files.
         tokenizer.train(files, trainer)
 
-        # 8. Configure a post-processor to automatically add start, end, and separator tokens.
+        # 7. Configure a post-processor to add [SOS], [EOS], [SEP].
         tokenizer.post_processor = processors.TemplateProcessing(
             single="[SOS] $A [EOS]",
             pair="[SOS] $A [EOS] [SEP] $B [EOS]",
@@ -131,19 +85,55 @@ class HFTokenizerWrapper:
             ],
         )
 
-        # 9. Save the tokenizer to a file for later use.
+        # 8. Save the tokenizer
         tokenizer.save(tokenizer_path)
         print(f"Tokenizer training complete and saved to {tokenizer_path}")
 
 
-# If you want to allow training from the command line, you can add:
 if __name__ == "__main__":
-    # Define the list of files used for training your tokenizer.
-    training_files = [
-        "..\\possible_commands.json",
-        "..\\training_data\\synthetic_unlabeled_robot_commands.txt",
-        "..\\training_data\\synthetic_basic_unlabeled_robot_commands.txt"
+    # Original dictionary file and other training files
+    english_dict_path = "google-10000-english-no-swears.txt"
+    other_files = [
+        "..\\training_data\\basic_data\\synthetic_basic_labeled_robot_commands_json.txt",
+        "..\\training_data\\multiple_parameter_data\\synthetic_labeled_robot_commands_with_accel_json.txt"
     ]
 
-    # Train the tokenizer and save to bpe_tokenizer.json.
-    HFTokenizerWrapper(tokenizer_path="bpe_tokenizer.json", train_if_missing=True, training_files=training_files)
+    # ------------------------
+    # 1. Read the dictionary file and replicate lines in memory.
+    # ------------------------
+    dict_lines = []
+    replicate_factor = 5  # Increase this value if you want more weight
+    if os.path.exists(english_dict_path):
+        with open(english_dict_path, "r", encoding="utf-8") as f:
+            original_dict_lines = f.read().splitlines()
+        dict_lines = original_dict_lines * replicate_factor
+    else:
+        print(f"Dictionary file not found: {english_dict_path}")
+
+    # ------------------------
+    # 2. Write the replicated lines to a temporary file
+    # ------------------------
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix="_dict.txt") as tmp_file:
+        tmp_dict_path = tmp_file.name
+        for line in dict_lines:
+            tmp_file.write(line + "\n")
+
+    # Now we have a new temp file that includes the dictionary with increased weight
+    # appended multiple times.
+
+    # ------------------------
+    # 3. Combine the dictionary temp file with your other files
+    # ------------------------
+    training_files = [tmp_dict_path] + other_files
+
+    # ------------------------
+    # 4. Train the tokenizer
+    # ------------------------
+    tokenizer_wrapper = HFTokenizerWrapper(
+        tokenizer_path="bpe_tokenizer.json",
+        train_if_missing=True,
+        training_files=training_files
+    )
+
+    # Cleanup: remove tmp_dict_path if you prefer
+    os.remove(tmp_dict_path)

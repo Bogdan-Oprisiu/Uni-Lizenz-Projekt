@@ -263,8 +263,8 @@ if __name__ == "__main__":
         labeled_commands.append(command_text)
         labeled_jsons.append(expected_json)
 
-    with open("synthetic_labeled_robot_commands.txt", "w", encoding="utf-8") as f_cmd, \
-            open("synthetic_labeled_robot_commands_json.txt", "w", encoding="utf-8") as f_json:
+    with open("synthetic_basic_labeled_robot_commands.txt", "w", encoding="utf-8") as f_cmd, \
+            open("synthetic_basic_labeled_robot_commands_json.txt", "w", encoding="utf-8") as f_json:
         for cmd, js in zip(labeled_commands, labeled_jsons):
             f_cmd.write(cmd + "\n")
             f_json.write(js + "\n")
