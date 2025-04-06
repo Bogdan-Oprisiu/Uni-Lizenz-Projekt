@@ -111,7 +111,7 @@ def normalize_all_units(text: str) -> str:
     """
     1) Find numeric expressions with a single token recognized unit (including spelled-out).
     2) Normalize spelled-out units -> short form.
-    3) Convert to final standard (distance=cm, speed=cm/s, accel=cm/s^2, angle=rad).
+    3) Convert to a final standard (distance=cm, speed=cm/s, accel=cm/s^2, angle=rad).
     4) Format numeric: 2 decimals for distance/speed/accel, or 4 for angles.
     5) Retain trailing punctuation after the expression.
     """

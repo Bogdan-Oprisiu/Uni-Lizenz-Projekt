@@ -3,13 +3,14 @@ number_unit_normalization.py
 
 This module performs early normalization of numeric and unit expressions.
 It includes:
-  - Constant replacement (e.g., "pi" or "π" → "3.14")
-  - Converting spelled-out numbers into digits (e.g., "fifty" → "50")
-  - Tokenizing the text (with separation between digits and letters)
-  - Merging multi-word unit phrases (e.g., "meters per second squared" → a single token)
+  1) Constant replacement (e.g., "pi" or "π" → "3.14")
+  2) Converting spelled-out numbers into digits (e.g., "fifty" → "50")
+  3) Tokenizing the text (with separation between digits and letters)
+  4) Merging multi-word unit phrases (e.g., "meters per second squared" → one token)
+  5) Standardizing spelled-out units into shorter forms (e.g., "centimeters" → "cm")
 
-These early steps produce a standardized text that can be further processed
-by later unit conversion modules.
+These steps produce a standardized text that can be further processed
+by later modules (such as unit_conversion.py) that apply numeric conversions.
 """
 
 import re
@@ -17,6 +18,30 @@ from typing import List
 
 import unicodedata
 from word2number import w2n
+
+###############################################################################
+# 0) Single-word map for spelled-out unit standardization
+###############################################################################
+single_word_map = {
+    "centimeters": "cm", "centimetres": "cm", "centimeter": "cm",
+    "meters": "m", "metres": "m", "meter": "m",
+    "kilometers": "km", "kilometres": "km", "kilometer": "km",
+    "degrees": "deg", "degree": "deg",
+    "radians": "rad", "radian": "rad",
+    "cm": "cm", "m": "m", "km": "km", "deg": "deg", "rad": "rad",
+    # Speed
+    "cm/s": "cm/s", "m/s": "m/s", "km/h": "km/h",
+    "meters per second": "m/s", "metres per second": "m/s",
+    "centimeters per second": "cm/s", "centimetres per second": "cm/s",
+    "kilometers per hour": "km/h", "kilometres per hour": "km/h",
+    # Acceleration
+    "m/s^2": "m/s^2", "m/s²": "m/s^2",
+    "meters per second squared": "m/s^2", "metres per second squared": "m/s^2",
+    "cm/s^2": "cm/s^2", "cm/s²": "cm/s^2",
+    "centimeters per second squared": "cm/s^2", "centimetres per second squared": "cm/s^2",
+    # Time
+    "seconds": "s"
+}
 
 
 ###############################################################################
@@ -28,6 +53,7 @@ def rejoin_tokens(tokens: List[str]) -> str:
     E.g., ["Hello", "world", ","] -> "Hello world,"
     """
     raw = " ".join(tokens)
+    # Remove extra spaces before punctuation
     return re.sub(r"\s+([^\w\s])", r"\1", raw)
 
 
@@ -47,14 +73,12 @@ def normalize_constants_early(text: str) -> str:
         "e": "2.71",
         "phi": "1.62"
     }
-
     tokens = text.split()
     result_tokens = []
     for tok in tokens:
-        # Separate trailing punctuation for preservation.
+        # Separate trailing punctuation
         core = tok.rstrip(".,;!?")
         trailing = tok[len(core):]
-        # Normalize the token (using Unicode normalization and lowercasing).
         norm_core = unicodedata.normalize("NFC", core.lower())
         if norm_core in constants_map:
             result_tokens.append(constants_map[norm_core] + trailing)
@@ -66,7 +90,6 @@ def normalize_constants_early(text: str) -> str:
 ###############################################################################
 # STEP 2: CONVERT SPELLED-OUT NUMBERS
 ###############################################################################
-# Define a set of valid number words (can be extended if needed)
 VALID_NUMBER_WORDS = {
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
     "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
@@ -87,14 +110,12 @@ def is_all_spelled_number_words(token: str) -> bool:
 
 def convert_spelled_numbers_phrases(text: str) -> str:
     """
-    Convert spelled-out English numbers (e.g., "one hundred and twenty-five")
-    into digits. Non-numeric tokens are left as-is.
+    Convert spelled-out English numbers (e.g., "one hundred and twenty-five") into digits.
+    Non-numeric tokens are left as-is.
 
-    If a series of tokens are all recognized as number words, they are combined,
-    converted, and replaced with the digit representation.
+    If a series of tokens are all recognized as spelled-out number words, combine & convert.
 
-    Modification: If a token is "and" and the buffer is empty,
-    it is output immediately (so that "and" used as a separator in a sentence is preserved).
+    If a token is "and" and the buffer is empty, output it directly (separator).
     """
     tokens = text.split()
     result_tokens = []
@@ -114,7 +135,6 @@ def convert_spelled_numbers_phrases(text: str) -> str:
 
     for tok in tokens:
         if tok.lower() == "and" and not buffer:
-            # "and" that is not part of a number phrase should be output directly.
             result_tokens.append(tok)
         elif re.match(r'^[a-zA-Z-]+$', tok) and is_all_spelled_number_words(tok):
             buffer.append(tok)
@@ -131,8 +151,7 @@ def convert_spelled_numbers_phrases(text: str) -> str:
 ###############################################################################
 def separate_number_and_letter(text: str) -> str:
     """
-    Insert a space between a digit and a letter if missing.
-    E.g., "2.5m" becomes "2.5 m".
+    Insert a space between a digit and a letter if missing. e.g., "2.5m" -> "2.5 m".
     """
     return re.sub(r"(\d)([A-Za-z])", r"\1 \2", text)
 
@@ -142,12 +161,11 @@ def separate_number_and_letter(text: str) -> str:
 ###############################################################################
 def tokenize_for_normalization(text: str) -> List[str]:
     """
-    Tokenize the input text and merge multi-word unit phrases into single tokens.
-    This includes handling phrases like:
-      - "meters per second squared" → merged into one token.
-      - "kilometers per hour" → merged into one token.
+    Tokenize the input text and merges multi-word unit phrases (e.g., "meters per second squared")
+    into single tokens. Also transforms slash-based expressions like "m / s" -> "m/s".
+    No numeric conversion here; just textual merging.
     """
-    # First, ensure there is space between digits and letters.
+    # Insert space between digits & letters
     text = separate_number_and_letter(text)
     rough_tokens = text.split()
 
@@ -157,7 +175,7 @@ def tokenize_for_normalization(text: str) -> List[str]:
         token = rough_tokens[i]
         lower = token.lower()
 
-        # Example 1: Merge "meters per second squared"
+        # (1) Merge "meters per second squared"
         if lower in ["meters", "metres", "meter"] and (i + 3 < len(rough_tokens)):
             maybe_per = rough_tokens[i + 1].lower().strip(".,;!?")
             maybe_second = rough_tokens[i + 2].lower().strip(".,;!?")
@@ -171,7 +189,7 @@ def tokenize_for_normalization(text: str) -> List[str]:
                 i += 4
                 continue
 
-        # Example 2: Merge "kilometers per hour"
+        # (2) Merge "kilometers per hour"
         if lower in ["kilometers", "kilometres", "kilometer"] and (i + 2 < len(rough_tokens)):
             maybe_per = rough_tokens[i + 1].lower().strip(".,;!?")
             maybe_hour = rough_tokens[i + 2].lower().strip(".,;!?")
@@ -184,7 +202,7 @@ def tokenize_for_normalization(text: str) -> List[str]:
                 i += 3
                 continue
 
-        # Example 3: Merge "centimeters per second squared"
+        # (3) Merge "centimeters per second squared"
         if lower in ["centimeters", "centimetres", "centimeter"] and (i + 3 < len(rough_tokens)):
             maybe_per = rough_tokens[i + 1].lower().strip(".,;!?")
             maybe_second = rough_tokens[i + 2].lower().strip(".,;!?")
@@ -198,7 +216,7 @@ def tokenize_for_normalization(text: str) -> List[str]:
                 i += 4
                 continue
 
-        # Example 4: Merge slash-based tokens (e.g., "m / s ^ 2" -> "m/s^2")
+        # (4) "m / s ^ 2" -> "m/s^2"
         if lower == "m" and i + 4 < len(rough_tokens):
             if (rough_tokens[i + 1] == "/" and
                     rough_tokens[i + 2].lower() == "s" and
@@ -208,21 +226,21 @@ def tokenize_for_normalization(text: str) -> List[str]:
                 i += 5
                 continue
 
-        # Example 5: Merge "m / s" -> "m/s"
+        # (5) "m / s" -> "m/s"
         if lower == "m" and i + 2 < len(rough_tokens):
             if rough_tokens[i + 1] == "/" and rough_tokens[i + 2].lower() == "s":
                 merged_tokens.append("m/s")
                 i += 3
                 continue
 
-        # Example 6: Merge "cm / s" -> "cm/s"
+        # (6) "cm / s" -> "cm/s"
         if lower in ["cm", "centimeter", "centimetre"] and (i + 2 < len(rough_tokens)):
             if rough_tokens[i + 1] == "/" and rough_tokens[i + 2].lower() == "s":
                 merged_tokens.append("cm/s")
                 i += 3
                 continue
 
-        # If no merge is applicable, add the token as-is.
+        # Otherwise, add the token as-is
         merged_tokens.append(token)
         i += 1
 
@@ -230,23 +248,57 @@ def tokenize_for_normalization(text: str) -> List[str]:
 
 
 ###############################################################################
-# STEP 5: FULL EARLY NORMALIZATION PIPELINE
+# STEP 5: STANDARDIZE SPELLED-OUT UNITS (NO NUMERIC CONVERSION)
+###############################################################################
+def standardize_spelled_out_units(tokens: List[str]) -> List[str]:
+    """
+    Replace any spelled-out or multi-word units from the single_word_map with
+    their short form (e.g. "centimeters" -> "cm", "kilometers per hour" -> "km/h")
+    if they appear as single tokens at this stage.
+
+    This step does not convert numeric values, only textual units.
+    """
+    normalized_tokens = []
+    for tok in tokens:
+        # Strip punctuation for matching; reattach after
+        core = tok.rstrip(".,;!?")
+        trailing = tok[len(core):]
+
+        # Lowercase & remove punctuation from the core to match in single_word_map
+        check = re.sub(r"[.,;!?]+", "", core.lower()).strip()
+
+        if check in single_word_map:
+            normalized_tokens.append(single_word_map[check] + trailing)
+        else:
+            normalized_tokens.append(tok)
+    return normalized_tokens
+
+
+###############################################################################
+# STEP 6: FULL EARLY NORMALIZATION PIPELINE
 ###############################################################################
 def normalize_numbers_units(text: str) -> str:
     """
     Complete early normalization pipeline:
       1) Replace constants (π, tau, etc.) with numeric approximations.
       2) Convert spelled-out numbers to digits.
-      3) Tokenize the text and merge multi-word unit phrases.
-      4) Rejoin tokens into a final normalized string.
+      3) Tokenize the text and merge multi-word unit phrases (like "meters per second squared").
+      4) Standardize spelled-out unit tokens (e.g. "centimeters" -> "cm").
+      5) Rejoin tokens into a final normalized string.
     """
+    # (1) Constants
     text = normalize_constants_early(text)
+    # (2) Spelled-out numbers
     text = convert_spelled_numbers_phrases(text)
+    # (3) Merge multi-word unit phrases
     tokens = tokenize_for_normalization(text)
+    # (4) Standardize spelled-out units (no numeric conversion)
+    tokens = standardize_spelled_out_units(tokens)
+    # (5) Rejoin
     return rejoin_tokens(tokens)
 
 
-# For testing purposes, run this module directly.
+# Test if run directly
 if __name__ == "__main__":
     sample_texts = [
         "Move fifty centimeters forward.",
@@ -256,7 +308,8 @@ if __name__ == "__main__":
         "Accelerate at ten meters per second squared.",
         "Rotate π now!",
         "Turn 30 degrees, then move 1.23m.",
-        "I have fifty apples and one hundred and twenty-five oranges."
+        "I have fifty apples and one hundred and twenty-five oranges.",
+        "Please move two kilometers per hour"
     ]
     for text in sample_texts:
         normalized = normalize_numbers_units(text)

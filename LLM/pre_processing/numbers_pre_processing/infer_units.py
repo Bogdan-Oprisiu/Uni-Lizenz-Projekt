@@ -32,7 +32,6 @@ def infer_default_units(tokens):
         "drive": "cm/s",
         "speed": "cm/s",
         "accelerate": "cm/s^2",
-        # Add more as needed.
     }
 
     # Set of units considered already specified.
