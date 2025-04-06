@@ -2,14 +2,17 @@
 test_spell_checker.py
 
 This file contains tests for the basic_spell_checker function defined in spell_checker.py.
+It verifies that:
+  - Common misspellings are corrected.
+  - Non-alphabetic tokens (numbers, punctuation) remain unchanged.
+  - Mixed alphanumeric tokens are left untouched.
+  - Unit tokens (e.g., "km", "m/s^2") are preserved and not modified.
 """
+
 from pre_processing.spell_checker import basic_spell_checker
 
 
 def test_common_misspellings():
-    """
-    Test that basic_spell_checker fixes some common English misspellings.
-    """
     input_text = "This is an exampel of a sentense with errors."
     expected_output = "This is an example of a sentence with errors."
     corrected = basic_spell_checker(input_text)
@@ -17,62 +20,65 @@ def test_common_misspellings():
 
 
 def test_no_alphabetic_changes():
-    """
-    Non-alphabetic tokens (numbers, punctuation) should remain untouched.
-    """
     input_text = "The year is 2025, and cost is $100."
-    # Spell-check should not alter digits, dollar sign, punctuation, or presumably correct words.
     expected_output = "The year is 2025, and cost is $100."
     corrected = basic_spell_checker(input_text)
     assert corrected == expected_output, f"Expected '{expected_output}', got '{corrected}'"
 
 
 def test_partial_misspellings():
-    """
-    Ensure that partial words or words with numeric parts are left alone
-    if they're not purely alphabetic.
-    """
     input_text = "User123 posted a mesage about AI2025."
-    # 'mesage' is alphabetic, so it should become 'message',
-    # but 'User123' and 'AI2025' are alphanumeric and should remain unchanged.
     expected_output = "User123 posted a message about AI2025."
     corrected = basic_spell_checker(input_text)
     assert corrected == expected_output, f"Expected '{expected_output}', got '{corrected}'"
 
 
 def test_capitalization_handling():
-    """
-    The basic_spell_checker lowercases everything by default if it's purely alphabetic,
-    because SpellChecker by default doesn't preserve original capitalization.
-    We just verify it's at least spelled correctly. For example, "Becaus" => "because".
-    """
     input_text = "Becaus It's Rainning"
-    # The SpellChecker library typically lowercases the checked word ("Becaus" => "because").
-    # "It's" is not purely alphabetic (apostrophe), so it's left alone.
-    # "Rainning" => "raining" or "raining"? SpellChecker likely picks "raining".
+    # "Becaus" should be corrected to "because" and "Rainning" to "raining"
     expected_output = "because It's raining"
     corrected = basic_spell_checker(input_text)
     assert corrected == expected_output, f"Expected '{expected_output}', got '{corrected}'"
 
 
 def test_unrecognized_words():
-    """
-    If the word is not recognized at all and SpellChecker has no suggestions,
-    it should remain as is.
-    """
     input_text = "Xyzztty is a magical incantation."
-    # "Xyzzy" might not be in the dictionary, so it should remain "Xyzzy".
     expected_output = "Xyzztty is a magical incantation."
     corrected = basic_spell_checker(input_text)
     assert corrected == expected_output, f"Expected '{expected_output}', got '{corrected}'"
 
 
-if __name__ == "__main__":
-    # Run each test. An AssertionError will be raised if any test fails.
+def test_unit_protection():
+    """
+    Ensure that unit tokens are preserved without modification.
+    For example, "km", "m/s^2" should remain unchanged.
+    """
+    input_text = "Drive at 60 km and accelerate at 9.81 m/s^2."
+    expected_output = "Drive at 60 km and accelerate at 9.81 m/s^2."
+    corrected = basic_spell_checker(input_text)
+    assert corrected == expected_output, f"Expected '{expected_output}', got '{corrected}'"
+
+
+def test_mixed_units_and_text():
+    """
+    Verify that in a sentence mixing text and unit tokens, the units are not altered.
+    """
+    input_text = "The distance is 100 km and the speed is 50 m/s."
+    expected_output = "The distance is 100 km and the speed is 50 m/s."
+    corrected = basic_spell_checker(input_text)
+    assert corrected == expected_output, f"Expected '{expected_output}', got '{corrected}'"
+
+
+def run_all_tests():
     test_common_misspellings()
     test_no_alphabetic_changes()
     test_partial_misspellings()
     test_capitalization_handling()
     test_unrecognized_words()
+    test_unit_protection()
+    test_mixed_units_and_text()
+    print("All spell checker tests passed successfully!")
 
-    print("All tests passed successfully!")
+
+if __name__ == "__main__":
+    run_all_tests()
