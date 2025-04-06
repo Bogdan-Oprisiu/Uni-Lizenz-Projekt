@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/pre_processing/testing/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pre_processing/testing/test_normalization_and_noise_removal.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pre_processing/testing/test_preprocessing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/normalization_and_noise_removal.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/normalization_and_noise_removal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokenizer/bpe_tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer/bpe_tokenizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pre_processing/testing/test_spell_checker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +62,7 @@
     "Python.spell_checker.executor": "Run",
     "Python.teacher.executor": "Run",
     "Python.test_normalization_and_noise_removal.executor": "Run",
+    "Python.test_spell_checker.executor": "Run",
     "Python.test_unit_conversions.executor": "Run",
     "Python.unit_conversion.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -135,7 +131,7 @@
       <workItem from="1743435559842" duration="825000" />
       <workItem from="1743605046289" duration="48000" />
       <workItem from="1743761507807" duration="142000" />
-      <workItem from="1743923646660" duration="4776000" />
+      <workItem from="1743923646660" duration="5164000" />
     </task>
     <servers />
   </component>
@@ -158,6 +154,7 @@
     <SUITE FILE_PATH="coverage/LLM$generate_basic_labelled_data.coverage" NAME="generate_basic_labelled_data Coverage Results" MODIFIED="1743355595866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
     <SUITE FILE_PATH="coverage/LLM$evaluate_basic_data.coverage" NAME="evaluate_basic_data Coverage Results" MODIFIED="1743355614589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$basic_training.coverage" NAME="basic_training Coverage Results" MODIFIED="1743399056892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_training" />
+    <SUITE FILE_PATH="coverage/LLM$test_spell_checker.coverage" NAME="test_spell_checker Coverage Results" MODIFIED="1743934132543" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/testing" />
     <SUITE FILE_PATH="coverage/LLM$evaluate_data_for_student.coverage" NAME="evaluate_data_for_student Coverage Results" MODIFIED="1742912516154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$c.coverage" NAME="c Coverage Results" MODIFIED="1743399337038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1742912370258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
