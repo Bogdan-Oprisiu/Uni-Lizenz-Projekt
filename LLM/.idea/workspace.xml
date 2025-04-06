@@ -7,12 +7,9 @@
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/infer_units.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/infer_units.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/number_unit_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/number_unit_normalization.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/numbers_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/numbers_processing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests/test_infer_units.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests/test_infer_units.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests/test_number_unit_normalization.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests/test_number_unit_normalization.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/unit_conversion.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/unit_conversion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pre_processing/testing/test_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/testing/test_preprocessing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests/test_numbers_processing.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests/test_numbers_processing.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +69,7 @@
     "Python.test_infer_units.executor": "Run",
     "Python.test_normalization_and_noise_removal.executor": "Run",
     "Python.test_number_unit_normalization.executor": "Run",
+    "Python.test_numbers_processing.executor": "Run",
     "Python.test_spell_checker.executor": "Run",
     "Python.test_unit_conversion.executor": "Run",
     "Python.test_unit_conversions.executor": "Run",
@@ -142,7 +140,7 @@
       <workItem from="1743435559842" duration="825000" />
       <workItem from="1743605046289" duration="48000" />
       <workItem from="1743761507807" duration="142000" />
-      <workItem from="1743923646660" duration="12735000" />
+      <workItem from="1743923646660" duration="13388000" />
     </task>
     <servers />
   </component>
@@ -156,9 +154,9 @@
     <SUITE FILE_PATH="coverage/LLM$processing.coverage" NAME="processing Coverage Results" MODIFIED="1743098506470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$a.coverage" NAME="a Coverage Results" MODIFIED="1743399313637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$test_unit_conversions.coverage" NAME="test_unit_conversions Coverage Results" MODIFIED="1743098520947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
-    <SUITE FILE_PATH="coverage/LLM$test_number_unit_normalization.coverage" NAME="test_number_unit_normalization Coverage Results" MODIFIED="1743950592445" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
+    <SUITE FILE_PATH="coverage/LLM$test_number_unit_normalization.coverage" NAME="test_number_unit_normalization Coverage Results" MODIFIED="1743950789679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
     <SUITE FILE_PATH="coverage/LLM$teacher.coverage" NAME="teacher Coverage Results" MODIFIED="1742203652720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/LLM$test_infer_units.coverage" NAME="test_infer_units Coverage Results" MODIFIED="1743950003510" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
+    <SUITE FILE_PATH="coverage/LLM$test_infer_units.coverage" NAME="test_infer_units Coverage Results" MODIFIED="1743951113590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
     <SUITE FILE_PATH="coverage/LLM$evaluate_data.coverage" NAME="evaluate_data Coverage Results" MODIFIED="1743342755196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$normalization_and_noise_removal.coverage" NAME="normalization_and_noise_removal Coverage Results" MODIFIED="1743933611864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$d.coverage" NAME="d Coverage Results" MODIFIED="1743399267883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/1" />
@@ -171,7 +169,7 @@
     <SUITE FILE_PATH="coverage/LLM$evaluate_data_for_student.coverage" NAME="evaluate_data_for_student Coverage Results" MODIFIED="1742912516154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$c.coverage" NAME="c Coverage Results" MODIFIED="1743399337038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1742912370258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
-    <SUITE FILE_PATH="coverage/LLM$infer_units.coverage" NAME="infer_units Coverage Results" MODIFIED="1743950625248" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
+    <SUITE FILE_PATH="coverage/LLM$infer_units.coverage" NAME="infer_units Coverage Results" MODIFIED="1743951110414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$3.coverage" NAME="3 Coverage Results" MODIFIED="1743399379442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop" />
     <SUITE FILE_PATH="coverage/LLM$spell_checker.coverage" NAME="spell_checker Coverage Results" MODIFIED="1743934242158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$number_unit_normalization.coverage" NAME="number_unit_normalization Coverage Results" MODIFIED="1743950563676" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
@@ -185,6 +183,7 @@
     <SUITE FILE_PATH="coverage/LLM$b.coverage" NAME="b Coverage Results" MODIFIED="1743399323119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$bpe_tokenizer.coverage" NAME="bpe_tokenizer Coverage Results" MODIFIED="1743342051259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tokenizer" />
     <SUITE FILE_PATH="coverage/LLM$generate_basic_unlabelled_data.coverage" NAME="generate_basic_unlabelled_data Coverage Results" MODIFIED="1743925645458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
-    <SUITE FILE_PATH="coverage/LLM$numbers_processing.coverage" NAME="numbers_processing Coverage Results" MODIFIED="1743950640544" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
+    <SUITE FILE_PATH="coverage/LLM$test_numbers_processing.coverage" NAME="test_numbers_processing Coverage Results" MODIFIED="1743951303957" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
+    <SUITE FILE_PATH="coverage/LLM$numbers_processing.coverage" NAME="numbers_processing Coverage Results" MODIFIED="1743951271630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
   </component>
 </project>

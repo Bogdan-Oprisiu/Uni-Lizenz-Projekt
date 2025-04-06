@@ -27,9 +27,8 @@ Usage:
 
 import re
 
-from infer_units import infer_default_units
-from number_unit_normalization import normalize_numbers_units
-from unit_conversion import normalize_all_units
+from pre_processing.numbers_pre_processing.infer_units import infer_default_units
+from pre_processing.numbers_pre_processing.number_unit_normalization import normalize_numbers_units
 
 # List of known multi-word unit phrases that should remain merged.
 # These are in their fully merged, standardized form.
@@ -87,11 +86,8 @@ def combined_numbers_pipeline(text: str) -> str:
     tokens = protected_text.split()
     inferred_tokens = infer_default_units(tokens)
     inferred_text = " ".join(inferred_tokens)
-    # # (Optionally, restore protected tokens - here we assume unit_conversion can handle them)
-    # restored_text = restore_protected_units(inferred_text)
     # # Step 4: Final unit conversion.
     # final_text = normalize_all_units(restored_text)
-
 
     final_text = inferred_text
     return final_text
