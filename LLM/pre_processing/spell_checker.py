@@ -8,6 +8,7 @@ from spellchecker import SpellChecker
 # Initialize the spell checker once.
 # You may customize this by loading domain-specific words into the dictionary.
 spell = SpellChecker()
+spell.distance = 2
 
 
 def basic_spell_checker(text: str) -> str:
