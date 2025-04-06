@@ -40,7 +40,7 @@ making it more likely for an LLM to reliably generate JSON of the desired struct
     - Train the model to understand these tags, though this is optional/advanced.
 
 ----------------------------------------------------------------
-6. Don’t Forget Coverage of User Inputs
+6. Remember Coverage of User Inputs
 ----------------------------------------------------------------
     - Make sure your tokenizer sees examples of user inputs (e.g., “move forward 100cm”).
     - The model can then better parse and respond with the correct JSON schema.

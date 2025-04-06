@@ -5,15 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/back-end/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/back-end/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/back-end/run_llm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/front-end/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/front-end/app.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/front-end/pre-processing_commands/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../FullStackApp/start.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pre_processing/testing/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pre_processing/testing/test_normalization_and_noise_removal.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pre_processing/testing/test_preprocessing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training_data/generate_basic_unlabelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/generate_basic_unlabelled_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pre_processing/normalization_and_noise_removal.py" beforeDir="false" afterPath="$PROJECT_DIR$/pre_processing/normalization_and_noise_removal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tokenizer/bpe_tokenizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer/bpe_tokenizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,50 +38,51 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Python.3.executor&quot;: &quot;Run&quot;,
-    &quot;Python.TalkToGPT.executor&quot;: &quot;Run&quot;,
-    &quot;Python.a.executor&quot;: &quot;Run&quot;,
-    &quot;Python.b.executor&quot;: &quot;Run&quot;,
-    &quot;Python.basic_training.executor&quot;: &quot;Run&quot;,
-    &quot;Python.bpe_tokenizer.executor&quot;: &quot;Run&quot;,
-    &quot;Python.c.executor&quot;: &quot;Run&quot;,
-    &quot;Python.d.executor&quot;: &quot;Run&quot;,
-    &quot;Python.evaluate_basic_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.evaluate_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.evaluate_data_for_student.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_basic_labelled_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_basic_unlabelled_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_labeled_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.generate_unlabeled_data.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.model_architecture.executor&quot;: &quot;Run&quot;,
-    &quot;Python.normalization_and_noise_removal.executor&quot;: &quot;Run&quot;,
-    &quot;Python.number_unit_normalization.executor&quot;: &quot;Run&quot;,
-    &quot;Python.numbers_processing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.phrase_to_number.executor&quot;: &quot;Run&quot;,
-    &quot;Python.processing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.spell_checker.executor&quot;: &quot;Run&quot;,
-    &quot;Python.teacher.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_unit_conversions.executor&quot;: &quot;Run&quot;,
-    &quot;Python.unit_conversion.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/MyProjects/Uni Lizenz Projekt/LLM&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.3.executor": "Run",
+    "Python.TalkToGPT.executor": "Run",
+    "Python.a.executor": "Run",
+    "Python.b.executor": "Run",
+    "Python.basic_training.executor": "Run",
+    "Python.bpe_tokenizer.executor": "Run",
+    "Python.c.executor": "Run",
+    "Python.d.executor": "Run",
+    "Python.evaluate_basic_data.executor": "Run",
+    "Python.evaluate_data.executor": "Run",
+    "Python.evaluate_data_for_student.executor": "Run",
+    "Python.generate_basic_labelled_data.executor": "Run",
+    "Python.generate_basic_unlabelled_data.executor": "Run",
+    "Python.generate_data.executor": "Run",
+    "Python.generate_labeled_data.executor": "Run",
+    "Python.generate_unlabeled_data.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.model_architecture.executor": "Run",
+    "Python.normalization_and_noise_removal.executor": "Run",
+    "Python.number_unit_normalization.executor": "Run",
+    "Python.numbers_processing.executor": "Run",
+    "Python.phrase_to_number.executor": "Run",
+    "Python.processing.executor": "Run",
+    "Python.spell_checker.executor": "Run",
+    "Python.teacher.executor": "Run",
+    "Python.test_normalization_and_noise_removal.executor": "Run",
+    "Python.test_unit_conversions.executor": "Run",
+    "Python.unit_conversion.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/MyProjects/Uni Lizenz Projekt/LLM",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\basic_training" />
@@ -137,7 +135,7 @@
       <workItem from="1743435559842" duration="825000" />
       <workItem from="1743605046289" duration="48000" />
       <workItem from="1743761507807" duration="142000" />
-      <workItem from="1743923646660" duration="2030000" />
+      <workItem from="1743923646660" duration="4776000" />
     </task>
     <servers />
   </component>
@@ -152,9 +150,10 @@
     <SUITE FILE_PATH="coverage/LLM$a.coverage" NAME="a Coverage Results" MODIFIED="1743399313637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$test_unit_conversions.coverage" NAME="test_unit_conversions Coverage Results" MODIFIED="1743098520947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$teacher.coverage" NAME="teacher Coverage Results" MODIFIED="1742203652720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/LLM$normalization_and_noise_removal.coverage" NAME="normalization_and_noise_removal Coverage Results" MODIFIED="1743098481053" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$evaluate_data.coverage" NAME="evaluate_data Coverage Results" MODIFIED="1743342755196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
+    <SUITE FILE_PATH="coverage/LLM$normalization_and_noise_removal.coverage" NAME="normalization_and_noise_removal Coverage Results" MODIFIED="1743933611864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$d.coverage" NAME="d Coverage Results" MODIFIED="1743399267883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/1" />
+    <SUITE FILE_PATH="coverage/LLM$test_normalization_and_noise_removal.coverage" NAME="test_normalization_and_noise_removal Coverage Results" MODIFIED="1743933620830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/testing" />
     <SUITE FILE_PATH="coverage/LLM$generate_labeled_data.coverage" NAME="generate_labeled_data Coverage Results" MODIFIED="1743341928202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
     <SUITE FILE_PATH="coverage/LLM$generate_basic_labelled_data.coverage" NAME="generate_basic_labelled_data Coverage Results" MODIFIED="1743355595866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
     <SUITE FILE_PATH="coverage/LLM$evaluate_basic_data.coverage" NAME="evaluate_basic_data Coverage Results" MODIFIED="1743355614589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
