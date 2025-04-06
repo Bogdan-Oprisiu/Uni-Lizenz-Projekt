@@ -1,4 +1,57 @@
-# bpe_tokenizer.py
+"""
+bpe_tokenizer.py
+
+Below are some ideas and best practices to consider for improving your tokenizer and
+making it more likely for an LLM to reliably generate JSON of the desired structure.
+
+----------------------------------------------------------------
+1. Add More Domain-Specific Special Tokens
+----------------------------------------------------------------
+    - For keys like "commandLanguage", "errors", "parameters", "distance", "acceleration", etc.
+    - For punctuation used in JSON: '{', '}', '[', ']', ':', ','.
+    - This prevents the BPE merge steps from splitting them incorrectly and helps
+      preserve the exact JSON structure in generation.
+
+----------------------------------------------------------------
+2. Include a Richer JSON “Skeleton” in the Training Data
+----------------------------------------------------------------
+    - Provide full, well-formed JSON examples to your tokenizer during training.
+    - Repeated usage of braces, quotes, colons, commas, and typical JSON fields helps the
+      tokenizer treat these as significant tokens or subwords.
+
+----------------------------------------------------------------
+3. Experiment with Vocab Size
+----------------------------------------------------------------
+    - 10k tokens is a reasonable starting point, but verify if it properly handles
+      domain terms (e.g., “acceleration” remains one token or a small set of subwords).
+    - Adjust up or down depending on your domain’s complexity.
+
+----------------------------------------------------------------
+4. Consider a Custom Normalizer or Post-Processor
+----------------------------------------------------------------
+    - Tokenizer post-processing can add [SOS], [EOS], [SEP], etc.
+    - Potentially auto-insert certain JSON punctuation if desired.
+    - Be cautious not to over-constrain or hamper the model’s ability to adapt.
+
+----------------------------------------------------------------
+5. Add Additional Special Tokens for JSON-Level Control
+----------------------------------------------------------------
+    - If you have repeated patterns or blocks, consider using tokens like <CMD>...</CMD>.
+    - Train the model to understand these tags, though this is optional/advanced.
+
+----------------------------------------------------------------
+6. Don’t Forget Coverage of User Inputs
+----------------------------------------------------------------
+    - Make sure your tokenizer sees examples of user inputs (e.g., “move forward 100cm”).
+    - The model can then better parse and respond with the correct JSON schema.
+
+----------------------------------------------------------------
+7. Validate the JSON Output Post-Generation
+----------------------------------------------------------------
+    - Even with perfect tokenization, LLMs can generate invalid JSON.
+    - Use a JSON parser or schema validator on the output, catch errors,
+      and respond with appropriate error codes if needed.
+"""
 
 import os
 
@@ -19,7 +72,9 @@ class HFTokenizerWrapper:
             if train_if_missing:
                 if training_files is None:
                     raise ValueError(
-                        "training_files must be provided if tokenizer file is missing and train_if_missing is True.")
+                        "training_files must be provided if tokenizer file is missing "
+                        "and train_if_missing is True."
+                    )
                 self.train_tokenizer(tokenizer_path, training_files)
             else:
                 raise FileNotFoundError(f"Tokenizer file {tokenizer_path} not found.")
@@ -44,18 +99,20 @@ class HFTokenizerWrapper:
         tokenizer.decoder = decoders.ByteLevel()
 
         # 4. Define special tokens (including punctuation and domain-specific tokens).
+        #    Here, you might consider adding even more domain-specific tokens or JSON structure tokens.
         special_tokens = [
             "[PAD]", "[UNK]", "[SOS]", "[EOS]", "[SEP]",
             "{", "}", "[", "]", ":", ",",
             "\"commandLanguage\"", "\"errors\"", "\"commands\"", "\"parameters\"",
             "\"name\"", "\"description\"", "\"distance\"", "\"acceleration\"",
-            "\"angle\"", "\"direction\""
+            "\"angle\"", "\"direction\"",
+            # Add more here if needed...
         ]
 
         # 5. Create a trainer with a vocabulary size and special tokens.
         trainer = trainers.BpeTrainer(vocab_size=10000, special_tokens=special_tokens)
 
-        # Check if the files exist and print a warning if any are missing.
+        # 6. Check if the files exist and print a warning if any are missing.
         for f in files:
             if not os.path.exists(f):
                 print(f"File not found: {f}")
