@@ -196,7 +196,7 @@ if __name__ == "__main__":
 
     # File paths to your datasets (update these paths as needed)
     labeled_json_path = "../training_data/synthetic_basic_labeled_robot_commands.json"
-    distilled_json_path = "../training_data/synthetic_basic_unlabeled_robot_commands.txt"
+    distilled_json_path = "../training_data/basic_data/synthetic_basic_unlabeled_robot_commands.txt"
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = train(
