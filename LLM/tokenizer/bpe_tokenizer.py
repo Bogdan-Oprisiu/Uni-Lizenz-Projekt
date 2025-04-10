@@ -98,6 +98,8 @@ if __name__ == "__main__":
         "..\\training_data\\multiple_parameter_data\\synthetic_labeled_robot_commands_with_accel_json.txt"
     ]
 
+    # other_files = []
+
     # ------------------------
     # 1. Read the dictionary file and replicate lines in memory.
     # ------------------------
