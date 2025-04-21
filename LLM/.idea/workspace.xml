@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokenizer_v2/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer_v2/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tokenizer_v2/requierements-tokenizer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer_v2/requierements-tokenizer.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tokenizer_v2/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer_v2/train.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokenizer_v2/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer_v2/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +93,7 @@
     "Python.test_standard_attention_head.executor": "Run",
     "Python.test_unit_conversion.executor": "Run",
     "Python.test_unit_conversions.executor": "Run",
+    "Python.train.executor": "Run",
     "Python.unit_conversion.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -173,7 +172,7 @@
       <workItem from="1744643159550" duration="7616000" />
       <workItem from="1744721843417" duration="1063000" />
       <workItem from="1744723591939" duration="650000" />
-      <workItem from="1745225877804" duration="2629000" />
+      <workItem from="1745225877804" duration="3254000" />
     </task>
     <servers />
   </component>
@@ -239,5 +238,6 @@
     <SUITE FILE_PATH="coverage/LLM$infer_units.coverage" NAME="infer_units Coverage Results" MODIFIED="1743951110414" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$spell_checker.coverage" NAME="spell_checker Coverage Results" MODIFIED="1743951924796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$test_unit_conversions.coverage" NAME="test_unit_conversions Coverage Results" MODIFIED="1743098520947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
+    <SUITE FILE_PATH="coverage/LLM$train.coverage" NAME="train Coverage Results" MODIFIED="1745229280454" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tokenizer_v2" />
   </component>
 </project>
