@@ -92,7 +92,7 @@ class HFTokenizerWrapper:
 
 if __name__ == "__main__":
     # Original dictionary file and other training files
-    english_dict_path = "google-10000-english-no-swears.txt"
+    english_dict_path = "../training_data/tokenizer/google-10000-english-no-swears.txt"
     other_files = [
         "..\\training_data\\basic_data\\synthetic_basic_labeled_robot_commands_json.txt",
         "..\\training_data\\multiple_parameter_data\\synthetic_labeled_robot_commands_with_accel_json.txt"
