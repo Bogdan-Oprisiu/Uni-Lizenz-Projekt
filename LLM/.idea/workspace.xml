@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/teacher_v2/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v2/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v2/extract_soft_targets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v2/fine_tune_teacher.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v2/requierements-teacher.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v2/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokenizer_v2/requierements-tokenizer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer_v2/requierements-tokenizer.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tokenizer_v2/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/tokenizer_v2/train.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -172,7 +176,7 @@
       <workItem from="1744643159550" duration="7616000" />
       <workItem from="1744721843417" duration="1063000" />
       <workItem from="1744723591939" duration="650000" />
-      <workItem from="1745225877804" duration="3254000" />
+      <workItem from="1745225877804" duration="4251000" />
     </task>
     <servers />
   </component>
@@ -203,7 +207,7 @@
     <SUITE FILE_PATH="coverage/LLM$learned_positional_encoding.coverage" NAME="learned_positional_encoding Coverage Results" MODIFIED="1744274783327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/positional_encoding/positional_encoding" />
     <SUITE FILE_PATH="coverage/LLM$model_architecture.coverage" NAME="model_architecture Coverage Results" MODIFIED="1743420418868" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/LLM$d.coverage" NAME="d Coverage Results" MODIFIED="1743399267883" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/1" />
-    <SUITE FILE_PATH="coverage/LLM$config.coverage" NAME="config Coverage Results" MODIFIED="1745226998890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tokenizer_v2" />
+    <SUITE FILE_PATH="coverage/LLM$config.coverage" NAME="config Coverage Results" MODIFIED="1745229730617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher_v2" />
     <SUITE FILE_PATH="coverage/LLM$3.coverage" NAME="3 Coverage Results" MODIFIED="1743399379442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop" />
     <SUITE FILE_PATH="coverage/LLM$numbers_processing.coverage" NAME="numbers_processing Coverage Results" MODIFIED="1743951271630" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
     <SUITE FILE_PATH="coverage/LLM$example.coverage" NAME="example Coverage Results" MODIFIED="1744722757267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/positional_encoding" />
