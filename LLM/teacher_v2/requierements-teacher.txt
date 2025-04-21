@@ -1,0 +1,92 @@
+# Teacher Pipeline – Quick‑Start Guide
+
+This short guide explains **what you need** and **how to run** the T5‑based teacher pipeline that generates soft‑targets for the student model.
+
+---
+## 1·Folder layout
+```
+LLM/                                ← project root (call this $LLM_ROOT)
+│
+├─ teacher_v2/                      ← this repo – fine‑tuning + soft‑target code
+│   ├─ fine_tune_teacher.py         ← supervised fine‑tuning script
+│   ├─ extract_soft_targets.py      ← runs teacher over unlabeled corpus
+│   ├─ config.py                    ← central paths/hyper‑params
+│   ├─ utils.py                     ← helpers (tokenizer/model I/O, batching…)
+│   └─ …
+│
+├─ tokenizer_v2/                    ← shared BPE tokenizer
+│   ├─ bpe_tokenizer_v2.json        ← tokenizer model (≈60k merges)
+│   └─ utils.py (load_tokenizer helper)
+│
+└─ training_data/                   ← corpora (labeled + unlabeled)
+    ├─ basic_data/
+    └─ multiple_parameter_data/
+```
+
+---
+## 2·Python requirements
+```bash
+pip install --upgrade pip
+# 2.1 core libraries
+pip install torch==2.0.1+cu117 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+pip install transformers==4.34.0   # works with torch 2.0 & no torch.compiler issues
+pip install datasets sentencepiece tokenizers tqdm huggingface-hub accelerate
+
+# 2.2 optional (for 8‑bit loading)
+# pip install bitsandbytes
+
+# 2.3 preprocessing helpers (if you use the spelling/units pipeline)
+pip install pyspellchecker
+```
+> **Colab hint** – if you store the repo in `/content/Uni-Lizenz-Projekt/LLM` add:
+> ```python
+> import sys
+> sys.path.insert(0, "/content/Uni-Lizenz-Projekt/LLM")  # teacher_v2 & tokenizer_v2 imports
+> ```
+
+---
+## 3·Fine‑tune the teacher (optional)
+If you haven’t already trained a checkpoint, run
+```bash
+python teacher_v2/fine_tune_teacher.py \
+    --variant basic        # or multi
+    --epochs 3             # tweak as needed
+    --batch_size 8         # fit to your GPU‑VRAM
+    --lr 2e-4              # learning‑rate
+    --output_dir teacher_v2/finetuned_teacher
+```
+This will save both **model** and **tokenizer** to `teacher_v2/finetuned_teacher/`.
+`config.py` automatically prefers that directory when it exists.
+
+---
+## 4·Extract soft targets
+```bash
+python teacher_v2/extract_soft_targets.py \
+    --batch_size 8 \
+    --top_k 5 \
+    --temperature 2.0 \
+    --compress          # writes soft_targets_top5.json.gz
+```
+Outputs land in:
+* `artefacts/teacher_outputs/soft_targets_top5.json(.gz)`  – list‑of‑lists of (token_id, prob)
+* `artefacts/teacher_outputs/teacher_predictions.jsonl`    – one decoded JSON command per line
+
+---
+## 5·Common gotchas
+| Symptom | Fix |
+|---------|-----|
+| **`ModuleNotFoundError: tokenizer_v2`** | Ensure `$LLM_ROOT` is on `sys.path` **and** `tokenizer_v2/__init__.py` exists (`touch` an empty file). |
+| **`module 'torch' has no attribute 'compiler'`** | Use *torch≥2.0* **or** downgrade transformers to `4.34.0` or below. |
+| **`model_kwargs not used: ['token_type_ids']`** | The shipped `extract_soft_targets.py` already drops that key – make sure you copied the latest file. |
+| OOM on T5‑Large | Try `DEVICE="cpu"` in `config.py`, smaller `--batch_size`, or enable 8‑bit with bitsandbytes. |
+
+---
+## 6·Troubleshooting checklist
+1. `python -c "import torch, transformers, huggingface_hub, accelerate; print(torch.__version__, transformers.__version__)"`
+2. `print(config.FINETUNED_CKPT, config.TOKENIZER_JSON)` – check paths exist.
+3. Verify `training_data/*` corpora are present (otherwise `assert_paths()` fails).
+
+Once those three points pass, the teacher pipeline should run end‑to‑end.
+
+Happy training🚂🎉
+
