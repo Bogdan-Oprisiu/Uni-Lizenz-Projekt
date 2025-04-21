@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/teacher_v2/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teacher_v2/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teacher_v2/extract_soft_targets.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teacher_v2/fine_tune_teacher.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teacher_v2/requierements-teacher.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/teacher_v2/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/teacher_v2/fine_tune_teacher.py" beforeDir="false" afterPath="$PROJECT_DIR$/teacher_v2/fine_tune_teacher.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +59,7 @@
     "Python.evaluate_data_for_student.executor": "Run",
     "Python.example.executor": "Run",
     "Python.feed_forward.executor": "Run",
+    "Python.fine_tune_teacher.executor": "Run",
     "Python.generate_basic_labeled_data.executor": "Run",
     "Python.generate_basic_labelled_data.executor": "Run",
     "Python.generate_basic_unlabelled_data.executor": "Run",
@@ -176,7 +173,7 @@
       <workItem from="1744643159550" duration="7616000" />
       <workItem from="1744721843417" duration="1063000" />
       <workItem from="1744723591939" duration="650000" />
-      <workItem from="1745225877804" duration="4251000" />
+      <workItem from="1745225877804" duration="5923000" />
     </task>
     <servers />
   </component>
@@ -201,6 +198,7 @@
     <SUITE FILE_PATH="coverage/LLM$decoder_layer.coverage" NAME="decoder_layer Coverage Results" MODIFIED="1744279823303" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/decoder" />
     <SUITE FILE_PATH="coverage/LLM$decoder.coverage" NAME="decoder Coverage Results" MODIFIED="1744284194909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/decoder" />
     <SUITE FILE_PATH="coverage/LLM$regular_positional_encoding.coverage" NAME="regular_positional_encoding Coverage Results" MODIFIED="1744274730255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/positional_encoding/positional_encoding" />
+    <SUITE FILE_PATH="coverage/LLM$fine_tune_teacher.coverage" NAME="fine_tune_teacher Coverage Results" MODIFIED="1745232087250" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher_v2" />
     <SUITE FILE_PATH="coverage/LLM$test_number_unit_normalization.coverage" NAME="test_number_unit_normalization Coverage Results" MODIFIED="1743950789679" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
     <SUITE FILE_PATH="coverage/LLM$basic_training.coverage" NAME="basic_training Coverage Results" MODIFIED="1743399056892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_training" />
     <SUITE FILE_PATH="coverage/LLM$generate_unlabeled_data.coverage" NAME="generate_unlabeled_data Coverage Results" MODIFIED="1743341916980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
