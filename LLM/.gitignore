@@ -8,3 +8,4 @@ training_data/multiple_parameter_data/*.txt
 teacher/*.txt
 tokenizer/*.txt
 tokenizer/*.json
+teacher_v2/finetuned_teacher
