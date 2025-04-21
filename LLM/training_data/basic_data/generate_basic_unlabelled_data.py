@@ -181,7 +181,7 @@ def generate_back_command():
 def generate_side_command(command_type):
     """
     command_type is either "left" or "right".
-    We’ll still respect that so e.g. if user specifically wants "left," we fix 'direction' to "left."
+    We’ll still respect that so, e.g., if a user specifically wants "left," we fix 'direction' to "left."
     But we can also choose a random template from the side subgroups.
     """
     distance = random_distance()
