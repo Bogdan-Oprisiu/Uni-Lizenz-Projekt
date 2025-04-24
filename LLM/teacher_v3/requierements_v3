@@ -4,17 +4,20 @@
 # torch==2.0.1+cu117 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
 # Example for CPU or other CUDA:
 torch>=2.0.0
-transformers>=4.34.0,<4.37.0 # Pinning minor version for stability with PEFT/bitsandbytes if used
+# --- PINNED TRANSFORMERS VERSION ---
+transformers==4.38.2
+# ---------------------------------
 datasets>=2.10.0
-tokenizers>=0.13.0
+tokenizers>=0.13.0 # Ensure tokenizer version compatibility if issues arise
 sentencepiece
 
-# PEFT for LoRA
-peft>=0.7.0
+# --- PINNED PEFT VERSION ---
+peft==0.8.2 # Pinning to a specific stable version
+# ---------------------------
 
 # Hugging Face Hub & Acceleration
 huggingface-hub>=0.15.0
-accelerate>=0.20.0 # Needed for efficient model loading/training
+accelerate>=0.20.0 # Ensure accelerate is compatible
 
 # Utilities
 tqdm

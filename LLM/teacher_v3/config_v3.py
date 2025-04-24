@@ -1,7 +1,7 @@
 # ----------------------------- teacher_v3/config_v3.py -----------------------------
 """Central settings for the LoRA-based teacher pipeline (v3)."""
 from pathlib import Path
-from typing import List, Optional, Dict  # Added Any for assert_config check
+from typing import List, Optional  # Added Any for assert_config check
 
 # ---------------------------------------------------------------------------
 # 0. Filesystem layout
@@ -11,7 +11,7 @@ BASE_DIR: Path = Path(__file__).resolve().parent  # .../teacher_v3
 PROJECT_ROOT: Path = BASE_DIR.parent  # project root (e.g., LLM/)
 ARTIFACTS_DIR: Path = PROJECT_ROOT / "artefacts"  # Correctly points to LLM/artefacts
 
-# Location of the shared tokenizer. Based on image_59527e.png, tokenizer_v2 is inside ARTIFACTS_DIR.
+# Location of the shared tokenizer. Based on project_tree.txt, tokenizer_v2 is inside ARTIFACTS_DIR.
 TOKENIZER_PATH: Path = ARTIFACTS_DIR / "tokenizer_v2" / "bpe_tokenizer_v2.json"  # Correct path inside artefacts
 
 # ---------------------------------------------------------------------------
@@ -25,8 +25,8 @@ LORA_ADAPTER_DIR: Path = BASE_DIR / "lora_teacher_adapter"
 
 # c) Model loading options
 DEVICE: str = "cuda"
-USE_BNB_INT8_BASE: bool = False
-MODEL_DTYPE: Optional[str] = "float16"
+USE_BNB_INT8_BASE: bool = False  # Set to True if you install bitsandbytes and want 8-bit base model
+MODEL_DTYPE: Optional[str] = "float16"  # Options: "float16", "bfloat16", None (for float32)
 
 # ---------------------------------------------------------------------------
 # 2. LoRA Fine-tuning Configuration
@@ -34,13 +34,13 @@ MODEL_DTYPE: Optional[str] = "float16"
 LORA_R: int = 8
 LORA_ALPHA: int = 16
 LORA_DROPOUT: float = 0.1
-LORA_TARGET_MODULES: List[str] = ["q", "v"]
+LORA_TARGET_MODULES: List[str] = ["q", "v"]  # Common for T5
 
 # ---------------------------------------------------------------------------
 # 3. Training Hyperparameters
 # ---------------------------------------------------------------------------
 NUM_TRAIN_EPOCHS: int = 3
-PER_DEVICE_TRAIN_BATCH_SIZE: int = 8
+PER_DEVICE_TRAIN_BATCH_SIZE: int = 8  # Adjust based on GPU memory
 LEARNING_RATE: float = 2e-4
 WEIGHT_DECAY: float = 0.01
 OPTIMIZER: str = "adamw_torch"
@@ -48,38 +48,32 @@ LR_SCHEDULER_TYPE: str = "linear"
 WARMUP_RATIO: float = 0.05
 LOGGING_STEPS: int = 100
 SAVE_STRATEGY: str = "epoch"
-SAVE_STEPS: int = 500
+SAVE_STEPS: int = 500  # Only used if save_strategy="steps"
 SEED: int = 42
 
 # ---------------------------------------------------------------------------
 # 4. Inference Hyperparameters
 # ---------------------------------------------------------------------------
-PER_DEVICE_EVAL_BATCH_SIZE: int = 16
+PER_DEVICE_EVAL_BATCH_SIZE: int = 16  # Can often be larger for inference
 TOP_K: int = 5
 TEMPERATURE: float = 1.0
 MAX_INPUT_LENGTH: int = 128
 MAX_TARGET_LENGTH: int = 128
 
 # ---------------------------------------------------------------------------
-# 5. Input Data (for Fine-tuning)
+# 5. Input Data (for Fine-tuning) - Paths defined directly in fine_tune script now
 # ---------------------------------------------------------------------------
 TRAINING_DATA_DIR: Path = PROJECT_ROOT / "training_data"  # Points to LLM/training_data
-
-LABELED_DATA_CONFIG: Dict[str, Dict[str, Path]] = {
-    "default": {
-        # These paths should be relative to PROJECT_ROOT or absolute
-        "text": TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_labeled_robot_commands_with_accel.txt",
-        "map_json": TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_labeled_robot_commands_with_accel_MAP.jsonl",
-    }
-}
+# LABELED_DATA_CONFIG dictionary removed as paths are hardcoded in fine_tune script
 
 # ---------------------------------------------------------------------------
 # 6. Input Data (for Soft Target Extraction)
 # ---------------------------------------------------------------------------
+# Paths to *unlabeled* natural language commands. Relative to PROJECT_ROOT.
 UNLABELED_CORPORA: List[Path] = [
-    # These paths should be relative to PROJECT_ROOT or absolute
-    TRAINING_DATA_DIR / "basic_data" / "synthetic_basic_unlabeled_robot_commands.txt",
+    TRAINING_DATA_DIR / "basic_data" / "synthetic_basic_unlabeled_robot_commands.txt",  # NOTE: Ensure this file exists
     TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_unlabeled_robot_commands_with_accel.txt",
+    # NOTE: Ensure this file exists
 ]
 
 # ---------------------------------------------------------------------------
@@ -92,7 +86,7 @@ SOFT_TARGETS_FILE: Path = OUTPUT_DIR / "teacher_v3_soft_targets_top5.json"
 
 
 # ---------------------------------------------------------------------------
-# 8. Sanity Check Helper
+# 8. Sanity Check Helper (Optional - can be removed if checks done elsewhere)
 # ---------------------------------------------------------------------------
 def assert_config(is_training: bool = True) -> None:
     """Basic checks for mandatory files/settings."""
@@ -103,18 +97,18 @@ def assert_config(is_training: bool = True) -> None:
     def resolve_path(p: Path) -> Path:
         if p.is_absolute():
             return p.resolve()
-        # If relative, assume it's relative to PROJECT_ROOT (adjust if needed)
-        # Ensure PROJECT_ROOT itself is resolved correctly
         return (PROJECT_ROOT.resolve() / p).resolve()
 
     # Check tokenizer path defined in config
     files_to_check.append(TOKENIZER_PATH)
 
     if is_training:
-        # Check labeled data for training
-        for config_name, paths in LABELED_DATA_CONFIG.items():
-            files_to_check.append(paths["text"])
-            files_to_check.append(paths["map_json"])
+        # Define paths explicitly here for the check, mirroring fine_tune script
+        basic_text_path = TRAINING_DATA_DIR / "basic_data" / "synthetic_labeled_robot_commands_with_accel.txt"
+        basic_map_path = TRAINING_DATA_DIR / "basic_data" / "synthetic_labeled_robot_commands_with_accel_MAP.jsonl"
+        multi_text_path = TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_labeled_robot_commands_with_accel.txt"
+        multi_map_path = TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_labeled_robot_commands_with_accel_MAP.jsonl"
+        files_to_check.extend([basic_text_path, basic_map_path, multi_text_path, multi_map_path])
     else:
         # Check unlabeled data for inference
         files_to_check.extend(UNLABELED_CORPORA)
@@ -124,8 +118,6 @@ def assert_config(is_training: bool = True) -> None:
         if not resolved_adapter_config.exists():
             print(f"INFO: LoRA adapter config not found at '{resolved_adapter_config}'.")
             print("      (This is expected if fine-tuning hasn't run yet).")
-            # Decide if this should be a fatal error for inference
-            # missing_files_details.append((adapter_config_file, resolved_adapter_config)) # Uncomment to make it fatal
 
     # Check existence of collected paths
     print("\n--- Checking Required Paths ---")
@@ -138,29 +130,14 @@ def assert_config(is_training: bool = True) -> None:
             missing_files_details.append((f_path, resolved_f_path))  # Add original and resolved path
         print(f"Checking: '{f_path}' -> Resolved: '{resolved_f_path}' -> Status: {status}")
 
-    # Specific check for map_json existence during training with warning
-    # (This might be redundant now with the loop above, but keeps the explicit warning)
-    if is_training:
-        for config_name, paths in LABELED_DATA_CONFIG.items():
-            map_json_path = paths["map_json"]
-            resolved_map_json_path = resolve_path(map_json_path)
-            if not resolved_map_json_path.exists():
-                # Check if it's already in the missing list to avoid duplicate warnings
-                if not any(mf[1] == resolved_map_json_path for mf in missing_files_details):
-                    print(
-                        f"\nWARNING: Expected map JSON label file '{map_json_path}' for training config '{config_name}' does not exist.")
-                    print(f"         (Resolved path: {resolved_map_json_path})")
-                    print(f"         Ensure your data generation script creates this file.")
-                    # missing_files_details already contains it if check above failed
-
     if missing_files_details:
         print("\n--- Configuration Error: Missing Required Files ---")
         for original_path, resolved_path in missing_files_details:
             print(f"  - Required: '{original_path}'")
             print(f"    Resolved to: '{resolved_path}' (Not Found)")
         print("-----------------------------------------------------")
-        raise FileNotFoundError(
-            "One or more required files specified in config_v3.py were not found at their resolved locations.")
+        print("Please ensure all listed files exist at the specified locations.")
+        raise FileNotFoundError("One or more required files specified in config_v3.py were not found.")
 
     print("-----------------------------")
     print("✅ Config check passed.")
