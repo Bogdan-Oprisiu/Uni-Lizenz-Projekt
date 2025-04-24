@@ -1,8 +1,20 @@
 import json
+import math  # Added import for math.pi and math.degrees
 import random
 import re
 
-from pre_processing.processing import full_text_processing
+# Assuming pre_processing.processing.full_text_processing exists and works as intended
+# If not, replace with desired text normalization logic (e.g., lowercasing, removing extra spaces)
+try:
+    from pre_processing.processing import full_text_processing
+except ImportError:
+    print("Warning: pre_processing.processing not found. Using basic text processing.")
+
+
+    def full_text_processing(text):
+        text = text.lower()
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text
 
 # =============================================================================
 # 1) Command Template Definitions (with optional acceleration placeholders)
@@ -42,243 +54,263 @@ SIDE_SUBGROUPS = [
     ],
     [
         "{verb} {direction} steadily {distance}{unit}",
-        "move {direction} calmly {distance}{unit}",
-        "{verb} {distance}{unit} {direction} at a consistent pace"
+        "strafe {distance}{unit} {direction} at a consistent pace",
+        "{verb} {distance}{unit} {direction} calmly"
     ],
 ]
 
 ROTATE_SUBGROUPS = [
     [
-        "{verb} {direction} briefly by {angle}{unit}",
-        "spin {direction} quickly {angle}{unit}",
-        "please {verb} a small angle {angle}{unit} to the {direction}"
+        "{verb} {direction} quickly {angle}{unit}",
+        "please {verb} a small angle {angle}{unit} to the {direction}",
+        "spin {direction} briefly by {angle}{unit}"
     ],
     [
-        "turn {direction} steadily by {angle}{unit}",
-        "rotate {direction} a larger angle of {angle}{unit}",
-        "{verb} {angle}{unit} toward the {direction} in a controlled manner"
+        "{verb} {direction} steadily by {angle}{unit}",
+        "turn {angle}{unit} toward the {direction} in a controlled manner",
+        "{verb} {direction} a larger angle of {angle}{unit}"
     ],
 ]
 
 STOP_SUBGROUPS = [
-    [
-        "stop",
-        "halt"
-    ],
-    [
-        "please stop",
-        "cease movement"
-    ],
+    ["stop", "halt", "cease movement"],
+    ["please stop", "bring it to a halt", "stop moving"],
 ]
 
-# =============================================================================
-# 2) Synonyms, Helper Functions, and Acceleration Handling
-# =============================================================================
+# Verbs and Nouns
+FORWARD_VERBS = ["move", "go", "proceed", "advance", "head"]
+FORWARD_NOUNS = ["forward", "ahead", "straight"]
 
-directions_forward = ["forward", "ahead", "advance", "proceed", "go ahead"]
-directions_back = ["back", "reverse", "backward", "retreat", "recede"]
-side_directions = ["left", "right", "port", "starboard"]
-rotate_directions = ["left", "right", "port", "starboard"]
+BACK_VERBS = ["move", "go", "retreat", "reverse", "step"]
+BACK_NOUNS = ["back", "backward", "reverse", "recede"]
 
-verbs_forward = ["move", "go", "advance", "proceed", "head"]
-verbs_back = ["move", "go", "reverse", "retreat", "step", "recede"]
-verbs_side = ["strafe", "move", "slide", "shift"]
-verbs_rotate = ["rotate", "turn", "spin", "pivot"]
+SIDE_VERBS = ["move", "slide", "shift", "strafe"]
+# Directions handled by argument
 
+ROTATE_VERBS = ["rotate", "turn", "spin", "pivot"]
+ROTATE_DIRECTIONS = ["left", "right", "port", "starboard"]  # Port=Left, Starboard=Right
 
-def random_distance():
-    """Generate a distance as a float between 10 and 500, formatted with one decimal."""
-    return f"{random.uniform(10, 500):.1f}"
+# Units
+DISTANCE_UNIT = " cm"
 
 
-def random_angle_degrees():
-    """
-    Generate a random angle in degrees (instead of radians, since the JSON schema uses degrees).
-    Range: -180 to 180, formatted with 1 decimal.
-    """
-    angle_deg = random.uniform(-180, 180)
-    return f"{angle_deg:.1f}"
-
-
-def random_acceleration_linear():
-    """Generate a random linear acceleration in cm/s^2, 0 to 50 range."""
-    return f"{random.uniform(0, 50):.2f}"
-
-
-def random_acceleration_angular():
-    """Generate a random angular acceleration in deg/s^2, 0 to 60 range."""
-    return f"{random.uniform(0, 60):.2f}"
-
-
-def fill_template(template, components):
-    """Replace placeholders in the template with values from components."""
-    return template.format(**components)
-
-
-def choose_template(subgroup_list):
-    """Randomly choose a subgroup, then pick one template from that subgroup."""
-    subgroup = random.choice(subgroup_list)
-    return random.choice(subgroup)
-
-
-def maybe_add_acceleration_phrase(cmd_text, is_linear=True):
-    """
-    With 50% chance, append an acceleration phrase to the textual command.
-    If it's linear, e.g. "with acceleration 12.34 cm/s^2".
-    If it's angular, e.g. "with angular acceleration 25.67 deg/s^2".
-    """
-    if random.random() < 0.5:  # 50% chance to include acceleration phrase
-        if is_linear:
-            accel_val = random_acceleration_linear()
-            return cmd_text + f" with acceleration {accel_val} cm/s^2"
-        else:
-            accel_val = random_acceleration_angular()
-            return cmd_text + f" with angular acceleration {accel_val} deg/s^2"
-    return cmd_text
-
-
-def extract_acceleration(cmd_text, is_linear=True):
-    """
-    Extract the acceleration value from the command text using regex.
-    Returns a float if found, otherwise None.
-    """
-    if is_linear:
-        match = re.search(r"acceleration\s+(\d+(\.\d+)?)\s*cm/s\^?2", cmd_text)
-    else:
-        match = re.search(r"angular acceleration\s+(\d+(\.\d+)?)\s*deg/s\^?2", cmd_text)
-    if match:
-        return float(match.group(1))
-    return None
-
+# ANGLE_UNIT defined within rotate function
 
 # =============================================================================
-# 3) Labeled Generation Functions (Returning Text + JSON)
+# 2) Generation Functions for Each Command Type (Labeled)
 # =============================================================================
 
 def generate_forward_labeled():
-    distance = random_distance()
-    template = choose_template(FORWARD_SUBGROUPS)
-    components = {
-        "verb": random.choice(verbs_forward),
-        "direction": random.choice(directions_forward),
-        "distance": distance,
-        "unit": "cm"
-    }
-    command_text = fill_template(template, components)
-    command_text = maybe_add_acceleration_phrase(command_text, is_linear=True)
-    command_text = full_text_processing(command_text) + "."
+    # --- Parameters ---
+    distance = round(random.uniform(1.0, 500.0), 2)
+    use_accel = random.random() < 0.3  # 30% chance to include acceleration
+    accel_val = None
+    accel_unit_text = ""
 
-    accel_val = extract_acceleration(command_text, is_linear=True)
+    json_params = {"distance": distance}
+    json_command = "forward"
 
-    expected_json = {
-        "command": "forward",
-        "parameters": {
-            "distance": float(distance)
-        }
-    }
-    if accel_val is not None:
-        expected_json["parameters"]["acceleration"] = accel_val
+    if use_accel:
+        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
+        accel_unit_text = " cm/s^2"
+        json_params["acceleration"] = accel_val
 
-    return command_text, json.dumps(expected_json)
+    # --- Text Generation ---
+    template_base = random.choice(random.choice(FORWARD_SUBGROUPS))
+    if use_accel:
+        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    text_cmd = template.format(
+        verb=random.choice(FORWARD_VERBS),
+        direction=random.choice(FORWARD_NOUNS),
+        distance=distance,
+        unit=DISTANCE_UNIT,
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    text_cmd = full_text_processing(text_cmd) + "."
+
+    # --- JSON Generation ---
+    json_data = {"command": json_command, "parameters": json_params}
+    json_string = json.dumps(json_data)
+
+    return text_cmd, json_string
 
 
 def generate_back_labeled():
-    distance = random_distance()
-    template = choose_template(BACK_SUBGROUPS)
-    components = {
-        "verb": random.choice(verbs_back),
-        "direction": random.choice(directions_back),
-        "distance": distance,
-        "unit": "cm"
-    }
-    command_text = fill_template(template, components)
-    command_text = maybe_add_acceleration_phrase(command_text, is_linear=True)
-    command_text = full_text_processing(command_text) + "."
+    # --- Parameters ---
+    distance = round(random.uniform(1.0, 500.0), 2)
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
 
-    accel_val = extract_acceleration(command_text, is_linear=True)
+    json_params = {"distance": distance}
+    json_command = "back"
 
-    expected_json = {
-        "command": "back",
-        "parameters": {
-            "distance": float(distance)
-        }
-    }
-    if accel_val is not None:
-        expected_json["parameters"]["acceleration"] = accel_val
+    if use_accel:
+        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
+        accel_unit_text = " cm/s^2"
+        json_params["acceleration"] = accel_val
 
-    return command_text, json.dumps(expected_json)
+    # --- Text Generation ---
+    template_base = random.choice(random.choice(BACK_SUBGROUPS))
+    if use_accel:
+        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    text_cmd = template.format(
+        verb=random.choice(BACK_VERBS),
+        direction=random.choice(BACK_NOUNS),
+        distance=distance,
+        unit=DISTANCE_UNIT,
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    text_cmd = full_text_processing(text_cmd) + "."
+
+    # --- JSON Generation ---
+    json_data = {"command": json_command, "parameters": json_params}
+    json_string = json.dumps(json_data)
+
+    return text_cmd, json_string
 
 
-def generate_side_labeled(direction):
-    distance = random_distance()
-    template = choose_template(SIDE_SUBGROUPS)
-    components = {
-        "verb": random.choice(verbs_side),
-        "direction": direction,  # "left" or "right"
-        "distance": distance,
-        "unit": "cm"
-    }
-    command_text = fill_template(template, components)
-    command_text = maybe_add_acceleration_phrase(command_text, is_linear=True)
-    command_text = full_text_processing(command_text) + "."
+def generate_side_labeled(side):  # side is "left" or "right"
+    # --- Parameters ---
+    distance = round(random.uniform(1.0, 500.0), 2)
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
 
-    accel_val = extract_acceleration(command_text, is_linear=True)
+    json_params = {"distance": distance}
+    # Determine direction based on side for strafing etc.
+    if side == "left":
+        direction_choices = ["left", "port"]
+        json_command = "left"
+        if random.random() < 0.2:  # Occasionally specify direction explicitly for strafe
+            json_params["direction"] = random.choice(direction_choices)
+            json_command = "strafe"
+    else:  # side == "right"
+        direction_choices = ["right", "starboard"]
+        json_command = "right"
+        if random.random() < 0.2:
+            json_params["direction"] = random.choice(direction_choices)
+            json_command = "strafe"
 
-    expected_json = {
-        "command": direction,  # either "left" or "right"
-        "parameters": {
-            "distance": float(distance)
-        }
-    }
-    if accel_val is not None:
-        expected_json["parameters"]["acceleration"] = accel_val
+    if use_accel:
+        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
+        accel_unit_text = " cm/s^2"
+        json_params["acceleration"] = accel_val
 
-    return command_text, json.dumps(expected_json)
+    # --- Text Generation ---
+    template_base = random.choice(random.choice(SIDE_SUBGROUPS))
+    if use_accel:
+        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    # Direction text might differ slightly from json_command
+    text_direction = random.choice(direction_choices)
+
+    text_cmd = template.format(
+        verb=random.choice(SIDE_VERBS),
+        direction=text_direction,
+        distance=distance,
+        unit=DISTANCE_UNIT,
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    # Sometimes add direction explicitly for strafing text
+    if json_command == "strafe" and "direction" in json_params:
+        if random.random() < 0.5 and "strafe" not in text_cmd:  # Add direction hint if not obvious
+            text_cmd = f"strafing to the {json_params['direction']} " + text_cmd
+
+    text_cmd = full_text_processing(text_cmd) + "."
+
+    # --- JSON Generation ---
+    json_data = {"command": json_command, "parameters": json_params}
+    json_string = json.dumps(json_data)
+
+    return text_cmd, json_string
 
 
 def generate_rotate_labeled():
-    angle_str = random_angle_degrees()
-    template = choose_template(ROTATE_SUBGROUPS)
-    chosen_direction = random.choice(["left", "right"])  # ensure valid schema direction
-    components = {
-        "verb": random.choice(verbs_rotate),
-        "direction": chosen_direction,
-        "angle": angle_str,
-        "unit": "deg"
-    }
-    command_text = fill_template(template, components)
-    command_text = maybe_add_acceleration_phrase(command_text, is_linear=False)
-    command_text = full_text_processing(command_text) + "."
+    # --- Angle (Use Radians Consistently) ---
+    angle_rad = round(random.uniform(-math.pi, math.pi), 4)  # Generate and keep angle in radians
 
-    accel_val = extract_acceleration(command_text, is_linear=False)
+    # --- Direction ---
+    direction = random.choice(ROTATE_DIRECTIONS)
 
-    expected_json = {
-        "command": "rotate",
-        "parameters": {
-            "angle": float(angle_str),
-            "direction": chosen_direction
-        }
-    }
-    if accel_val is not None:
-        expected_json["parameters"]["acceleration"] = accel_val
+    # --- JSON Base (Use Radians) ---
+    # Use radians for angle in JSON
+    json_params = {"angle": angle_rad, "direction": direction}
+    json_command = "rotate"
 
-    return command_text, json.dumps(expected_json)
+    # --- Acceleration (Standardized to rad/s^2) ---
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
+
+    if use_accel:
+        # Always use rad/s^2 now
+        accel_val = round(random.uniform(0.01, 3.0), 4)  # Generate rad/s^2 value
+        accel_unit_text = " rad/s^2"  # Standard unit text
+        # *** FIX: Always add acceleration (as rad/s^2 value) to JSON if use_accel is True ***
+        json_params["acceleration"] = accel_val
+
+    # --- Text Generation (Use Radians) ---
+    template_base = random.choice(random.choice(ROTATE_SUBGROUPS))
+
+    # Use radians for angle in text
+    angle_val_text = angle_rad
+    angle_unit_text = " rad"
+
+    # Add acceleration part to template if needed
+    if use_accel:
+        template = template_base + " with angular acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    # Format the text command
+    text_cmd = template.format(
+        verb=random.choice(ROTATE_VERBS),
+        direction=direction,
+        angle=angle_val_text,  # Use radian value
+        unit=angle_unit_text,  # Use " rad" unit
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    text_cmd = full_text_processing(text_cmd) + "."
+
+    # --- JSON Final ---
+    json_data = {"command": json_command, "parameters": json_params}
+    json_string = json.dumps(json_data)
+
+    return text_cmd, json_string
 
 
 def generate_stop_labeled():
-    template_group = random.choice(STOP_SUBGROUPS)
-    phrase = random.choice(template_group)
-    command_text = full_text_processing(phrase) + "."
+    # --- Text Generation ---
+    text_cmd = random.choice(random.choice(STOP_SUBGROUPS))
+    text_cmd = full_text_processing(text_cmd) + "."
 
-    expected_json = {
-        "command": "stop",
-        "parameters": {}
-    }
-    return command_text, json.dumps(expected_json)
+    # --- JSON Generation ---
+    json_params = {}
+    json_command = "stop"
+    json_data = {"command": json_command, "parameters": json_params}
+    json_string = json.dumps(json_data)
 
+    return text_cmd, json_string
+
+
+# =============================================================================
+# 3) Master Function to Select Command Type
+# =============================================================================
 
 def generate_labeled_command(command_type):
-    """Dispatch function to produce text + JSON for a single command."""
     if command_type == "forward":
         return generate_forward_labeled()
     elif command_type == "back":
@@ -290,6 +322,7 @@ def generate_labeled_command(command_type):
     elif command_type == "stop":
         return generate_stop_labeled()
     else:
+        # Default to stop command if type is unrecognized
         return generate_stop_labeled()
 
 
@@ -298,27 +331,33 @@ def generate_labeled_command(command_type):
 # =============================================================================
 
 if __name__ == "__main__":
-    num_samples = 10_000
+    num_samples = 10_000  # Adjust number of samples as needed
     valid_command_types = ["forward", "back", "left", "right", "rotate", "stop"]
 
     commands_text = []
     commands_json = []
 
-    for _ in range(num_samples):
+    print(f"Generating {num_samples} labeled samples...")
+    for i in range(num_samples):
         ctype = random.choice(valid_command_types)
         txt, js = generate_labeled_command(ctype)
         commands_text.append(txt)
         commands_json.append(js)
+        if (i + 1) % 1000 == 0:
+            print(f"Generated {i + 1}/{num_samples} samples...")
 
+    # Define output filenames
     txt_filename = "synthetic_labeled_robot_commands_with_accel.txt"
     json_filename = "synthetic_labeled_robot_commands_with_accel_json.txt"
 
-    with open(txt_filename, "w", encoding="utf-8") as f_txt, \
-            open(json_filename, "w", encoding="utf-8") as f_js:
-        for text_cmd, json_cmd in zip(commands_text, commands_json):
+    print(f"Writing text commands to {txt_filename}...")
+    with open(txt_filename, "w", encoding="utf-8") as f_txt:
+        for text_cmd in commands_text:
             f_txt.write(text_cmd + "\n")
+
+    print(f"Writing JSON commands to {json_filename}...")
+    with open(json_filename, "w", encoding="utf-8") as f_js:
+        for json_cmd in commands_json:
             f_js.write(json_cmd + "\n")
 
-    print(f"Labeled data with acceleration generated:\n"
-          f" - {txt_filename}\n"
-          f" - {json_filename}")
+    print("Data generation complete.")

@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="" />
+    <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/V1/basic_training/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/V1/teacher/teacher_outputs_basic.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student/datamodule.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student/eval.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/student/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/generate_json_command.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basic_training/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/V1/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basic_training/basic_training.py" beforeDir="false" afterPath="$PROJECT_DIR$/V1/basic_training/basic_training.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basic_training/trained_basic_model.pt" beforeDir="false" afterPath="$PROJECT_DIR$/V1/basic_training/trained_basic_model.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data/basic_data/generate_basic_unlabelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/basic_data/generate_basic_unlabelled_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_labelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_labelled_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_unlabelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_unlabelled_data.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -173,7 +189,7 @@
       <workItem from="1744723591939" duration="650000" />
       <workItem from="1745225877804" duration="14074000" />
       <workItem from="1745308453333" duration="248000" />
-      <workItem from="1745475749306" duration="1922000" />
+      <workItem from="1745475749306" duration="2353000" />
     </task>
     <servers />
   </component>

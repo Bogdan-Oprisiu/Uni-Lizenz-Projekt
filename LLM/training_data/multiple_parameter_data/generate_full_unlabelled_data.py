@@ -1,6 +1,18 @@
+import math  # Added import for math.pi
 import random
+import re
 
-from pre_processing.processing import full_text_processing
+# Assuming pre_processing.processing.full_text_processing exists and works as intended
+try:
+    from pre_processing.processing import full_text_processing
+except ImportError:
+    print("Warning: pre_processing.processing not found. Using basic text processing.")
+
+
+    def full_text_processing(text):
+        text = text.lower()
+        text = re.sub(r'\s+', ' ', text).strip()
+        return text
 
 # =============================================================================
 # 1) Command Template Definitions (Same as Before, Possibly Reused)
@@ -40,146 +52,170 @@ SIDE_SUBGROUPS = [
     ],
     [
         "{verb} {direction} steadily {distance}{unit}",
-        "move {direction} calmly {distance}{unit}",
-        "{verb} {distance}{unit} {direction} at a consistent pace"
+        "strafe {distance}{unit} {direction} at a consistent pace",
+        "{verb} {distance}{unit} {direction} calmly"
     ],
 ]
 
 ROTATE_SUBGROUPS = [
     [
-        "{verb} {direction} briefly by {angle}{unit}",
-        "spin {direction} quickly {angle}{unit}",
-        "please {verb} a small angle {angle}{unit} to the {direction}"
+        "{verb} {direction} quickly {angle}{unit}",
+        "please {verb} a small angle {angle}{unit} to the {direction}",
+        "spin {direction} briefly by {angle}{unit}"
     ],
     [
-        "turn {direction} steadily by {angle}{unit}",
-        "rotate {direction} a larger angle of {angle}{unit}",
-        "{verb} {angle}{unit} toward the {direction} in a controlled manner"
+        "{verb} {direction} steadily by {angle}{unit}",
+        "turn {angle}{unit} toward the {direction} in a controlled manner",
+        "{verb} {direction} a larger angle of {angle}{unit}"
     ],
 ]
 
 STOP_SUBGROUPS = [
-    [
-        "stop",
-        "halt"
-    ],
-    [
-        "please stop",
-        "cease movement"
-    ],
+    ["stop", "halt", "cease movement"],
+    ["please stop", "bring it to a halt", "stop moving"],
 ]
 
-# =============================================================================
-# 2) Synonyms, Helper Functions, and Acceleration
-# =============================================================================
+# Verbs and Nouns (Same as labeled script)
+FORWARD_VERBS = ["move", "go", "proceed", "advance", "head"]
+FORWARD_NOUNS = ["forward", "ahead", "straight"]
+BACK_VERBS = ["move", "go", "retreat", "reverse", "step"]
+BACK_NOUNS = ["back", "backward", "reverse", "recede"]
+SIDE_VERBS = ["move", "slide", "shift", "strafe"]
+ROTATE_VERBS = ["rotate", "turn", "spin", "pivot"]
+ROTATE_DIRECTIONS = ["left", "right", "port", "starboard"]
 
-directions_forward = ["forward", "ahead", "advance", "proceed", "go ahead"]
-directions_back = ["back", "reverse", "backward", "retreat", "recede"]
-side_directions = ["left", "right", "port", "starboard"]
-rotate_directions = ["left", "right", "port", "starboard"]
-
-verbs_forward = ["move", "go", "advance", "proceed", "head"]
-verbs_back = ["move", "go", "reverse", "retreat", "step", "recede"]
-verbs_side = ["strafe", "move", "slide", "shift"]
-verbs_rotate = ["rotate", "turn", "spin", "pivot"]
+# Units
+DISTANCE_UNIT = " cm"
 
 
-def random_distance():
-    return f"{random.uniform(10, 500):.1f}"
-
-
-def random_angle_degrees():
-    angle_deg = random.uniform(-180, 180)
-    return f"{angle_deg:.1f}"
-
-
-def random_acceleration_linear():
-    return f"{random.uniform(0, 50):.2f}"
-
-
-def random_acceleration_angular():
-    return f"{random.uniform(0, 60):.2f}"
-
-
-def fill_template(template, components):
-    return template.format(**components)
-
-
-def choose_template(subgroup_list):
-    subgroup = random.choice(subgroup_list)
-    return random.choice(subgroup)
-
-
-def maybe_add_acceleration_phrase(cmd_text, is_linear=True):
-    if random.random() < 0.5:
-        if is_linear:
-            accel_val = random_acceleration_linear()
-            return cmd_text + f" with acceleration {accel_val} cm/s^2"
-        else:
-            accel_val = random_acceleration_angular()
-            return cmd_text + f" with angular acceleration {accel_val} deg/s^2"
-    return cmd_text
-
+# ANGLE_UNIT defined within rotate function
 
 # =============================================================================
-# 3) Unlabeled Generation Functions
+# 2) Generation Functions for Each Command Type (Unlabeled - Text Only)
 # =============================================================================
 
 def generate_forward_cmd():
-    distance = random_distance()
-    template = choose_template(FORWARD_SUBGROUPS)
-    components = {
-        "verb": random.choice(verbs_forward),
-        "direction": random.choice(directions_forward),
-        "distance": distance,
-        "unit": "cm"
-    }
-    cmd = fill_template(template, components)
-    cmd = maybe_add_acceleration_phrase(cmd, is_linear=True)
-    return full_text_processing(cmd) + "."
+    distance = round(random.uniform(1.0, 500.0), 2)
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
+
+    template_base = random.choice(random.choice(FORWARD_SUBGROUPS))
+    if use_accel:
+        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
+        accel_unit_text = " cm/s^2"
+        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    text_cmd = template.format(
+        verb=random.choice(FORWARD_VERBS),
+        direction=random.choice(FORWARD_NOUNS),
+        distance=distance,
+        unit=DISTANCE_UNIT,
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    return full_text_processing(text_cmd) + "."
 
 
 def generate_back_cmd():
-    distance = random_distance()
-    template = choose_template(BACK_SUBGROUPS)
-    components = {
-        "verb": random.choice(verbs_back),
-        "direction": random.choice(directions_back),
-        "distance": distance,
-        "unit": "cm"
-    }
-    cmd = fill_template(template, components)
-    cmd = maybe_add_acceleration_phrase(cmd, is_linear=True)
-    return full_text_processing(cmd) + "."
+    distance = round(random.uniform(1.0, 500.0), 2)
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
+
+    template_base = random.choice(random.choice(BACK_SUBGROUPS))
+    if use_accel:
+        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
+        accel_unit_text = " cm/s^2"
+        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    text_cmd = template.format(
+        verb=random.choice(BACK_VERBS),
+        direction=random.choice(BACK_NOUNS),
+        distance=distance,
+        unit=DISTANCE_UNIT,
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    return full_text_processing(text_cmd) + "."
 
 
-def generate_side_cmd(direction):
-    distance = random_distance()
-    template = choose_template(SIDE_SUBGROUPS)
-    components = {
-        "verb": random.choice(verbs_side),
-        "direction": direction,
-        "distance": distance,
-        "unit": "cm"
-    }
-    cmd = fill_template(template, components)
-    cmd = maybe_add_acceleration_phrase(cmd, is_linear=True)
-    return full_text_processing(cmd) + "."
+def generate_side_cmd(side):  # side is "left" or "right"
+    distance = round(random.uniform(1.0, 500.0), 2)
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
+
+    if side == "left":
+        direction_choices = ["left", "port"]
+    else:  # side == "right"
+        direction_choices = ["right", "starboard"]
+
+    template_base = random.choice(random.choice(SIDE_SUBGROUPS))
+    if use_accel:
+        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
+        accel_unit_text = " cm/s^2"
+        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    text_direction = random.choice(direction_choices)
+    text_cmd = template.format(
+        verb=random.choice(SIDE_VERBS),
+        direction=text_direction,
+        distance=distance,
+        unit=DISTANCE_UNIT,
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    # Add direction hint sometimes if strafing
+    if random.random() < 0.1 and "strafe" not in text_cmd:
+        text_cmd = f"strafing to the {text_direction} " + text_cmd
+
+    return full_text_processing(text_cmd) + "."
 
 
 def generate_rotate_cmd():
-    angle_deg = random_angle_degrees()
-    template = choose_template(ROTATE_SUBGROUPS)
-    chosen_dir = random.choice(rotate_directions)
-    components = {
-        "verb": random.choice(verbs_rotate),
-        "direction": chosen_dir,
-        "angle": angle_deg,
-        "unit": "deg"
-    }
-    cmd = fill_template(template, components)
-    cmd = maybe_add_acceleration_phrase(cmd, is_linear=False)
-    return full_text_processing(cmd) + "."
+    # --- Angle (Use Radians Consistently) ---
+    angle_rad = round(random.uniform(-math.pi, math.pi), 4)  # Generate and keep angle in radians
+
+    # --- Direction ---
+    direction = random.choice(ROTATE_DIRECTIONS)  # Direction needed for formatting
+
+    # --- Acceleration (Standardized to rad/s^2) ---
+    use_accel = random.random() < 0.3
+    accel_val = None
+    accel_unit_text = ""
+
+    template_base = random.choice(random.choice(ROTATE_SUBGROUPS))
+
+    if use_accel:
+        # Always use rad/s^2 now
+        accel_val = round(random.uniform(0.01, 3.0), 4)  # Generate rad/s^2 value
+        accel_unit_text = " rad/s^2"  # Standard unit text
+        template = template_base + " with angular acceleration {accel_val}{accel_unit_text}"
+    else:
+        template = template_base
+
+    # --- Text Generation (Use Radians) ---
+    # Use radians for angle in text
+    angle_val_text = angle_rad
+    angle_unit_text = " rad"
+
+    # Format the text command
+    text_cmd = template.format(
+        verb=random.choice(ROTATE_VERBS),
+        direction=direction,
+        angle=angle_val_text,  # Use radian value
+        unit=angle_unit_text,  # Use " rad" unit
+        accel_val=accel_val if use_accel else None,
+        accel_unit_text=accel_unit_text if use_accel else ""
+    )
+    return full_text_processing(text_cmd) + "."
 
 
 def generate_stop_cmd():
@@ -199,6 +235,7 @@ def generate_unlabeled_command(cmd_type):
     elif cmd_type == "stop":
         return generate_stop_cmd()
     else:
+        # Default to stop if type is unrecognized
         return generate_stop_cmd()
 
 
@@ -207,19 +244,27 @@ def generate_unlabeled_command(cmd_type):
 # =============================================================================
 
 if __name__ == "__main__":
-    num_samples = 10_000
+    num_samples = 100_000  # Adjust number of samples as needed
     valid_command_types = ["forward", "back", "left", "right", "rotate", "stop"]
 
     all_commands = []
-    for _ in range(num_samples):
+    print(f"Generating {num_samples} unlabeled samples...")
+    for i in range(num_samples):
         cmd_t = random.choice(valid_command_types)
         text_cmd = generate_unlabeled_command(cmd_t)
-        all_commands.append(text_cmd)
+        # Add line number prefix for potential tracking (optional)
+        # all_commands.append(f"{i+1}: {text_cmd}")
+        all_commands.append(text_cmd)  # Without line numbers
+        if (i + 1) % 1000 == 0:
+            print(f"Generated {i + 1}/{num_samples} samples...")
 
+    # Define output filename
+    output_filename = "synthetic_unlabeled_robot_commands_with_accel.txt"
+
+    print(f"Writing unlabeled commands to {output_filename}...")
     # Write them to a single text file
-    with open("synthetic_unlabeled_robot_commands_with_accel.txt", "w", encoding="utf-8") as f:
-        for idx, cmd in enumerate(all_commands, start=1):
-            f.write(f"{idx}: {cmd}\n")
+    with open(output_filename, "w", encoding="utf-8") as f_out:
+        for text_cmd in all_commands:
+            f_out.write(text_cmd + "\n")
 
-    print("Unlabeled commands with optional acceleration saved in:")
-    print("synthetic_unlabeled_robot_commands_with_accel.txt")
+    print("Data generation complete.")

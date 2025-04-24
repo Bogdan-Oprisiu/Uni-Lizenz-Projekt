@@ -282,6 +282,6 @@ if __name__ == "__main__":
     # prefixing each command with its index to show that we did it.
     with open("synthetic_basic_unlabeled_robot_commands.txt", "w", encoding="utf-8") as f:
         for idx, command in enumerate(basic_unlabeled_commands, start=1):
-            f.write(f"{idx}: {command}\n")
+            f.write(f"{command}\n")
 
     print("Basic unlabeled command data generated and saved as synthetic_basic_unlabeled_robot_commands.txt")
