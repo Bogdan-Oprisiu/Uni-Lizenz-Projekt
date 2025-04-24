@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/unit_converter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/possible_commands.json" beforeDir="false" afterPath="$PROJECT_DIR$/possible_commands.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data/basic_data/generate_basic_labeled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/basic_data/generate_basic_labeled_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/generate_json_command.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/generate_json_command.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +180,7 @@
       <workItem from="1744723591939" duration="650000" />
       <workItem from="1745225877804" duration="14074000" />
       <workItem from="1745308453333" duration="248000" />
-      <workItem from="1745475749306" duration="3960000" />
+      <workItem from="1745475749306" duration="5500000" />
     </task>
     <servers />
   </component>
@@ -192,7 +193,7 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/LLM$c.coverage" NAME="c Coverage Results" MODIFIED="1743399337038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$encoder.coverage" NAME="encoder Coverage Results" MODIFIED="1744280876064" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/encoder" />
-    <SUITE FILE_PATH="coverage/LLM$generate_json_command.coverage" NAME="generate_json_command Coverage Results" MODIFIED="1745479746804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/LLM$generate_json_command.coverage" NAME="generate_json_command Coverage Results" MODIFIED="1745481314741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/LLM$test_infer_units.coverage" NAME="test_infer_units Coverage Results" MODIFIED="1743951113590" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
     <SUITE FILE_PATH="coverage/LLM$output_embedding.coverage" NAME="output_embedding Coverage Results" MODIFIED="1744284183675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/input_output_embedding" />
     <SUITE FILE_PATH="coverage/LLM$generate_full_unlabelled_data.coverage" NAME="generate_full_unlabelled_data Coverage Results" MODIFIED="1745476859260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data/multiple_parameter_data" />

@@ -3,6 +3,14 @@
     "commands": [
       {
         "name": "forward",
+        "aliases": [
+          "go",
+          "proceed",
+          "advance",
+          "head",
+          "move forward",
+          "go ahead"
+        ],
         "description": "Move the robot ahead.",
         "parameters": {
           "distance": {
@@ -22,6 +30,14 @@
       },
       {
         "name": "back",
+        "aliases": [
+          "go back",
+          "reverse",
+          "retreat",
+          "step back",
+          "recede",
+          "move back"
+        ],
         "description": "Move the robot backward.",
         "parameters": {
           "distance": {
@@ -41,44 +57,71 @@
       },
       {
         "name": "left",
-        "description": "Strafe left using mecanum wheels (lateral movement, not rotation).",
+        "aliases": [
+          "move left",
+          "slide left",
+          "shift left",
+          "strafe left",
+          "move port",
+          "slide port",
+          "shift port",
+          "strafe port",
+          "move sideways left"
+        ],
+        "description": "Move laterally to the left.",
         "parameters": {
           "distance": {
             "type": "number",
             "unit": "cm",
             "required": true,
-            "description": "The linear distance to strafe left."
+            "description": "The linear distance to move left."
           },
           "acceleration": {
             "type": "number",
             "unit": "cm/s^2",
             "required": false,
             "default": 10,
-            "description": "Optional acceleration value for left strafe motion."
+            "description": "Optional acceleration value for left lateral motion."
           }
         }
       },
       {
         "name": "right",
-        "description": "Strafe right using mecanum wheels (lateral movement, not rotation).",
+        "aliases": [
+          "move right",
+          "slide right",
+          "shift right",
+          "strafe right",
+          "move starboard",
+          "slide starboard",
+          "shift starboard",
+          "strafe starboard",
+          "move sideways right"
+        ],
+        "description": "Move laterally to the right.",
         "parameters": {
           "distance": {
             "type": "number",
             "unit": "cm",
             "required": true,
-            "description": "The linear distance to strafe right."
+            "description": "The linear distance to move right."
           },
           "acceleration": {
             "type": "number",
             "unit": "cm/s^2",
             "required": false,
             "default": 10,
-            "description": "Optional acceleration value for right strafe motion."
+            "description": "Optional acceleration value for right lateral motion."
           }
         }
       },
       {
         "name": "rotate",
+        "aliases": [
+          "turn",
+          "spin",
+          "pivot"
+        ],
         "description": "Rotate the robot in place.",
         "parameters": {
           "angle": {
@@ -89,7 +132,7 @@
           },
           "direction": {
             "type": "string",
-            "required": false,
+            "required": true,
             "enum": [
               "left",
               "right",
@@ -109,6 +152,12 @@
       },
       {
         "name": "stop",
+        "aliases": [
+          "halt",
+          "cease movement",
+          "stop moving",
+          "bring it to a halt"
+        ],
         "description": "Halt all robot motion.",
         "parameters": {}
       }
@@ -118,7 +167,7 @@
     "definitions": [
       {
         "code": "INVALID_COMMAND",
-        "description": "The provided command does not match any known commands."
+        "description": "The provided command does not match any known commands or aliases."
       },
       {
         "code": "MISSING_PARAMETER",
@@ -138,7 +187,11 @@
       },
       {
         "code": "UNIT_MISMATCH",
-        "description": "The unit inferred from the input does not match the expected unit after conversion attempts."
+        "description": "Cannot convert between incompatible unit types (e.g., length to angle)."
+      },
+      {
+        "code": "UNKNOWN_UNIT",
+        "description": "An unknown unit was provided."
       },
       {
         "code": "INTERNAL_ERROR",
