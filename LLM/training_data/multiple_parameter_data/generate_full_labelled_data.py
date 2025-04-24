@@ -266,7 +266,7 @@ def generate_side_labeled(command_type):  # command_type is 'left' or 'right'
     # Choose text direction (can include port/starboard)
     text_direction = random.choice([d for d in side_directions if
                                     (d in ['left', 'port'] and command_type == 'left') or (
-                                                d in ['right', 'starboard'] and command_type == 'right')])
+                                            d in ['right', 'starboard'] and command_type == 'right')])
 
     components = {
         "verb": random.choice(verbs_side),
@@ -282,40 +282,43 @@ def generate_side_labeled(command_type):  # command_type is 'left' or 'right'
     return command_text, expected_map
 
 
+# Fragment relevant din data_gen_3_files_accel_imported
 def generate_rotate_labeled():
-    # Randomly choose angle unit for text generation
+    # 1. Generează unghiul și unitatea sa PENTRU TEXT
     use_deg_in_text = random.random() < 0.3
     angle_unit_text = 'deg' if use_deg_in_text else 'rad'
+    # random_angle returnează valoarea ȘI unitatea CORECTĂ a acelei valori
     angle_val, angle_unit_map = random_angle(unit=angle_unit_text)
 
     chosen_direction = random.choice(rotate_directions)
     use_accel = random.random() < 0.3
-    accel_val, accel_unit = (None, None)
+    accel_val, accel_unit = (None, None)  # Inițializare
     accel_text_suffix = ""
-    # Map includes angle value and the unit used in text
+    # 2. Creează harta INIȚIALĂ doar cu unghiul
     expected_map = {
         "command": "rotate",
-        "angle": angle_val,
-        "angle_unit": angle_unit_map,
+        "angle": angle_val,  # Valoarea generată
+        "angle_unit": angle_unit_map,  # Unitatea CORECTĂ a valorii generate
         "direction": chosen_direction
     }
 
     if use_accel:
-        # Randomly choose acceleration unit for text generation
-        use_deg_accel_in_text = random.random() < 0.4  # Slightly higher chance for deg/s^2 in text
+        use_deg_accel_in_text = random.random() < 0.3
         accel_unit_text = 'deg/s^2' if use_deg_accel_in_text else 'rad/s^2'
+
         accel_val, accel_unit_map = random_angular_accel(unit=accel_unit_text)
         accel_text_suffix = f" with angular acceleration {{accel_val}}{accel_unit_text}"
+
         expected_map["acceleration"] = accel_val
-        expected_map["acceleration_unit"] = accel_unit_map  # Unit used in text
+        expected_map["acceleration_unit"] = accel_unit_map
 
     components = {
         "verb": random.choice(verbs_rotate),
         "direction": chosen_direction,
         "angle": angle_val,
-        "unit": angle_unit_text,  # Unit for angle in text
+        "unit": angle_unit_text,
         "accel_val": accel_val,
-        "accel_unit_text": accel_unit_text if use_accel else ""  # Unit for accel in text
+        "accel_unit_text": accel_unit_text if use_accel else ""
     }
     template = choose_template(ROTATE_SUBGROUPS) + accel_text_suffix
     command_text = full_text_processing(fill_template(template, components)) + "."

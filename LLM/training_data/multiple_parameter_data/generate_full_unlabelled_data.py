@@ -244,7 +244,7 @@ def generate_unlabeled_command(cmd_type):
 # =============================================================================
 
 if __name__ == "__main__":
-    num_samples = 100_000  # Adjust number of samples as needed
+    num_samples = 100_000  # Adjust the number of samples as needed
     valid_command_types = ["forward", "back", "left", "right", "rotate", "stop"]
 
     all_commands = []

@@ -15,3 +15,6 @@ artefacts/teacher_outputs
 artefacts/tokenizer_v2
 teacher_v2/.cache
 V1/teacher/*.json
+hunan_data/*.json
+hunan_data/*.jsonl
+hunan_data/*.txt

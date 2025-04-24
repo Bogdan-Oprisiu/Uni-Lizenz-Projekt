@@ -1,0 +1,2037 @@
+Robot, please move forward about 50 centimeters.
+Can you turn right 90 degrees?
+Back up a bit, maybe 20 cm.
+Stop now!
+Move laterally left one meter.
+Rotate slowly towards port by pi/4 radians.
+I need you to go back 1 foot.
+Slide to starboard 30 inches.
+Okay, stop.
+Advance 150 cm.
+Turn around completely, 180 degrees left.
+Retreat 0.5 meters.
+Can you make a side step to the right, 60 cm?
+Stay put.
+Go forward 2 feet.
+Rotate -45 degrees.
+Move back 10 inches.
+Lateral left, 80 cm.
+Cease movement.
+Advance slowly 1.2 meters.
+Rotate right 1.5 radians.
+Go back 35 cm.
+Slide right 0.7 meters.
+Halt!
+Go straight ahead 25 cm.
+Turn left 60 degrees, please.
+A small step back, about 5 cm.
+Side movement left, 1 foot.
+Alright, that's enough.
+Continue forward another meter.
+Rotate starboard 30 deg.
+Go in reverse 12 inches.
+Right slide, 40 cm.
+Stop, please.
+Advance 0.8 meters.
+Turn left pi/2.
+Retreat 6 inches.
+Move sideways left, 0.5 feet.
+Stop the motor.
+Go forward 1 and a half feet.
+Turn 270 degrees to the right.
+Back up 500 mm.
+Lateral right 100 cm.
+Stop motion.
+Advance 3 meters.
+Rotate left, 1 radian.
+Go back 20 cm.
+Slide left 15 inches.
+Stop immediately!
+Move forward 120 cm.
+Rotate 15 degrees right.
+Back up 1.5 feet.
+Side move right 0.6 m.
+Just stop.
+Advance 40 cm.
+Turn left 135 degrees.
+Retreat 25 inches.
+Lateral left 1.1 meters.
+Stop.
+Go forward 3 feet.
+Rotate right pi radians.
+Go back 80 cm.
+Slide right 2 feet.
+Hold position.
+Advance 1 meter and 10 cm.
+Rotate left, maybe 0.5 rad.
+Back up 1 foot exactly.
+Slide to the left 25 inches.
+Cease all activity.
+Move forward 600 millimeters.
+Turn starboard 45 deg.
+Reverse 1.8 meters.
+Shift right 70cm.
+Freeze!
+Proceed ahead 2.5 feet.
+Pivot left 120 degrees.
+Step back 8 inches.
+Move sideways port 0.9 m.
+That's good, stop there.
+Go forward half a meter.
+Rotate right -1.0 radians.
+Back up 55 cm.
+Slide left 3 feet.
+Stop right there.
+Advance 1.3 meters.
+Turn port 1.2 rad.
+Retreat 14 inches.
+Shift starboard 500 mm.
+Hold it!
+Move forward 75 cm, accelerate quickly at 20 cm/s^2.
+Rotate left 60 degrees with an angular acceleration of 1 rad/s^2.
+Back up 30 cm, moderate acceleration please (maybe 5 cm/s^2).
+Slide right 1 meter, accelerate at 0.1 m/s^2.
+Turn right pi/3 radians, accelerate angularly at 0.5 rad/s^2.
+Go forward 2 feet, acceleration 1 ft/s^2.
+Move back 10 inches, fast acceleration (30 cm/s^2).
+Rotate port -30 degrees, slow angular acceleration (10 deg/s^2).
+Shift left 50 cm with 5 cm/s^2 acceleration.
+Advance 1.5m, acceleration 0.15 m/s^2.
+Turn right 1 radian, angular accel 0.8 rad/s^2.
+Retreat 45 cm, accel 8 cm/s^2.
+Slide left 0.8 meters, accelerate at 15 cm/s^2.
+Rotate starboard 100 deg, angular acceleration 30 deg/s^2.
+Go forward 1 foot, acceleration 15 cm/s^2.
+Back up 18 inches, accelerate at 0.2 m/s^2.
+Turn left -0.7 rad, angular accel 0.3 rad/s^2.
+Shift right 65 cm, accel 12 cm/s^2.
+Advance 90 cm.
+Rotate port 2.0 rad.
+Move back 1.1 meters.
+Slide starboard 4 feet.
+Stop moving now.
+Go forward 1 foot 6 inches.
+Turn left -90 degrees.
+Retreat 400 mm.
+Move laterally port 1.2 m.
+Cease!
+Advance 85 cm.
+Rotate right 0.8 radians.
+Back up 3 inches.
+Slide left 0.4 meters.
+Hold still.
+Go forward 1.7 meters.
+Turn starboard 150 degrees.
+Reverse 2.5 feet.
+Shift port 90 cm.
+Stop the robot.
+Move ahead 5 cm.
+Pivot right -pi/6 rad.
+Step back 1.3 feet.
+Move sideways right 20 inches.
+Alright, stop.
+Advance 100 cm.
+Rotate left 2.5 radians.
+Go back 0.9 meters.
+Slide left 1 foot 2 inches.
+Stop operations.
+Move forward 2.2 meters.
+Turn right 200 degrees.
+Retreat 700 mm.
+Shift right 1.4 m.
+Hold!
+Proceed forward 65 cm.
+Rotate port -0.2 rad.
+Back up 2 feet 3 inches.
+Slide starboard 35 inches.
+Stop please now.
+Advance 1.9 meters.
+Turn left 3.0 radians.
+Reverse 1.6 m.
+Move left 85 cm.
+Stop robot.
+Go forward 30 inches.
+Rotate right 75 degrees.
+Back up 0.7 meters.
+Slide right 1.1 feet.
+Cease function.
+Advance 140 cm.
+Turn port 220 deg.
+Retreat 9 inches.
+Shift left 1.8 meters.
+Stop activity.
+Move forward 2 feet 8 inches.
+Rotate starboard -1.8 rad.
+Go back 600 mm.
+Slide left 40 inches.
+Stop all movement.
+Advance 1.0 meters.
+Turn left 10 degrees.
+Back up 1.4 feet.
+Move right 75 cm.
+Stop engine.
+Go forward 95 cm.
+Rotate right 2.8 rad.        (Line 150)
+Retreat 1.2 meters.
+Slide left 2.5 feet.
+Stop command.
+Advance 1.6 meters.
+Turn port -135 deg.
+Go back 11 inches.
+Shift right 1.3 m.
+Halt process.
+Move forward 1 foot 10 inches.
+Rotate starboard 3.1 radians.
+Back up 800 mm.
+Slide left 50 inches.
+Stop machine.
+Advance 2.0 meters.
+Turn left 300 degrees.
+Retreat 1.9 feet.
+Move right 1.7 meters.
+Stop everything.
+Go forward 130 cm.
+Rotate right -2.5 rad.
+Back up 0.6 meters.
+Slide left 1.5 feet.
+Stop sequence.
+Advance 1.1 m.
+Turn port 1.9 rad.
+Retreat 1 foot 3 inches.
+Shift right 45 inches.
+Stop procedure.
+Move forward 2.4 meters.
+Rotate starboard 330 deg.
+Go back 700 mm.
+Slide left 1.6 meters.
+Stop system.
+Advance 1.8 meters.
+Turn left -2.2 rad.
+Back up 2 feet 6 inches.
+Move right 60 cm.
+Stop device.
+Go forward 1.4 meters.
+Rotate right 1.4 rad.
+Retreat 1.0 meters.
+Slide left 30 inches.
+Stop task.
+Advance 1.2 meters.
+Turn port 80 deg.
+Go back 1 foot 8 inches.
+Shift right 1.0 m.
+Halt execution.
+Move forward 2.1 meters.
+Rotate starboard -2.9 rad.
+Back up 900 mm.
+Slide left 55 inches.
+Stop operation.
+Advance 1.5 meters.
+Turn left 250 degrees.
+Retreat 2.1 feet.
+Move right 1.9 meters.
+Stop process.
+Go forward 1.7 m.
+Rotate right 2.1 rad.
+Back up 1.1 meters.
+Slide left 2 feet 1 inch.
+Stop function.
+Advance 1.3 m.
+Turn port -1.1 rad.
+Retreat 1 foot 5 inches.
+Shift right 60 inches.
+Stop execution.
+Move forward 2.6 meters.
+Rotate starboard 350 deg.
+Go back 850 mm.
+Slide left 1.9 meters.
+Stop program.
+Advance 1.9 m.
+Turn left 2.7 rad.
+Back up 2 feet 9 inches.
+Move right 1.5 meters.
+Stop.
+Go forward 1.25 meters.
+Rotate right -100 degrees.
+Retreat 1 foot.
+Slide left 40 cm.
+Halt.
+Advance 1.65 m.
+Turn port 1.7 radians.
+Back up 15 inches.
+Shift right 0.8 meters.
+Cease movement.
+Move forward 2 feet 2 inches.
+Rotate starboard 2.4 rad.
+Go back 750 mm.
+Slide left 1.2 meters.
+Stop now.
+Advance 1.45 meters.
+Turn left -160 deg.
+Retreat 1.7 feet.
+Move right 95 cm.
+Stop, please.
+Go forward 1.85 m.
+Rotate right 3.0 rad.
+Back up 1.3 meters.
+Slide left 2 feet 4 inches.
+Halt!
+Advance 1.05 meters.
+Turn port 0.3 rad.
+Retreat 1 foot 7 inches.
+Shift right 50 inches.
+Stop the motor.
+Move forward 2.3 meters.
+Rotate starboard -3.0 rad.
+Go back 950 mm.
+Slide left 1.7 meters.
+Stop motion.
+Advance 1.55 m.
+Turn left 280 degrees.
+Back up 2.0 feet.
+Move right 1.2 meters.
+Stop immediately!
+Go forward 1.95 meters.
+Rotate right 0.1 rad.
+Retreat 1.4 meters.
+Slide left 2 feet 10 inches.
+Just stop.
+Advance 1.15 m.
+Turn port -200 deg.
+Go back 1 foot 1 inch.
+Shift right 70 inches.
+Opreste-te. (Romanian example)
+Move forward 2.05 meters.
+Rotate starboard 3.1 rad.
+Back up 1.0 meters.
+Slide left 2.3 feet.
+Hold position.
+Advance 1.75 m.
+Turn left 1.2 rad.
+Retreat 1 foot 9 inches.
+Move right 1.1 meters.
+Cease all activity.
+Go forward 2.45 meters.
+Rotate right -3.1 rad.
+Back up 1.5 meters.
+Slide left 3 feet.
+Freeze!
+Advance 1.35 m.
+Turn port 2.6 rad.
+Go back 1 foot 4 inches.
+Shift right 80 inches.
+Hold it!
+Move forward 2.15 meters.
+Rotate starboard 360 deg.
+Retreat 2.2 feet.
+Move right 1.6 meters.
+Stop right there.
+Advance 1.8 m.
+Turn left -2.6 rad.
+Back up 1.2 m.
+Slide left 2 feet 7 inches.
+Stop command.
+Go forward 2.55 meters.
+Rotate right 0.4 rad.
+Retreat 1.6 meters.
+Shift left 1.9 meters.
+Halt process.
+Advance 1.4 m.
+Turn port 2.1 rad.
+Go back 1 foot 6 inches.
+Move right 1.0 meters.
+Stop machine.
+Move forward 2.25 meters.
+Rotate starboard -30 deg.
+Retreat 2.4 feet.
+Slide left 2.1 meters.
+Stop everything.
+Advance 1.9 m.
+Turn left 1.6 rad.
+Back up 1.4 m.
+Move right 1.3 meters.
+Stop sequence.
+Go forward 2.65 meters.
+Rotate right 3.1 rad.
+Retreat 1.8 meters.
+Shift left 2.4 meters.
+Stop procedure.
+Advance 1.5 m.
+Turn port -1.5 rad.
+Go back 1 foot 8 inches.
+Move right 1.2 m.
+Stop system.
+Move forward 2.35 meters.
+Rotate starboard 30 deg.
+Retreat 2.6 feet.
+Slide left 2.3 meters.
+Stop device.
+Advance 2.0 m.
+Turn left 2.0 rad.
+Back up 1.6 m.
+Move right 1.4 meters.
+Stop task.
+Go forward 2.75 meters.
+Rotate right -60 deg.
+Retreat 2.0 meters.
+Shift left 2.6 meters.
+Halt execution.
+Advance 1.6 m.
+Turn port 1.0 rad.
+Go back 1 foot 10 inches.
+Move right 1.1 m.
+Stop operation.
+Move forward 2.4 m.
+Rotate starboard 60 deg.
+Retreat 2.8 feet.
+Slide left 2.5 meters.
+Stop process.
+Advance 2.1 m.
+Turn left -1.0 rad.
+Back up 1.8 m.
+Move right 1.5 meters.
+Stop function.
+Go forward 2.85 meters.
+Rotate right 90 deg.
+Retreat 2.2 meters.
+Shift left 2.8 meters.
+Stop execution.
+Advance 1.7 m.
+Turn port 0.5 rad.
+Go back 2 feet.
+Move right 1.3 m.
+Stop program.
+Move forward 2.5 m.
+Rotate starboard -90 deg.
+Retreat 3.0 feet.
+Slide left 2.7 meters.
+Stop.
+Advance 2.2 m.
+Turn left 0 rad.
+Back up 2.0 m.
+Move right 1.6 meters.
+Halt.
+Go forward 2.95 meters.
+Rotate right 120 deg.
+Retreat 2.4 meters.
+Shift left 3.0 meters.
+Cease movement.
+Advance 1.8 m.
+Turn port -0.5 rad.
+Go back 2 feet 3 inches.
+Move right 1.4 m.
+Stop now.
+Move forward 2.6 m.
+Rotate starboard 150 deg.
+Retreat 3.2 feet.
+Slide left 2.9 meters.
+Stop, please.
+Advance 2.3 m.
+Turn left -120 deg.
+Back up 2.2 m.
+Move right 1.7 meters.
+Halt!
+Go forward 3.0 meters.
+Rotate right 180 deg.
+Retreat 2.6 meters.
+Shift left 3.2 meters.
+Stop the motor.
+Advance 1.9 m.
+Turn port 3.14 rad.
+Go back 2 feet 6 inches.
+Move right 1.5 m.
+Stop motion.
+Move forward 2.7 m.
+Rotate starboard -150 deg.
+Retreat 3.4 feet.
+Slide left 3.1 meters.
+Stop immediately!
+Advance 2.4 m.
+Turn left -180 deg.
+Back up 2.4 m.
+Move right 1.8 meters.
+Just stop.
+Go forward 3.1 meters.
+Rotate right 210 deg.
+Retreat 2.8 meters.
+Shift left 3.4 meters.
+Opreste-te.
+Move forward 2.0 m.
+Turn port -3.14 rad.
+Go back 2 feet 9 inches.
+Move right 1.6 m.
+Hold position.
+Advance 2.8 m.
+Rotate starboard 240 deg.
+Retreat 3.6 feet.
+Slide left 3.3 meters.
+Cease all activity.
+Go forward 2.5 m.
+Turn left -210 deg.
+Back up 2.6 m.
+Move right 1.9 meters.
+Freeze!
+Advance 3.2 meters.
+Rotate right 270 deg.
+Retreat 3.0 meters.
+Shift left 3.6 meters.
+Hold it!
+Move forward 2.1 m.
+Turn port 2.0 rad.
+Go back 3 feet.
+Move right 1.7 m.
+Stop right there.
+Advance 2.9 m.
+Rotate starboard -240 deg.
+Retreat 3.8 feet.
+Slide left 3.5 meters.
+Stop command.
+Go forward 2.6 m.
+Turn left -270 deg.
+Back up 2.8 m.
+Move right 2.0 meters.
+Halt process.
+Advance 3.3 meters.
+Rotate right 300 deg.
+Retreat 3.2 meters.
+Shift left 3.8 meters.
+Stop machine.
+Move forward 2.2 m.
+Turn port 1.0 rad.
+Go back 3 feet 3 inches.
+Move right 1.8 m.
+Stop everything.
+Advance 3.0 m.
+Rotate starboard -300 deg.
+Retreat 4.0 feet.
+Slide left 3.7 meters.
+Stop sequence.
+Go forward 2.7 m.
+Turn left 0.0 rad.
+Back up 3.0 m.
+Move right 2.1 meters.
+Stop procedure.
+Advance 3.4 meters.
+Rotate right 330 deg.
+Retreat 3.4 meters.
+Shift left 4.0 meters.
+Stop system.
+Move forward 2.3 m.
+Turn port -1.0 rad.
+Go back 3 feet 6 inches.
+Move right 1.9 m.
+Stop device.
+Advance 3.1 m.
+Rotate starboard 360 deg.
+Retreat 4.2 feet.
+Slide left 3.9 meters.
+Stop task.
+Go forward 2.8 m.
+Turn left -330 deg.
+Back up 3.2 m.
+Move right 2.2 meters.
+Halt execution.
+Advance 3.5 meters.
+Rotate right -360 deg.
+Retreat 3.6 meters.
+Shift left 4.2 meters.
+Stop operation.
+Move forward 2.4 m.
+Turn port 2.5 rad.
+Go back 3 feet 9 inches.
+Move right 2.0 m.
+Stop process.
+Advance 3.2 m.
+Rotate starboard 20 deg.
+Retreat 4.4 feet.
+Slide left 4.1 meters.
+Stop function.
+Go forward 2.9 m.
+Turn left -2.5 rad.
+Back up 3.4 m.
+Move right 2.3 meters.
+Stop execution.
+Advance 3.6 meters.
+Rotate right 50 deg.
+Retreat 3.8 meters.
+Shift left 4.4 meters.
+Stop program.
+Move forward 2.5 m.
+Turn port 1.5 rad.
+Go back 4 feet.
+Move right 2.1 m.
+Stop.
+Advance 3.3 m.
+Rotate starboard -50 deg.
+Retreat 4.6 feet.
+Slide left 4.3 meters.
+Halt.
+Go forward 3.0 m.
+Turn left -1.5 rad.
+Back up 3.6 m.
+Move right 2.4 meters.
+Cease movement.
+Advance 3.7 meters.
+Rotate right 80 deg.
+Retreat 4.0 meters.
+Shift left 4.6 meters.
+Stop now.
+Move forward 2.6 m.
+Turn port 0.8 rad.
+Go back 4 feet 3 inches.
+Move right 2.2 m.
+Stop, please.
+Advance 3.4 m.
+Rotate starboard -80 deg.
+Retreat 4.8 feet.
+Slide left 4.5 meters.
+Halt!
+Go forward 3.1 m.
+Turn left -0.8 rad.
+Back up 3.8 m.
+Move right 2.5 meters.
+Stop the motor.
+Advance 3.8 meters.
+Rotate right 110 deg.
+Retreat 4.2 meters.
+Shift left 4.8 meters.
+Stop motion.
+Move forward 2.7 m.
+Turn port 0.2 rad.
+Go back 4 feet 6 inches.
+Move right 2.3 m.
+Stop immediately!
+Advance 3.5 m.
+Rotate starboard -110 deg.
+Retreat 5.0 feet.
+Slide left 4.7 meters.
+Just stop.
+Go forward 3.2 m.
+Turn left -0.2 rad.
+Back up 4.0 m.
+Move right 2.6 meters.
+Opreste-te.
+Advance 3.9 meters.
+Rotate right 140 deg.
+Retreat 4.4 meters.
+Shift left 5.0 meters.
+Hold position.
+Move forward 2.8 m.
+Turn port -1.2 rad.
+Go back 4 feet 9 inches.
+Move right 2.4 m.
+Cease all activity.
+Advance 3.6 m.
+Rotate starboard 170 deg.
+Retreat 5.2 feet.
+Slide left 4.9 meters.
+Freeze!
+Go forward 3.3 m.
+Turn left 1.2 rad.
+Back up 4.2 m.
+Move right 2.7 meters.
+Hold it!
+Advance 4.0 meters.
+Rotate right -170 deg.
+Retreat 4.6 meters.
+Shift left 5.2 meters.
+Stop right there.
+Move forward 2.9 m.
+Turn port 2.9 rad.
+Go back 5 feet.
+Move right 2.5 m.
+Stop command.
+Advance 3.7 m.
+Rotate starboard 200 deg.
+Retreat 5.4 feet.
+Slide left 5.1 meters.
+Halt process.
+Go forward 3.4 m.
+Turn left -2.9 rad.
+Back up 4.4 m.
+Move right 2.8 meters.
+Stop machine.
+Advance 4.1 meters.
+Rotate right -200 deg.
+Retreat 4.8 meters.
+Shift left 5.4 meters.
+Stop everything.
+Move forward 3.0 m.
+Turn port 1.8 rad.
+Go back 5 feet 3 inches.
+Move right 2.6 m.
+Stop sequence.
+Advance 3.8 m.
+Rotate starboard 230 deg.
+Retreat 5.6 feet.
+Slide left 5.3 meters.
+Stop procedure.
+Go forward 3.5 m.
+Turn left -1.8 rad.
+Back up 4.6 m.
+Move right 2.9 meters.
+Stop system.
+Advance 4.2 meters.
+Rotate right -230 deg.
+Retreat 5.0 meters.
+Shift left 5.6 meters.
+Stop device.
+Move forward 3.1 m.
+Turn port 0.7 rad.
+Go back 5 feet 6 inches.
+Move right 2.7 m.
+Stop task.
+Advance 3.9 m.
+Rotate starboard 260 deg.
+Retreat 5.8 feet.
+Slide left 5.5 meters.
+Halt execution.
+Go forward 3.6 m.
+Turn left -0.7 rad.
+Back up 4.8 m.
+Move right 3.0 meters.
+Stop operation.
+Advance 4.3 meters.
+Rotate right -260 deg.
+Retreat 5.2 meters.
+Shift left 5.8 meters.
+Stop process.
+Move forward 3.2 m.
+Turn port 2.2 rad.
+Go back 5 feet 9 inches.
+Move right 2.8 m.
+Stop function.
+Advance 4.0 m.
+Rotate starboard 290 deg.
+Retreat 6.0 feet.
+Slide left 5.7 meters.
+Stop execution.
+Go forward 3.7 m.
+Turn left -2.2 rad.
+Back up 5.0 m.
+Move right 3.1 meters.
+Stop program.
+Advance 4.4 meters.
+Rotate right -290 deg.
+Retreat 5.4 meters.
+Shift left 6.0 meters.
+Stop.
+Go forward 3.3 m.
+Turn port 1.3 rad.
+Go back 6 feet.
+Move right 2.9 m.
+Halt.
+Advance 4.1 m.
+Rotate starboard 320 deg.
+Retreat 6.2 feet.
+Slide left 5.9 meters.
+Cease movement.
+Go forward 3.8 m.
+Turn left -1.3 rad.
+Back up 5.2 m.
+Move right 3.2 meters.
+Stop now.
+Advance 4.5 meters.
+Rotate right -320 deg.
+Retreat 5.6 meters.
+Shift left 6.2 meters.
+Stop, please.
+Go forward 3.4 m.
+Turn port 0.4 rad.
+Go back 6 feet 3 inches.
+Move right 3.0 m.
+Halt!
+Advance 4.2 m.
+Rotate starboard 350 deg.
+Retreat 6.4 feet.
+Slide left 6.1 meters.
+Stop the motor.
+Go forward 3.9 m.
+Turn left -0.4 rad.
+Back up 5.4 m.
+Move right 3.3 meters.
+Stop motion.
+Advance 4.6 meters.
+Rotate right -350 deg.
+Retreat 5.8 meters.
+Shift left 6.4 meters.
+Stop immediately!
+Go forward 3.5 m.
+Turn port 3.0 rad.
+Go back 6 feet 6 inches.
+Move right 3.1 m.
+Just stop.
+Advance 4.3 m.
+Rotate starboard 10 deg.
+Retreat 6.6 feet.
+Slide left 6.3 meters.
+Opreste-te.
+Go forward 4.0 m.
+Turn left -3.0 rad.
+Back up 5.6 m.
+Move right 3.4 meters.
+Hold position.
+Advance 4.7 meters.
+Rotate right 40 deg.
+Retreat 6.0 meters.
+Shift left 6.6 meters.
+Cease all activity.
+Go forward 3.6 m.
+Turn port -0.1 rad.
+Go back 6 feet 9 inches.
+Move right 3.2 m.
+Freeze!
+Advance 4.4 m.
+Rotate starboard 70 deg.
+Retreat 6.8 feet.
+Slide left 6.5 meters.
+Hold it!
+Go forward 4.1 m.
+Turn left 0.1 rad.
+Back up 5.8 m.
+Move right 3.5 meters.
+Stop right there.
+Advance 4.8 meters.
+Rotate right -70 deg.
+Retreat 6.2 meters.
+Shift left 6.8 meters.
+Stop command.
+Go forward 3.7 m.
+Turn port 1.6 rad.
+Go back 7 feet.
+Move right 3.3 m.
+Halt process.
+Advance 4.5 m.
+Rotate starboard 100 deg.
+Retreat 7.0 feet.
+Slide left 6.7 meters.
+Stop machine.
+Go forward 4.2 m.
+Turn left -1.6 rad.
+Back up 6.0 m.
+Move right 3.6 meters.
+Stop everything.
+Advance 4.9 meters.
+Rotate right -100 deg.
+Retreat 6.4 meters.
+Shift left 7.0 meters.
+Stop sequence.
+Go forward 3.8 m.
+Turn port 0.9 rad.
+Go back 7 feet 3 inches.
+Move right 3.4 m.
+Stop procedure.
+Advance 4.6 m.
+Rotate starboard 130 deg.
+Retreat 7.2 feet.
+Slide left 6.9 meters.
+Stop system.
+Go forward 4.3 m.
+Turn left -0.9 rad.
+Back up 6.2 m.
+Move right 3.7 meters.
+Stop device.
+Advance 5.0 meters.
+Rotate right -130 deg.
+Retreat 6.6 meters.
+Shift left 7.2 meters.
+Stop task.
+Go forward 3.9 m.
+Turn port 2.3 rad.
+Go back 7 feet 6 inches.
+Move right 3.5 m.
+Halt execution.
+Advance 4.7 m.
+Rotate starboard 160 deg.
+Retreat 7.4 feet.
+Slide left 7.1 meters.
+Stop operation.
+Go forward 4.4 m.
+Turn left -2.3 rad.
+Back up 6.4 m.
+Move right 3.8 meters.
+Stop process.
+Advance 5.1 meters.
+Rotate right -160 deg.
+Retreat 6.8 meters.
+Shift left 7.4 meters.
+Stop function.
+Go forward 4.0 m.
+Turn port 1.4 rad.
+Go back 7 feet 9 inches.
+Move right 3.6 m.
+Stop execution.
+Advance 4.8 m.
+Rotate starboard 190 deg.
+Retreat 7.6 feet.
+Slide left 7.3 meters.
+Stop program.
+Go forward 4.5 m.
+Turn left -1.4 rad.
+Back up 6.6 m.
+Move right 3.9 meters.
+Stop.
+Advance 5.2 meters.
+Rotate right -190 deg.
+Retreat 7.0 meters.
+Shift left 7.6 meters.
+Halt.
+Go forward 4.1 m.
+Turn port 0.6 rad.
+Go back 8 feet.
+Move right 3.7 m.
+Cease movement.
+Advance 4.9 m.
+Rotate starboard 220 deg.
+Retreat 7.8 feet.
+Slide left 7.5 meters.
+Stop now.
+Go forward 4.6 m.
+Turn left -0.6 rad.
+Back up 6.8 m.
+Move right 4.0 meters.
+Stop, please.
+Advance 5.3 meters.
+Rotate right -220 deg.
+Retreat 7.2 meters.
+Shift left 7.8 meters.
+Halt!
+Go forward 4.2 m.
+Turn port 2.0 rad.
+Go back 8 feet 3 inches.
+Move right 3.8 m.
+Stop the motor.
+Advance 5.0 m.
+Rotate starboard 250 deg.
+Retreat 8.0 feet.
+Slide left 7.7 meters.
+Stop motion.
+Go forward 4.7 m.
+Turn left -2.0 rad.
+Back up 7.0 m.
+Move right 4.1 meters.
+Stop immediately!
+Advance 5.4 meters.
+Rotate right -250 deg.
+Retreat 7.4 meters.
+Shift left 8.0 meters.
+Just stop.
+Go forward 4.3 m.
+Turn port 1.1 rad.
+Go back 8 feet 6 inches.
+Move right 3.9 m.
+Opreste-te.
+Advance 5.1 m.
+Rotate starboard 280 deg.
+Retreat 8.2 feet.
+Slide left 7.9 meters.
+Hold position.
+Go forward 4.8 m.
+Turn left -1.1 rad.
+Back up 7.2 m.
+Move right 4.2 meters.
+Cease all activity.
+Advance 5.5 meters.
+Rotate right -280 deg.
+Retreat 7.6 meters.
+Shift left 8.2 meters.
+Freeze!
+Go forward 4.4 m.
+Turn port 0.3 rad.
+Go back 8 feet 9 inches.
+Move right 4.0 m.
+Hold it!
+Advance 5.2 m.
+Rotate starboard 310 deg.
+Retreat 8.4 feet.
+Slide left 8.1 meters.
+Stop right there.
+Go forward 4.9 m.
+Turn left -0.3 rad.
+Back up 7.4 m.
+Move right 4.3 meters.
+Stop command.
+Advance 5.6 meters.
+Rotate right -310 deg.
+Retreat 7.8 meters.
+Shift left 8.4 meters.
+Halt process.
+Go forward 4.5 m.
+Turn port 2.8 rad.
+Go back 9 feet.
+Move right 4.1 m.
+Stop machine.
+Advance 5.3 m.
+Rotate starboard 340 deg.
+Retreat 8.6 feet.
+Slide left 8.3 meters.
+Stop everything.
+Go forward 5.0 m.
+Turn left -2.8 rad.
+Back up 7.6 m.
+Move right 4.4 meters.
+Stop sequence.
+Advance 5.7 meters.
+Rotate right -340 deg.
+Retreat 8.0 meters.
+Shift left 8.6 meters.
+Stop procedure.
+Go forward 4.6 m.
+Turn port 1.9 rad.
+Go back 9 feet 3 inches.
+Move right 4.2 m.
+Stop system.
+Advance 5.4 m.
+Rotate starboard 5 deg.
+Retreat 8.8 feet.
+Slide left 8.5 meters.
+Stop device.
+Go forward 5.1 m.
+Turn left -1.9 rad.
+Back up 7.8 m.
+Move right 4.5 meters.
+Stop task.
+Advance 5.8 meters.
+Rotate right -5 deg.
+Retreat 8.2 meters.
+Shift left 8.8 meters.
+Halt execution.
+Go forward 4.7 m.
+Turn port 1.0 rad.
+Go back 9 feet 6 inches.
+Move right 4.3 m.
+Stop operation.
+Advance 5.5 m.
+Rotate starboard 35 deg.
+Retreat 9.0 feet.
+Slide left 8.7 meters.
+Stop process.
+Go forward 5.2 m.
+Turn left -1.0 rad.
+Back up 8.0 m.
+Move right 4.6 meters.
+Stop function.
+Advance 5.9 meters.
+Rotate right -35 deg.
+Retreat 8.4 meters.
+Shift left 9.0 meters.
+Stop execution.
+Go forward 4.8 m.
+Turn port 0.1 rad.
+Go back 9 feet 9 inches.
+Move right 4.4 m.
+Stop program.
+Advance 5.6 m.
+Rotate starboard 65 deg.
+Retreat 9.2 feet.
+Slide left 8.9 meters.
+Stop.
+Go forward 5.3 m.
+Turn left -0.1 rad.
+Back up 8.2 m.
+Move right 4.7 meters.
+Halt.
+Advance 6.0 meters.
+Rotate right -65 deg.
+Retreat 8.6 meters.
+Shift left 9.2 meters.
+Cease movement.
+Go forward 4.9 m.
+Turn port 2.4 rad.
+Go back 10 feet.
+Move right 4.5 m.
+Stop now.
+Advance 5.7 m.
+Rotate starboard 95 deg.
+Retreat 9.4 feet.
+Slide left 9.1 meters.
+Stop, please.
+Go forward 5.4 m.
+Turn left -2.4 rad.
+Back up 8.4 m.
+Move right 4.8 meters.
+Halt!
+Advance 6.1 meters.
+Rotate right -95 deg.
+Retreat 8.8 meters.
+Shift left 9.4 meters.
+Stop the motor.
+Go forward 5.0 m.
+Turn port 1.5 rad.
+Go back 10 feet 3 inches.
+Move right 4.6 m.
+Stop motion.
+Advance 5.8 m.
+Rotate starboard 125 deg.
+Retreat 9.6 feet.
+Slide left 9.3 meters.
+Stop immediately!
+Go forward 5.5 m.
+Turn left -1.5 rad.
+Back up 8.6 m.
+Move right 4.9 meters.
+Just stop.
+Advance 6.2 meters.
+Rotate right -125 deg.
+Retreat 9.0 meters.
+Shift left 9.6 meters.
+Opreste-te.
+Go forward 5.1 m.
+Turn port 0.7 rad.
+Go back 10 feet 6 inches.
+Move right 4.7 m.
+Hold position.
+Advance 5.9 m.
+Rotate starboard 155 deg.
+Retreat 9.8 feet.
+Slide left 9.5 meters.
+Cease all activity.
+Go forward 5.6 m.
+Turn left -0.7 rad.
+Back up 8.8 m.
+Move right 5.0 meters.
+Freeze!
+Advance 6.3 meters.
+Rotate right -155 deg.
+Retreat 9.2 meters.
+Shift left 9.8 meters.
+Hold it!
+Go forward 5.2 m.
+Turn port 2.1 rad.
+Go back 10 feet 9 inches.
+Move right 4.8 m.
+Stop right there.
+Advance 6.0 m.
+Rotate starboard 185 deg.
+Retreat 10.0 feet.
+Slide left 9.7 meters.
+Stop command.
+Go forward 5.7 m.
+Turn left -2.1 rad.
+Back up 9.0 m.
+Move right 5.1 meters.
+Halt process.
+Advance 6.4 meters.
+Rotate right -185 deg.
+Retreat 9.4 meters.
+Shift left 10.0 meters.
+Stop machine.
+Go forward 5.3 m.
+Turn port 1.2 rad.
+Go back 11 feet.
+Move right 4.9 m.
+Stop everything.
+Advance 6.1 m.
+Rotate starboard 215 deg.
+Retreat 10.2 feet.
+Slide left 9.9 meters.
+Stop sequence.
+Go forward 5.8 m.
+Turn left -1.2 rad.
+Back up 9.2 m.
+Move right 5.2 meters.
+Stop procedure.
+Advance 6.5 meters.
+Rotate right -215 deg.
+Retreat 9.6 meters.
+Shift left 10.2 meters.
+Stop system.
+Go forward 5.4 m.
+Turn port 0.4 rad.
+Go back 11 feet 3 inches.
+Move right 5.0 m.
+Stop device.
+Advance 6.2 m.
+Rotate starboard 245 deg.
+Retreat 10.4 feet.
+Slide left 10.1 meters.
+Stop task.
+Go forward 5.9 m.
+Turn left -0.4 rad.
+Back up 9.4 m.
+Move right 5.3 meters.
+Halt execution.
+Advance 6.6 meters.
+Rotate right -245 deg.
+Retreat 9.8 meters.
+Shift left 10.4 meters.
+Stop operation.
+Go forward 5.5 m.
+Turn port 2.7 rad.
+Go back 11 feet 6 inches.
+Move right 5.1 m.
+Stop process.
+Advance 6.3 m.
+Rotate starboard 275 deg.
+Retreat 10.6 feet.
+Slide left 10.3 meters.
+Stop function.
+Go forward 6.0 m.
+Turn left -2.7 rad.
+Back up 9.6 m.
+Move right 5.4 meters.
+Stop execution.
+Advance 6.7 meters.
+Rotate right -275 deg.
+Retreat 10.0 meters.
+Shift left 10.6 meters.
+Stop program.
+Go forward 5.6 m.
+Turn port 1.8 rad.
+Go back 11 feet 9 inches.
+Move right 5.2 m.
+Stop.
+Advance 6.4 m.
+Rotate starboard 305 deg.
+Retreat 10.8 feet.
+Slide left 10.5 meters.
+Halt.
+Go forward 6.1 m.
+Turn left -1.8 rad.
+Back up 9.8 m.
+Move right 5.5 meters.
+Cease movement.
+Advance 6.8 meters.
+Rotate right -305 deg.
+Retreat 10.2 meters.
+Shift left 10.8 meters.
+Stop now.
+Go forward 5.7 m.
+Turn port 1.0 rad.
+Go back 12 feet.
+Move right 5.3 m.
+Stop, please.
+Advance 6.5 m.
+Rotate starboard 335 deg.
+Retreat 11.0 feet.
+Slide left 10.7 meters.
+Halt!
+Go forward 6.2 m.
+Turn left -1.0 rad.
+Back up 10.0 m.
+Move right 5.6 meters.
+Stop the motor.
+Advance 6.9 meters.
+Rotate right -335 deg.
+Retreat 10.4 meters.
+Shift left 11.0 meters.
+Stop motion.
+Go forward 5.8 m.
+Turn port 0.2 rad.
+Go back 12 feet 3 inches.
+Move right 5.4 m.
+Stop immediately!
+Advance 6.6 m.
+Rotate starboard 2 deg.
+Retreat 11.2 feet.
+Slide left 10.9 meters.
+Just stop.
+Go forward 6.3 m.
+Turn left -0.2 rad.
+Back up 10.2 m.
+Move right 5.7 meters.
+Opreste-te.
+Advance 7.0 meters.
+Rotate right -2 deg.
+Retreat 10.6 meters.
+Shift left 11.2 meters.
+Hold position.
+Go forward 5.9 m.
+Turn port 2.6 rad.
+Go back 12 feet 6 inches.
+Move right 5.5 m.
+Cease all activity.
+Advance 6.7 m.
+Rotate starboard 32 deg.
+Retreat 11.4 feet.
+Slide left 11.1 meters.
+Freeze!
+Go forward 6.4 m.
+Turn left -2.6 rad.
+Back up 10.4 m.
+Move right 5.8 meters.
+Hold it!
+Advance 7.1 meters.
+Rotate right -32 deg.
+Retreat 10.8 meters.
+Shift left 11.4 meters.
+Stop right there.
+Go forward 6.0 m.
+Turn port 1.7 rad.
+Go back 12 feet 9 inches.
+Move right 5.6 m.
+Stop command.
+Advance 6.8 m.
+Rotate starboard 62 deg.
+Retreat 11.6 feet.
+Slide left 11.3 meters.
+Halt process.
+Go forward 6.5 m.
+Turn left -1.7 rad.
+Back up 10.6 m.
+Move right 5.9 meters.
+Stop machine.
+Advance 7.2 meters.
+Rotate right -62 deg.
+Retreat 11.0 meters.
+Shift left 11.6 meters.
+Stop everything.
+Go forward 6.1 m.
+Turn port 0.9 rad.
+Go back 13 feet.
+Move right 5.7 m.
+Stop sequence.
+Advance 6.9 m.
+Rotate starboard 92 deg.
+Retreat 11.8 feet.
+Slide left 11.5 meters.
+Stop procedure.
+Go forward 6.6 m.
+Turn left -0.9 rad.
+Back up 10.8 m.
+Move right 6.0 meters.
+Stop system.
+Advance 7.3 meters.
+Rotate right -92 deg.
+Retreat 11.2 meters.
+Shift left 11.8 meters.
+Stop device.
+Go forward 6.2 m.
+Turn port 2.2 rad.
+Go back 13 feet 3 inches.
+Move right 5.8 m.
+Stop task.
+Advance 7.0 m.
+Rotate starboard 122 deg.
+Retreat 12.0 feet.
+Slide left 11.7 meters.
+Halt execution.
+Go forward 6.7 m.
+Turn left -2.2 rad.
+Back up 11.0 m.
+Move right 6.1 meters.
+Stop operation.
+Advance 7.4 meters.
+Rotate right -122 deg.
+Retreat 11.4 meters.
+Shift left 12.0 meters.
+Stop process.
+Go forward 6.3 m.
+Turn port 1.4 rad.
+Go back 13 feet 6 inches.
+Move right 5.9 m.
+Stop function.
+Advance 7.1 m.
+Rotate starboard 152 deg.
+Retreat 12.2 feet.
+Slide left 11.9 meters.
+Stop execution.
+Go forward 6.8 m.
+Turn left -1.4 rad.
+Back up 11.2 m.
+Move right 6.2 meters.
+Stop program.
+Advance 7.5 meters.
+Rotate right -152 deg.
+Retreat 11.6 meters.
+Shift left 12.2 meters.
+Stop.
+Go forward 6.4 m.
+Turn port 0.6 rad.
+Go back 13 feet 9 inches.
+Move right 6.0 m.
+Halt.
+Advance 7.2 m.
+Rotate starboard 182 deg.
+Retreat 12.4 feet.
+Slide left 12.1 meters.
+Cease movement.
+Go forward 6.9 m.
+Turn left -0.6 rad.
+Back up 11.4 m.
+Move right 6.3 meters.
+Stop now.
+Advance 7.6 meters.
+Rotate right -182 deg.
+Retreat 11.8 meters.
+Shift left 12.4 meters.
+Stop, please.
+Go forward 6.5 m.
+Turn port 2.9 rad.
+Go back 14 feet.
+Move right 6.1 m.
+Halt!
+Advance 7.3 m.
+Rotate starboard 212 deg.
+Retreat 12.6 feet.
+Slide left 12.3 meters.
+Stop the motor.
+Go forward 7.0 m.
+Turn left -2.9 rad.
+Back up 11.6 m.
+Move right 6.4 meters.
+Stop motion.
+Advance 7.7 meters.
+Rotate right -212 deg.
+Retreat 12.0 meters.
+Shift left 12.6 meters.
+Stop immediately!
+Go forward 6.6 m.
+Turn port 2.1 rad.
+Go back 14 feet 3 inches.
+Move right 6.2 m.
+Just stop.
+Advance 7.4 m.
+Rotate starboard 242 deg.
+Retreat 12.8 feet.
+Slide left 12.5 meters.
+Opreste-te.
+Go forward 7.1 m.
+Turn left -2.1 rad.
+Back up 11.8 m.
+Move right 6.5 meters.
+Hold position.
+Advance 7.8 meters.
+Rotate right -242 deg.
+Retreat 12.2 meters.
+Shift left 12.8 meters.
+Cease all activity.
+Go forward 6.7 m.
+Turn port 1.3 rad.
+Go back 14 feet 6 inches.
+Move right 6.3 m.
+Freeze!
+Advance 7.5 m.
+Rotate starboard 272 deg.
+Retreat 13.0 feet.
+Slide left 12.7 meters.
+Hold it!
+Go forward 7.2 m.
+Turn left -1.3 rad.
+Back up 12.0 m.
+Move right 6.6 meters.
+Stop right there.
+Advance 7.9 meters.
+Rotate right -272 deg.
+Retreat 12.4 meters.
+Shift left 13.0 meters.
+Stop command.
+Go forward 6.8 m.
+Turn port 0.5 rad.
+Go back 14 feet 9 inches.
+Move right 6.4 m.
+Halt process.
+Advance 7.6 m.
+Rotate starboard 302 deg.
+Retreat 13.2 feet.
+Slide left 12.9 meters.
+Stop machine.
+Go forward 7.3 m.
+Turn left -0.5 rad.
+Back up 12.2 m.
+Move right 6.7 meters.
+Stop everything.
+Advance 8.0 meters.
+Rotate right -302 deg.
+Retreat 12.6 meters.
+Shift left 13.2 meters.
+Stop sequence.
+Go forward 6.9 m.
+Turn port 3.1 rad.
+Go back 15 feet.
+Move right 6.5 m.
+Stop procedure.
+Advance 7.7 m.
+Rotate starboard 332 deg.
+Retreat 13.4 feet.
+Slide left 13.1 meters.
+Stop system.
+Go forward 7.4 m.
+Turn left -3.1 rad.
+Back up 12.4 m.
+Move right 6.8 meters.
+Stop device.
+Advance 8.1 meters.
+Rotate right -332 deg.
+Retreat 12.8 meters.
+Shift left 13.4 meters.
+Stop task.
+Go forward 7.0 m.
+Turn port 2.3 rad.
+Go back 15 feet 3 inches.
+Move right 6.6 m.
+Halt execution.
+Advance 7.8 m.
+Rotate starboard 362 deg.
+Retreat 13.6 feet.
+Slide left 13.3 meters.
+Stop operation.
+Go forward 7.5 m.
+Turn left -2.3 rad.
+Back up 12.6 m.
+Move right 6.9 meters.
+Stop process.
+Advance 8.2 meters.
+Rotate right -362 deg.
+Retreat 13.0 meters.
+Shift left 13.6 meters.
+Stop function.
+Go forward 7.1 m.
+Turn port 1.5 rad.
+Go back 15 feet 6 inches.
+Move right 6.7 m.
+Stop execution.
+Advance 7.9 m.
+Rotate starboard 22 deg.
+Retreat 13.8 feet.
+Slide left 13.5 meters.
+Stop program.
+Go forward 7.6 m.
+Turn left -1.5 rad.
+Back up 12.8 m.
+Move right 7.0 meters.
+Stop.
+Advance 8.3 meters.
+Rotate right -22 deg.
+Retreat 13.2 meters.
+Shift left 13.8 meters.
+Halt.
+Go forward 7.2 m.
+Turn port 0.7 rad.
+Go back 15 feet 9 inches.
+Move right 6.8 m.
+Cease movement.
+Advance 8.0 m.
+Rotate starboard 52 deg.
+Retreat 14.0 feet.
+Slide left 13.7 meters.
+Stop now.
+Go forward 7.7 m.
+Turn left -0.7 rad.
+Back up 13.0 m.
+Move right 7.1 meters.
+Stop, please.
+Advance 8.4 meters.
+Rotate right -52 deg.
+Retreat 13.4 meters.
+Shift left 14.0 meters.
+Halt!
+Go forward 7.3 m.
+Turn port 3.0 rad.
+Go back 16 feet.
+Move right 6.9 m.
+Stop the motor.
+Advance 8.1 m.
+Rotate starboard 82 deg.
+Retreat 14.2 feet.
+Slide left 13.9 meters.
+Stop motion.
+Go forward 7.8 m.
+Turn left -3.0 rad.
+Back up 13.2 m.
+Move right 7.2 meters.
+Stop immediately!
+Advance 8.5 meters.
+Rotate right -82 deg.
+Retreat 13.6 meters.
+Shift left 14.2 meters.
+Just stop.
+Go forward 7.4 m.
+Turn port 2.2 rad.
+Go back 16 feet 3 inches.
+Move right 7.0 m.
+Opreste-te.
+Advance 8.2 m.
+Rotate starboard 112 deg.
+Retreat 14.4 feet.
+Slide left 14.1 meters.
+Hold position.
+Go forward 7.9 m.
+Turn left -2.2 rad.
+Back up 13.4 m.
+Move right 7.3 meters.
+Cease all activity.
+Advance 8.6 meters.
+Rotate right -112 deg.
+Retreat 13.8 meters.
+Shift left 14.4 meters.
+Freeze!
+Go forward 7.5 m.
+Turn port 1.4 rad.
+Go back 16 feet 6 inches.
+Move right 7.1 m.
+Hold it!
+Advance 8.3 m.
+Rotate starboard 142 deg.
+Retreat 14.6 feet.
+Slide left 14.3 meters.
+Stop right there.
+Go forward 8.0 m.
+Turn left -1.4 rad.
+Back up 13.6 m.
+Move right 7.4 meters.
+Stop command.
+Advance 8.7 meters.
+Rotate right -142 deg.
+Retreat 14.0 meters.
+Shift left 14.6 meters.
+Halt process.
+Go forward 7.6 m.
+Turn port 0.6 rad.
+Go back 16 feet 9 inches.
+Move right 7.2 m.
+Stop machine.
+Advance 8.4 m.
+Rotate starboard 172 deg.
+Retreat 14.8 feet.
+Slide left 14.5 meters.
+Stop everything.
+Go forward 8.1 m.
+Turn left -0.6 rad.
+Back up 13.8 m.
+Move right 7.5 meters.
+Stop sequence.
+Advance 8.8 meters.
+Rotate right -172 deg.
+Retreat 14.2 meters.
+Shift left 14.8 meters.
+Stop procedure.
+Go forward 7.7 m.
+Turn port 2.9 rad.
+Go back 17 feet.
+Move right 7.3 m.
+Stop system.
+Advance 8.5 m.
+Rotate starboard 202 deg.
+Retreat 15.0 feet.
+Slide left 14.7 meters.
+Stop device.
+Go forward 8.2 m.
+Turn left -2.9 rad.
+Back up 14.0 m.
+Move right 7.6 meters.
+Stop task.
+Advance 8.9 meters.
+Rotate right -202 deg.
+Retreat 14.4 meters.
+Shift left 15.0 meters.
+Halt execution.
+Go forward 7.8 m.
+Turn port 2.1 rad.
+Go back 17 feet 3 inches.
+Move right 7.4 m.
+Stop operation.
+Advance 8.6 m.
+Rotate starboard 232 deg.
+Retreat 15.2 feet.
+Slide left 14.9 meters.
+Stop process.
+Go forward 8.3 m.
+Turn left -2.1 rad.
+Back up 14.2 m.
+Move right 7.7 meters.
+Stop function.
+Advance 9.0 meters.
+Rotate right -232 deg.
+Retreat 14.6 meters.
+Shift left 15.2 meters.
+Stop execution.
+Go forward 7.9 m.
+Turn port 1.3 rad.
+Go back 17 feet 6 inches.
+Move right 7.5 m.
+Stop program.
+Advance 8.7 m.
+Rotate starboard 262 deg.
+Retreat 15.4 feet.
+Slide left 15.1 meters.
+Stop.
+Go forward 8.4 m.
+Turn left -1.3 rad.
+Back up 14.4 m.
+Move right 7.8 meters.
+Halt.
+Advance 9.1 meters.
+Rotate right -262 deg.
+Retreat 14.8 meters.
+Shift left 15.4 meters.
+Cease movement.
+Go forward 8.0 m.
+Turn port 0.5 rad.
+Go back 17 feet 9 inches.
+Move right 7.6 m.
+Stop now.
+Advance 8.8 m.
+Rotate starboard 292 deg.
+Retreat 15.6 feet.
+Slide left 15.3 meters.
+Stop, please.
+Go forward 8.5 m.
+Turn left -0.5 rad.
+Back up 14.6 m.
+Move right 7.9 meters.
+Halt!
+Advance 9.2 meters.
+Rotate right -292 deg.
+Retreat 15.0 meters.
+Shift left 15.6 meters.
+Stop the motor.
+Go forward 8.1 m.
+Turn port 3.1 rad.
+Go back 18 feet.
+Move right 7.7 m.
+Stop motion.
+Advance 8.9 m.
+Rotate starboard 322 deg.
+Retreat 15.8 feet.
+Slide left 15.5 meters.
+Stop immediately!
+Go forward 8.6 m.
+Turn left -3.1 rad.
+Back up 14.8 m.
+Move right 8.0 meters.
+Just stop.
+Advance 9.3 meters.
+Rotate right -322 deg.
+Retreat 15.2 meters.
+Shift left 15.8 meters.
+Opreste-te.
+Go forward 8.2 m.
+Turn port 2.3 rad.
+Go back 18 feet 3 inches.
+Move right 7.8 m.
+Hold position.
+Advance 9.0 m.
+Rotate starboard 352 deg.
+Retreat 16.0 feet.
+Slide left 15.7 meters.
+Cease all activity.
+Go forward 8.7 m.
+Turn left -2.3 rad.
+Back up 15.0 m.
+Move right 8.1 meters.
+Freeze!
+Advance 9.4 meters.
+Rotate right -352 deg.
+Retreat 15.4 meters.
+Shift left 16.0 meters.
+Hold it!
+Go forward 8.3 m.
+Turn port 1.5 rad.
+Go back 18 feet 6 inches.
+Move right 7.9 m.
+Stop right there.
+Advance 9.1 m.
+Rotate starboard 12 deg.
+Retreat 16.2 feet.
+Slide left 15.9 meters.
+Stop command.
+Go forward 8.8 m.
+Turn left -1.5 rad.
+Back up 15.2 m.
+Move right 8.2 meters.
+Halt process.
+Advance 9.5 meters.
+Rotate right -12 deg.
+Retreat 15.6 meters.
+Shift left 16.2 meters.
+Stop machine.
+Go forward 8.4 m.
+Turn port 0.7 rad.
+Go back 18 feet 9 inches.
+Move right 8.0 m.
+Stop everything.
+Advance 9.2 m.
+Rotate starboard 42 deg.
+Retreat 16.4 feet.
+Slide left 16.1 meters.
+Stop sequence.
+Go forward 8.9 m.
+Turn left -0.7 rad.
+Back up 15.4 m.
+Move right 8.3 meters.
+Stop procedure.
+Advance 9.6 meters.
+Rotate right -42 deg.
+Retreat 15.8 meters.
+Shift left 16.4 meters.
+Stop system.
+Go forward 8.5 m.
+Turn port 3.0 rad.
+Go back 19 feet.
+Move right 8.1 m.
+Stop device.
+Advance 9.3 m.
+Rotate starboard 72 deg.
+Retreat 16.6 feet.
+Slide left 16.3 meters.
+Stop task.
+Go forward 9.0 m.
+Turn left -3.0 rad.
+Back up 15.6 m.
+Move right 8.4 meters.
+Halt execution.
+Advance 9.7 meters.
+Rotate right -72 deg.
+Retreat 16.0 meters.
+Shift left 16.6 meters.
+Stop operation.
+Go forward 8.6 m.
+Turn port 2.2 rad.
+Go back 19 feet 3 inches.
+Move right 8.2 m.
+Stop process.
+Advance 9.4 m.
+Rotate starboard 102 deg.
+Retreat 16.8 feet.
+Slide left 16.5 meters.
+Stop function.
+Go forward 9.1 m.
+Turn left -2.2 rad.
+Back up 15.8 m.
+Move right 8.5 meters.
+Stop execution.
+Advance 9.8 meters.
+Rotate right -102 deg.
+Retreat 16.2 meters.
+Shift left 16.8 meters.
+Stop program.
+Go forward 8.7 m.
+Turn port 1.4 rad.
+Go back 19 feet 6 inches.
+Move right 8.3 m.
+Stop.
+Advance 9.5 m.
+Rotate starboard 132 deg.
+Retreat 17.0 feet.
+Slide left 16.7 meters.
+Halt.
+Go forward 9.2 m.
+Turn left -1.4 rad.
+Back up 16.0 m.
+Move right 8.6 meters.
+Cease movement.
+Advance 9.9 meters.
+Rotate right -132 deg.
+Retreat 16.4 meters.
+Shift left 17.0 meters.
+Stop now.
+Go forward 8.8 m.
+Turn port 0.6 rad.
+Go back 19 feet 9 inches.
+Move right 8.4 m.
+Stop, please.
+Advance 9.6 m.
+Rotate starboard 162 deg.
+Retreat 17.2 feet.
+Slide left 16.9 meters.
+Halt!
+Go forward 9.3 m.
+Turn left -0.6 rad.
+Back up 16.2 m.
+Move right 8.7 meters.
+Stop the motor.
+Advance 10.0 meters.
+Rotate right -162 deg.
+Retreat 16.6 meters.
+Shift left 17.2 meters.
+Stop motion.
+Go forward 8.9 m.
+Turn port 2.9 rad.
+Go back 20 feet.
+Move right 8.5 m.
+Stop immediately!
+Advance 9.7 m.
+Rotate starboard 192 deg.
+Retreat 17.4 feet.
+Slide left 17.1 meters.
+Just stop.
+Go forward 9.4 m.
+Turn left -2.9 rad.
+Back up 16.4 m.
+Move right 8.8 meters.
+Opreste-te.
+Advance 10.1 meters.
+Rotate right -192 deg.
+Retreat 16.8 meters.
+Shift left 17.4 meters.
+Hold position.
+Go forward 9.0 m.
+Turn port 2.1 rad.
+Go back 20 feet 3 inches.
+Move right 8.6 m.
+Cease all activity.
+Advance 9.8 m.
+Rotate starboard 222 deg.
+Retreat 17.6 feet.
+Slide left 17.3 meters.
+Freeze!
+Go forward 9.5 m.
+Turn left -2.1 rad.
+Back up 16.6 m.
+Move right 8.9 meters.
+Hold it!
+Advance 10.2 meters.
+Rotate right -222 deg.
+Retreat 17.0 meters.
+Shift left 17.6 meters.
+Stop right there.
+Go forward 9.1 m.
+Turn port 1.3 rad.
+Go back 20 feet 6 inches.
+Move right 8.7 m.
+Stop command.
+Advance 9.9 m.
+Rotate starboard 252 deg.
+Retreat 17.8 feet.
+Slide left 17.5 meters.
+Halt process.
+Go forward 9.6 m.
+Turn left -1.3 rad.
+Back up 16.8 m.
+Move right 9.0 meters.
+Stop machine.
+Advance 10.3 meters.
+Rotate right -252 deg.
+Retreat 17.2 meters.
+Shift left 17.8 meters.
+Stop everything.
+Go forward 9.2 m.
+Turn port 0.5 rad.
+Go back 20 feet 9 inches.
+Move right 8.8 m.
+Stop sequence.
+Advance 10.0 m.
+Rotate starboard 282 deg.
+Retreat 18.0 feet.
+Slide left 17.7 meters.
+Stop procedure.
+Go forward 9.7 m.
+Turn left -0.5 rad.
+Back up 17.0 m.
+Move right 9.1 meters.
+Stop system.
+Advance 10.4 meters.
+Rotate right -282 deg.
+Retreat 17.4 meters.
+Shift left 18.0 meters.
+Stop device.
+Go forward 9.3 m.
+Turn port 3.1 rad.
+Go back 21 feet.
+Move right 8.9 m.
+Stop task.
+Advance 10.1 m.
+Rotate starboard 312 deg.
+Retreat 18.2 feet.
+Slide left 17.9 meters.
+Halt execution.
+Go forward 9.8 m.
+Turn left -3.1 rad.
+Back up 17.2 m.
+Move right 9.2 meters.
+Stop operation.
+Advance 10.5 meters.
+Rotate right -312 deg.
+Retreat 17.6 meters.
+Shift left 18.2 meters.
+Stop process.
+Go forward 9.4 m.
+Turn port 2.3 rad.
+Go back 21 feet 3 inches.
+Move right 9.0 m.
+Stop function.
+Advance 10.2 m.
+Rotate starboard 342 deg.
+Retreat 18.4 feet.
+Slide left 18.1 meters.
+Stop execution.
+Go forward 9.9 m.
+Turn left -2.3 rad.
+Back up 17.4 m.
+Move right 9.3 meters.
+Stop program.
+Advance 10.6 meters.
+Rotate right -342 deg.
+Retreat 17.8 meters.
+Shift left 18.4 meters.
+Stop.
+Go forward 9.5 m.
+Turn port 1.5 rad.
+Go back 21 feet 6 inches.
+Move right 9.1 m.
+Halt.
+Advance 10.3 m.
+Rotate starboard 7 deg.
+Retreat 18.6 feet.
+Slide left 18.3 meters.
+Cease movement.
+Go forward 10.0 m.
+Turn left -1.5 rad.
+Back up 17.6 m.
+Move right 9.4 meters.
+Stop now.
+Advance 10.7 meters.
+Rotate right -7 deg.
+Retreat 18.0 meters.
+Shift left 18.6 meters.
+Stop, please.
+Go forward 9.6 m.
+Turn port 0.7 rad.
+Go back 21 feet 9 inches.
+Move right 9.2 m.
+Halt!
+Advance 10.4 m.
+Rotate starboard 37 deg.
+Retreat 18.8 feet.
+Slide left 18.5 meters.
+Stop the motor.
+Go forward 10.1 m.
+Turn left -0.7 rad.
+Back up 17.8 m.
+Move right 9.5 meters.
+Stop motion.
+Advance 10.8 meters.
+Rotate right -37 deg.
+Retreat 18.2 meters.
+Shift left 18.8 meters.
+Stop immediately!
+Go forward 9.7 m.
+Turn port 3.0 rad.
+Go back 22 feet.
+Move right 9.3 m.
+Just stop.
+Advance 10.5 m.
+Rotate starboard 67 deg.
+Retreat 19.0 feet.
+Slide left 18.7 meters.
+Opreste-te.
+Go forward 10.2 m.
+Turn left -3.0 rad.
+Back up 18.0 m.
+Move right 9.6 meters.
+Hold position.
+Advance 10.9 meters.
+Rotate right -67 deg.
+Retreat 18.4 meters.
+Shift left 19.0 meters.
+Cease all activity.
+Go forward 9.8 m.
+Turn port 2.2 rad.
+Go back 22 feet 3 inches.
+Move right 9.4 m.
+Freeze!
+Advance 10.6 m.
+Rotate starboard 97 deg.
+Retreat 19.2 feet.
+Slide left 18.9 meters.
+Hold it!
+Go forward 10.3 m.
+Turn left -2.2 rad.
+Back up 18.2 m.
+Move right 9.7 meters.
+Stop right there.
+Advance 11.0 meters.
+Rotate right -97 deg.
+Retreat 18.6 meters.
+Shift left 19.2 meters.
+Stop command.
