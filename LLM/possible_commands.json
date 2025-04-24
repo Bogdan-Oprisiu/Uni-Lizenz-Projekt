@@ -47,14 +47,14 @@
             "type": "number",
             "unit": "cm",
             "required": true,
-            "description": "The lateral distance to move left."
+            "description": "The linear distance to strafe left."
           },
           "acceleration": {
             "type": "number",
             "unit": "cm/s^2",
             "required": false,
             "default": 10,
-            "description": "Optional acceleration value for leftward movement."
+            "description": "Optional acceleration value for left strafe motion."
           }
         }
       },
@@ -66,42 +66,44 @@
             "type": "number",
             "unit": "cm",
             "required": true,
-            "description": "The lateral distance to move right."
+            "description": "The linear distance to strafe right."
           },
           "acceleration": {
             "type": "number",
             "unit": "cm/s^2",
             "required": false,
             "default": 10,
-            "description": "Optional acceleration value for rightward movement."
+            "description": "Optional acceleration value for right strafe motion."
           }
         }
       },
       {
         "name": "rotate",
-        "description": "Rotate the robot on its axis.",
+        "description": "Rotate the robot in place.",
         "parameters": {
           "angle": {
             "type": "number",
-            "unit": "degrees",
+            "unit": "rad",
             "required": true,
-            "description": "The angle in degrees by which to rotate the robot."
+            "description": "The angle to rotate in radians. Positive for counter-clockwise (left), negative for clockwise (right) if direction is not specified, otherwise follows direction."
           },
           "direction": {
             "type": "string",
-            "required": true,
+            "required": false,
             "enum": [
               "left",
-              "right"
+              "right",
+              "port",
+              "starboard"
             ],
             "description": "The direction to rotate the robot."
           },
           "acceleration": {
             "type": "number",
-            "unit": "deg/s^2",
+            "unit": "rad/s^2",
             "required": false,
-            "default": 28.65,
-            "description": "Optional angular acceleration for rotation."
+            "default": 0.5000,
+            "description": "Optional angular acceleration for rotation in rad/s^2."
           }
         }
       },
@@ -127,16 +129,20 @@
         "description": "The parameter value type is incorrect (e.g., a string provided instead of a number)."
       },
       {
+        "code": "INVALID_PARAMETER_VALUE",
+        "description": "The value provided for a parameter is invalid (e.g., unknown direction string, non-numeric)."
+      },
+      {
         "code": "OUT_OF_RANGE",
-        "description": "The parameter value is outside the acceptable range."
+        "description": "The parameter value is outside the acceptable range (if range limits are defined)."
       },
       {
-        "code": "SYNTAX_ERROR",
-        "description": "The command syntax is malformed or not parsable."
+        "code": "UNIT_MISMATCH",
+        "description": "The unit inferred from the input does not match the expected unit after conversion attempts."
       },
       {
-        "code": "UNSUPPORTED_UNIT",
-        "description": "The unit specified for a parameter is not supported or recognized."
+        "code": "INTERNAL_ERROR",
+        "description": "An unexpected error occurred during command processing."
       }
     ]
   }

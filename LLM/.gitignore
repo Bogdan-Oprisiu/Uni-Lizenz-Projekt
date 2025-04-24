@@ -9,3 +9,5 @@ teacher/*.txt
 tokenizer/*.txt
 tokenizer/*.json
 teacher_v2/finetuned_teacher
+artefacts/teacher_outputs
+artefacts/tokenizer_v2
