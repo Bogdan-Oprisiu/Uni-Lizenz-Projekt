@@ -1,0 +1,26 @@
+# Core ML/NLP Libraries
+# Ensure torch version matches your CUDA version if using GPU
+# Example for CUDA 11.7:
+# torch==2.0.1+cu117 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu117
+# Example for CPU or other CUDA:
+torch>=2.0.0
+transformers>=4.34.0,<4.37.0 # Pinning minor version for stability with PEFT/bitsandbytes if used
+datasets>=2.10.0
+tokenizers>=0.13.0
+sentencepiece
+
+# PEFT for LoRA
+peft>=0.7.0
+
+# Hugging Face Hub & Acceleration
+huggingface-hub>=0.15.0
+accelerate>=0.20.0 # Needed for efficient model loading/training
+
+# Utilities
+tqdm
+
+# Optional: For 8-bit quantization of the base model
+# bitsandbytes>=0.41.0
+
+# Optional: If using pre-processing steps from previous pipeline
+# pyspellchecker
