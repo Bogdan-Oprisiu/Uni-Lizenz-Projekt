@@ -13,7 +13,7 @@ move_cache()
 ##############################################################################
 # 2. Load the abstract command structure from your JSON definition
 ##############################################################################
-with open("../possible_commands.json", "r", encoding="utf-8") as f:
+with open("../../possible_commands.json", "r", encoding="utf-8") as f:
     possible_commands_str = f.read()
 
 ##############################################################################

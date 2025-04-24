@@ -13,7 +13,7 @@ move_cache()
 ##############################################################################
 # 2. Load the abstract command structure from your JSON definition
 ##############################################################################
-with open("../possible_commands.json", "r", encoding="utf-8") as f:
+with open("../../possible_commands.json", "r", encoding="utf-8") as f:
     possible_commands_str = f.read()
 
 ##############################################################################
@@ -100,7 +100,7 @@ def get_teacher_outputs(input_text, temperature=2.0, max_new_tokens=50):
 ##############################################################################
 # 6. Load the basic unlabeled data & process each command (from a text file)
 ##############################################################################
-with open("../training_data/basic_data/synthetic_basic_unlabeled_robot_commands.txt", "r", encoding="utf-8") as f:
+with open("../../training_data/basic_data/synthetic_basic_unlabeled_robot_commands.txt", "r", encoding="utf-8") as f:
     # Each line is one command; filter out empty lines.
     commands = [line.strip() for line in f if line.strip()]
 
