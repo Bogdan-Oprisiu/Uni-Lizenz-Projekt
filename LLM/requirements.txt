@@ -2,16 +2,18 @@ sentencepiece==0.1.96
 transformers~=4.32.0
 pandas==1.5.3
 numpy==1.24.0
-torch==2.0.1+cu118
+torch~=2.0.1+cu118
 torchvision==0.15.2+cu118
 torchaudio==2.0.2
 --extra-index-url https://download.pytorch.org/whl/cu118
 
 google==3.0.0
 protobuf==6.30.1
-tokenizers==0.13.3
-pyspellchecker==0.8.2
-word2number==1.1
-tqdm>=4.66
+tokenizers~=0.13.3
+pyspellchecker~=0.8.2
+word2number~=1.1
+tqdm~=4.67.1
 
-matplotlib==3.10.1
+matplotlib~=3.10.1
+datasets~=3.5.0
+peft~=0.15.2

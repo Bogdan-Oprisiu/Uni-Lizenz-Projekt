@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/training_data/human_data/human_unlabelled_commands.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v3/config_v3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v3/extract_soft_targets_v3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v3/fine_tune_v3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v3/requierements_v3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/teacher_v3/utils_v3.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_labelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_labelled_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_unlabelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_unlabelled_data.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +54,7 @@
     "Python.bpe_tokenizer.executor": "Run",
     "Python.c.executor": "Run",
     "Python.config.executor": "Run",
+    "Python.config_v3.executor": "Run",
     "Python.d.executor": "Run",
     "Python.decoder.executor": "Run",
     "Python.decoder_layer.executor": "Run",
@@ -105,6 +107,7 @@
     "Python.unit_conversion.executor": "Run",
     "Python.unit_converter.executor": "Run",
     "Python.utils.executor": "Run",
+    "Python.utils_v3.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
@@ -124,11 +127,11 @@
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\tokenizer_v2" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\teacher_v3" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\V1" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\teacher_v2" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\teacher" />
       <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\training_data\tokenizer" />
-      <recent name="C:\MyProjects\Uni Lizenz Projekt\LLM\architecture\positional_encoding" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -185,6 +188,8 @@
       <workItem from="1745225877804" duration="14074000" />
       <workItem from="1745308453333" duration="248000" />
       <workItem from="1745475749306" duration="11610000" />
+      <workItem from="1745501106410" duration="2240000" />
+      <workItem from="1745508235693" duration="354000" />
     </task>
     <servers />
   </component>
@@ -227,7 +232,9 @@
     <SUITE FILE_PATH="coverage/LLM$evaluate_data.coverage" NAME="evaluate_data Coverage Results" MODIFIED="1743342755196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$test_unit_conversion.coverage" NAME="test_unit_conversion Coverage Results" MODIFIED="1743949458620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing/tests" />
     <SUITE FILE_PATH="coverage/LLM$extract_soft_targets.coverage" NAME="extract_soft_targets Coverage Results" MODIFIED="1745250913558" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher_v2" />
+    <SUITE FILE_PATH="coverage/LLM$utils_v3.coverage" NAME="utils_v3 Coverage Results" MODIFIED="1745508483263" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher_v3" />
     <SUITE FILE_PATH="coverage/LLM$test_spell_checker.coverage" NAME="test_spell_checker Coverage Results" MODIFIED="1743952008317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/testing" />
+    <SUITE FILE_PATH="coverage/LLM$config_v3.coverage" NAME="config_v3 Coverage Results" MODIFIED="1745508279164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher_v3" />
     <SUITE FILE_PATH="coverage/LLM$evaluate_basic_data.coverage" NAME="evaluate_basic_data Coverage Results" MODIFIED="1743355614589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/teacher" />
     <SUITE FILE_PATH="coverage/LLM$deepseek_transformer.coverage" NAME="deepseek_transformer Coverage Results" MODIFIED="1744284216963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture" />
     <SUITE FILE_PATH="coverage/LLM$input_embedding.coverage" NAME="input_embedding Coverage Results" MODIFIED="1744278684455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/input_output_embedding" />
