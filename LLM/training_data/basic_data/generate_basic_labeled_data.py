@@ -8,13 +8,7 @@ import re  # Make sure re is imported
 # =============================================================================
 try:
     # Adjust the path if your file/classes have different names
-    from utils.command_processor import CommandProcessor
-
-    # UnitConverter might be in the same file or separate
-    # If separate, add: from utils.unit_converter import UnitConverter
-    # If in the same file as CommandProcessor, this import might suffice
-    # depending on how command_processor.py is structured.
-    # For this example, we assume CommandProcessor has its own UnitConverter instance.
+    from utils.generate_json_command import CommandProcessor
     print("Successfully imported CommandProcessor from utils.")
 except ImportError as e:
     print(f"FATAL: Could not import CommandProcessor from utils: {e}")

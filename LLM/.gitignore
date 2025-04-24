@@ -2,8 +2,10 @@ training_data/*.json
 teacher/*.json
 training_data/*.txt
 training_data/basic_data/*.txt
+training_data/basic_data/*.jsonl
 training_data/basic_data/*.json
 training_data/multiple_parameter_data/*.json
+training_data/multiple_parameter_data/*.jsonl
 training_data/multiple_parameter_data/*.txt
 teacher/*.txt
 tokenizer/*.txt

@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd388eb4-ceed-42e8-8c85-c10c7b3057c0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/possible_commands.json" beforeDir="false" afterPath="$PROJECT_DIR$/possible_commands.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/training_data/basic_data/generate_basic_labeled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/basic_data/generate_basic_labeled_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/generate_json_command.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/generate_json_command.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_labelled_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/training_data/multiple_parameter_data/generate_full_labelled_data.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +179,7 @@
       <workItem from="1744723591939" duration="650000" />
       <workItem from="1745225877804" duration="14074000" />
       <workItem from="1745308453333" duration="248000" />
-      <workItem from="1745475749306" duration="5500000" />
+      <workItem from="1745475749306" duration="5878000" />
     </task>
     <servers />
   </component>
@@ -198,7 +197,7 @@
     <SUITE FILE_PATH="coverage/LLM$output_embedding.coverage" NAME="output_embedding Coverage Results" MODIFIED="1744284183675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/input_output_embedding" />
     <SUITE FILE_PATH="coverage/LLM$generate_full_unlabelled_data.coverage" NAME="generate_full_unlabelled_data Coverage Results" MODIFIED="1745476859260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data/multiple_parameter_data" />
     <SUITE FILE_PATH="coverage/LLM$generate_basic_labelled_data.coverage" NAME="generate_basic_labelled_data Coverage Results" MODIFIED="1743355595866" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
-    <SUITE FILE_PATH="coverage/LLM$generate_basic_labeled_data.coverage" NAME="generate_basic_labeled_data Coverage Results" MODIFIED="1743959601490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data/basic_data" />
+    <SUITE FILE_PATH="coverage/LLM$generate_basic_labeled_data.coverage" NAME="generate_basic_labeled_data Coverage Results" MODIFIED="1745481427859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data/basic_data" />
     <SUITE FILE_PATH="coverage/LLM$test_normalization_and_noise_removal.coverage" NAME="test_normalization_and_noise_removal Coverage Results" MODIFIED="1743950420105" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/testing" />
     <SUITE FILE_PATH="coverage/LLM$test_standard_attention_head.coverage" NAME="test_standard_attention_head Coverage Results" MODIFIED="1744271687760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/positional_encoding/AttentionHeads/test" />
     <SUITE FILE_PATH="coverage/LLM$phrase_to_number.coverage" NAME="phrase_to_number Coverage Results" MODIFIED="1743098518024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/numbers_pre_processing" />
@@ -237,7 +236,7 @@
     <SUITE FILE_PATH="coverage/LLM$generate_data.coverage" NAME="generate_data Coverage Results" MODIFIED="1742912370258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data" />
     <SUITE FILE_PATH="coverage/LLM$encoder_layer.coverage" NAME="encoder_layer Coverage Results" MODIFIED="1744283662978" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/encoder" />
     <SUITE FILE_PATH="coverage/LLM$main.coverage" NAME="main Coverage Results" MODIFIED="1740938400874" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/LLM$generate_full_labelled_data.coverage" NAME="generate_full_labelled_data Coverage Results" MODIFIED="1745476835565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data/multiple_parameter_data" />
+    <SUITE FILE_PATH="coverage/LLM$generate_full_labelled_data.coverage" NAME="generate_full_labelled_data Coverage Results" MODIFIED="1745481694467" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/training_data/multiple_parameter_data" />
     <SUITE FILE_PATH="coverage/LLM$feed_forward.coverage" NAME="feed_forward Coverage Results" MODIFIED="1744278905075" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/architecture/fnn" />
     <SUITE FILE_PATH="coverage/LLM$b.coverage" NAME="b Coverage Results" MODIFIED="1743399323119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/OneDrive/Desktop/2" />
     <SUITE FILE_PATH="coverage/LLM$test_preprocessing.coverage" NAME="test_preprocessing Coverage Results" MODIFIED="1743952265393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pre_processing/testing" />

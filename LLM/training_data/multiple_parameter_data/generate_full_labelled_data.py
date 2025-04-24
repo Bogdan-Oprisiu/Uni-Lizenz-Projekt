@@ -1,10 +1,28 @@
 import json
-import math  # Added import for math.pi and math.degrees
+import math
 import random
-import re
+import re  # Make sure re is imported
+
+# =============================================================================
+# START: Import Classes (Assuming they are in utils/command_processor.py)
+# =============================================================================
+try:
+    # Adjust the path if your file/classes have different names
+    # This assumes CommandProcessor is in utils/generate_json_command.py as per user's last script
+    from utils.generate_json_command import CommandProcessor
+
+    print("Successfully imported CommandProcessor from utils.")
+except ImportError as e:
+    print(f"FATAL: Could not import CommandProcessor from utils: {e}")
+    print("Please ensure CommandProcessor and UnitConverter classes are defined")
+    print("in a file accessible via the 'utils' package (e.g., utils/generate_json_command.py)")
+    exit(1)
+# =============================================================================
+# END: Import Classes
+# =============================================================================
+
 
 # Assuming pre_processing.processing.full_text_processing exists and works as intended
-# If not, replace with desired text normalization logic (e.g., lowercasing, removing extra spaces)
 try:
     from pre_processing.processing import full_text_processing
 except ImportError:
@@ -16,10 +34,11 @@ except ImportError:
         text = re.sub(r'\s+', ' ', text).strip()
         return text
 
-# =============================================================================
-# 1) Command Template Definitions (with optional acceleration placeholders)
-# =============================================================================
-
+# =========================================================================================
+#    1. Subgroup Template Definitions (No changes needed here)
+# =========================================================================================
+# NOTE: Ellipses (...) represent the full original template lists for brevity.
+# Copy the full lists from the previous version of the script.
 FORWARD_SUBGROUPS = [
     [
         "{verb} {direction} quickly {distance}{unit}",
@@ -32,7 +51,6 @@ FORWARD_SUBGROUPS = [
         "{verb} {distance}{unit} {direction} in a controlled manner"
     ],
 ]
-
 BACK_SUBGROUPS = [
     [
         "{verb} {direction} fast {distance}{unit}",
@@ -45,7 +63,6 @@ BACK_SUBGROUPS = [
         "{verb} {distance}{unit} {direction} with caution"
     ],
 ]
-
 SIDE_SUBGROUPS = [
     [
         "{verb} {direction} quickly {distance}{unit}",
@@ -54,263 +71,267 @@ SIDE_SUBGROUPS = [
     ],
     [
         "{verb} {direction} steadily {distance}{unit}",
-        "strafe {distance}{unit} {direction} at a consistent pace",
-        "{verb} {distance}{unit} {direction} calmly"
+        "move {direction} calmly {distance}{unit}",  # Using move instead of strafe here
+        "{verb} {distance}{unit} {direction} at a consistent pace"
     ],
 ]
-
 ROTATE_SUBGROUPS = [
     [
-        "{verb} {direction} quickly {angle}{unit}",
-        "please {verb} a small angle {angle}{unit} to the {direction}",
-        "spin {direction} briefly by {angle}{unit}"
+        "{verb} {direction} briefly by {angle}{unit}",
+        "spin {direction} quickly {angle}{unit}",
+        "please {verb} a small angle {angle}{unit} to the {direction}"
     ],
     [
-        "{verb} {direction} steadily by {angle}{unit}",
-        "turn {angle}{unit} toward the {direction} in a controlled manner",
-        "{verb} {direction} a larger angle of {angle}{unit}"
+        "turn {direction} steadily by {angle}{unit}",
+        "rotate {direction} a larger angle of {angle}{unit}",
+        "{verb} {angle}{unit} toward the {direction} in a controlled manner"
+    ],
+]
+# Removed STRAFING_SUBGROUPS as per unification
+STOP_SUBGROUPS = [
+    [
+        "stop",
+        "halt"
+    ],
+    [
+        "please stop",
+        "cease movement",
+        "stop moving",
+        "bring it to a halt"
     ],
 ]
 
-STOP_SUBGROUPS = [
-    ["stop", "halt", "cease movement"],
-    ["please stop", "bring it to a halt", "stop moving"],
-]
+# =========================================================================================
+#    2. Synonyms and Helper Functions (No changes needed here)
+# =========================================================================================
+directions_forward = ["forward", "ahead", "advance", "proceed", "go ahead", "straight"]
+directions_back = ["back", "reverse", "backward", "retreat", "recede"]
+rotate_directions = ["left", "right", "port", "starboard"]
+side_directions = ["left", "right", "port", "starboard"]  # Used for text generation in side commands
+verbs_forward = ["move", "go", "advance", "proceed", "head"]
+verbs_back = ["move", "go", "reverse", "retreat", "step", "recede"]
+verbs_side = ["move", "slide", "shift", "strafe"]  # Keep 'strafe' as a possible verb in text
+verbs_rotate = ["rotate", "turn", "spin", "pivot"]
 
-# Verbs and Nouns
-FORWARD_VERBS = ["move", "go", "proceed", "advance", "head"]
-FORWARD_NOUNS = ["forward", "ahead", "straight"]
-
-BACK_VERBS = ["move", "go", "retreat", "reverse", "step"]
-BACK_NOUNS = ["back", "backward", "reverse", "recede"]
-
-SIDE_VERBS = ["move", "slide", "shift", "strafe"]
-# Directions handled by argument
-
-ROTATE_VERBS = ["rotate", "turn", "spin", "pivot"]
-ROTATE_DIRECTIONS = ["left", "right", "port", "starboard"]  # Port=Left, Starboard=Right
-
-# Units
-DISTANCE_UNIT = " cm"
+# Define standard units used IN TEXT generation primarily
+DISTANCE_UNIT_TEXT = "cm"
+LINEAR_ACCEL_UNIT_TEXT = "cm/s^2"
 
 
-# ANGLE_UNIT defined within rotate function
+# Angular units can vary in text generation
 
-# =============================================================================
-# 2) Generation Functions for Each Command Type (Labeled)
-# =============================================================================
+def random_distance(unit=DISTANCE_UNIT_TEXT):
+    """Generate distance and return value and unit."""
+    val = round(random.uniform(10, 500), 1)
+    return val, unit
+
+
+def random_angle(unit='rad'):
+    """Generate angle and return value and unit."""
+    if unit == 'rad':
+        val = round(random.uniform(-math.pi, math.pi), 4)  # Full circle range
+    elif unit == 'deg':
+        val = round(random.uniform(-180, 180), 1)  # Full circle range
+    else:  # Default to radians
+        val = round(random.uniform(-math.pi, math.pi), 4)
+        unit = 'rad'
+    return val, unit
+
+
+def random_linear_accel(unit=LINEAR_ACCEL_UNIT_TEXT):
+    """Generate linear acceleration value and unit."""
+    val = round(random.uniform(0.1, 50.0), 2)
+    # Could add logic here to sometimes generate m/s^2 if needed
+    return val, unit
+
+
+def random_angular_accel(unit='rad/s^2'):
+    """Generate angular acceleration value and unit."""
+    if unit == 'rad/s^2':
+        val = round(random.uniform(0.01, 3.0), 4)
+    elif unit == 'deg/s^2':
+        val = round(random.uniform(1.0, 180.0), 2)  # Approx range equivalent to 3 rad/s^2
+    else:  # Default to rad/s^2
+        val = round(random.uniform(0.01, 3.0), 4)
+        unit = 'rad/s^2'
+    return val, unit
+
+
+def fill_template(template, components):
+    """Replace placeholders in the template with values from components."""
+    formatted_components = components.copy()
+    # Format numeric values for the text string representation
+    if 'distance' in formatted_components:
+        formatted_components['distance'] = f"{formatted_components['distance']:.1f}"
+    if 'angle' in formatted_components:
+        if formatted_components.get('unit') == 'deg':
+            formatted_components['angle'] = f"{formatted_components['angle']:.1f}"
+        else:  # Assume rad
+            formatted_components['angle'] = f"{formatted_components['angle']:.4f}"
+    if 'accel_val' in formatted_components and formatted_components['accel_val'] is not None:
+        # Format acceleration based on its type/unit for text
+        accel_unit = formatted_components.get('accel_unit_text', '')
+        if 'deg' in accel_unit:
+            formatted_components['accel_val'] = f"{formatted_components['accel_val']:.2f}"
+        elif 'rad' in accel_unit:
+            formatted_components['accel_val'] = f"{formatted_components['accel_val']:.4f}"
+        else:  # Assume linear cm/s^2
+            formatted_components['accel_val'] = f"{formatted_components['accel_val']:.2f}"
+    else:
+        # Ensure keys exist even if None to avoid KeyError in format
+        formatted_components['accel_val'] = ''
+        formatted_components['accel_unit_text'] = ''
+
+    return template.format(**formatted_components)
+
+
+def choose_template(subgroup_list):
+    """Randomly choose a subgroup, then a template from that subgroup."""
+    subgroup = random.choice(subgroup_list)
+    return random.choice(subgroup)
+
+
+# =========================================================================================
+#    3. Labeled Generation Functions (Returning text and map, including acceleration)
+# =========================================================================================
 
 def generate_forward_labeled():
-    # --- Parameters ---
-    distance = round(random.uniform(1.0, 500.0), 2)
-    use_accel = random.random() < 0.3  # 30% chance to include acceleration
-    accel_val = None
-    accel_unit_text = ""
-
-    json_params = {"distance": distance}
-    json_command = "forward"
+    distance_val, distance_unit = random_distance()
+    use_accel = random.random() < 0.3
+    accel_val, accel_unit = (None, None)
+    accel_text_suffix = ""
+    expected_map = {"command": "forward", "distance": distance_val, "distance_unit": distance_unit}
 
     if use_accel:
-        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
-        accel_unit_text = " cm/s^2"
-        json_params["acceleration"] = accel_val
+        accel_val, accel_unit = random_linear_accel()
+        accel_text_suffix = f" with acceleration {{accel_val}}{accel_unit}"  # Use accel_unit directly
+        expected_map["acceleration"] = accel_val
+        expected_map["acceleration_unit"] = accel_unit
 
-    # --- Text Generation ---
-    template_base = random.choice(random.choice(FORWARD_SUBGROUPS))
-    if use_accel:
-        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
-    else:
-        template = template_base
+    components = {
+        "verb": random.choice(verbs_forward),
+        "direction": random.choice(directions_forward),
+        "distance": distance_val,
+        "unit": distance_unit,
+        "accel_val": accel_val,
+        "accel_unit_text": accel_unit  # Pass unit directly for formatting
+    }
+    template = choose_template(FORWARD_SUBGROUPS) + accel_text_suffix
+    command_text = full_text_processing(fill_template(template, components)) + "."
 
-    text_cmd = template.format(
-        verb=random.choice(FORWARD_VERBS),
-        direction=random.choice(FORWARD_NOUNS),
-        distance=distance,
-        unit=DISTANCE_UNIT,
-        accel_val=accel_val if use_accel else None,
-        accel_unit_text=accel_unit_text if use_accel else ""
-    )
-    text_cmd = full_text_processing(text_cmd) + "."
-
-    # --- JSON Generation ---
-    json_data = {"command": json_command, "parameters": json_params}
-    json_string = json.dumps(json_data)
-
-    return text_cmd, json_string
+    return command_text, expected_map
 
 
 def generate_back_labeled():
-    # --- Parameters ---
-    distance = round(random.uniform(1.0, 500.0), 2)
+    distance_val, distance_unit = random_distance()
     use_accel = random.random() < 0.3
-    accel_val = None
-    accel_unit_text = ""
-
-    json_params = {"distance": distance}
-    json_command = "back"
+    accel_val, accel_unit = (None, None)
+    accel_text_suffix = ""
+    expected_map = {"command": "back", "distance": distance_val, "distance_unit": distance_unit}
 
     if use_accel:
-        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
-        accel_unit_text = " cm/s^2"
-        json_params["acceleration"] = accel_val
+        accel_val, accel_unit = random_linear_accel()
+        accel_text_suffix = f" with acceleration {{accel_val}}{accel_unit}"
+        expected_map["acceleration"] = accel_val
+        expected_map["acceleration_unit"] = accel_unit
 
-    # --- Text Generation ---
-    template_base = random.choice(random.choice(BACK_SUBGROUPS))
-    if use_accel:
-        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
-    else:
-        template = template_base
+    components = {
+        "verb": random.choice(verbs_back),
+        "direction": random.choice(directions_back),
+        "distance": distance_val,
+        "unit": distance_unit,
+        "accel_val": accel_val,
+        "accel_unit_text": accel_unit
+    }
+    template = choose_template(BACK_SUBGROUPS) + accel_text_suffix
+    command_text = full_text_processing(fill_template(template, components)) + "."
 
-    text_cmd = template.format(
-        verb=random.choice(BACK_VERBS),
-        direction=random.choice(BACK_NOUNS),
-        distance=distance,
-        unit=DISTANCE_UNIT,
-        accel_val=accel_val if use_accel else None,
-        accel_unit_text=accel_unit_text if use_accel else ""
-    )
-    text_cmd = full_text_processing(text_cmd) + "."
-
-    # --- JSON Generation ---
-    json_data = {"command": json_command, "parameters": json_params}
-    json_string = json.dumps(json_data)
-
-    return text_cmd, json_string
+    return command_text, expected_map
 
 
-def generate_side_labeled(side):  # side is "left" or "right"
-    # --- Parameters ---
-    distance = round(random.uniform(1.0, 500.0), 2)
+def generate_side_labeled(command_type):  # command_type is 'left' or 'right'
+    distance_val, distance_unit = random_distance()
     use_accel = random.random() < 0.3
-    accel_val = None
-    accel_unit_text = ""
-
-    json_params = {"distance": distance}
-    # Determine direction based on side for strafing etc.
-    if side == "left":
-        direction_choices = ["left", "port"]
-        json_command = "left"
-        if random.random() < 0.2:  # Occasionally specify direction explicitly for strafe
-            json_params["direction"] = random.choice(direction_choices)
-            json_command = "strafe"
-    else:  # side == "right"
-        direction_choices = ["right", "starboard"]
-        json_command = "right"
-        if random.random() < 0.2:
-            json_params["direction"] = random.choice(direction_choices)
-            json_command = "strafe"
+    accel_val, accel_unit = (None, None)
+    accel_text_suffix = ""
+    # Map uses the canonical 'left' or 'right' command
+    expected_map = {"command": command_type, "distance": distance_val, "distance_unit": distance_unit}
 
     if use_accel:
-        accel_val = round(random.uniform(0.1, 50.0), 2)  # cm/s^2
-        accel_unit_text = " cm/s^2"
-        json_params["acceleration"] = accel_val
+        accel_val, accel_unit = random_linear_accel()
+        accel_text_suffix = f" with acceleration {{accel_val}}{accel_unit}"
+        expected_map["acceleration"] = accel_val
+        expected_map["acceleration_unit"] = accel_unit
 
-    # --- Text Generation ---
-    template_base = random.choice(random.choice(SIDE_SUBGROUPS))
-    if use_accel:
-        template = template_base + " with acceleration {accel_val}{accel_unit_text}"
-    else:
-        template = template_base
+    # Choose text direction (can include port/starboard)
+    text_direction = random.choice([d for d in side_directions if
+                                    (d in ['left', 'port'] and command_type == 'left') or (
+                                                d in ['right', 'starboard'] and command_type == 'right')])
 
-    # Direction text might differ slightly from json_command
-    text_direction = random.choice(direction_choices)
+    components = {
+        "verb": random.choice(verbs_side),
+        "direction": text_direction,
+        "distance": distance_val,
+        "unit": distance_unit,
+        "accel_val": accel_val,
+        "accel_unit_text": accel_unit
+    }
+    template = choose_template(SIDE_SUBGROUPS) + accel_text_suffix
+    command_text = full_text_processing(fill_template(template, components)) + "."
 
-    text_cmd = template.format(
-        verb=random.choice(SIDE_VERBS),
-        direction=text_direction,
-        distance=distance,
-        unit=DISTANCE_UNIT,
-        accel_val=accel_val if use_accel else None,
-        accel_unit_text=accel_unit_text if use_accel else ""
-    )
-    # Sometimes add direction explicitly for strafing text
-    if json_command == "strafe" and "direction" in json_params:
-        if random.random() < 0.5 and "strafe" not in text_cmd:  # Add direction hint if not obvious
-            text_cmd = f"strafing to the {json_params['direction']} " + text_cmd
-
-    text_cmd = full_text_processing(text_cmd) + "."
-
-    # --- JSON Generation ---
-    json_data = {"command": json_command, "parameters": json_params}
-    json_string = json.dumps(json_data)
-
-    return text_cmd, json_string
+    return command_text, expected_map
 
 
 def generate_rotate_labeled():
-    # --- Angle (Use Radians Consistently) ---
-    angle_rad = round(random.uniform(-math.pi, math.pi), 4)  # Generate and keep angle in radians
+    # Randomly choose angle unit for text generation
+    use_deg_in_text = random.random() < 0.3
+    angle_unit_text = 'deg' if use_deg_in_text else 'rad'
+    angle_val, angle_unit_map = random_angle(unit=angle_unit_text)
 
-    # --- Direction ---
-    direction = random.choice(ROTATE_DIRECTIONS)
-
-    # --- JSON Base (Use Radians) ---
-    # Use radians for angle in JSON
-    json_params = {"angle": angle_rad, "direction": direction}
-    json_command = "rotate"
-
-    # --- Acceleration (Standardized to rad/s^2) ---
+    chosen_direction = random.choice(rotate_directions)
     use_accel = random.random() < 0.3
-    accel_val = None
-    accel_unit_text = ""
+    accel_val, accel_unit = (None, None)
+    accel_text_suffix = ""
+    # Map includes angle value and the unit used in text
+    expected_map = {
+        "command": "rotate",
+        "angle": angle_val,
+        "angle_unit": angle_unit_map,
+        "direction": chosen_direction
+    }
 
     if use_accel:
-        # Always use rad/s^2 now
-        accel_val = round(random.uniform(0.01, 3.0), 4)  # Generate rad/s^2 value
-        accel_unit_text = " rad/s^2"  # Standard unit text
-        # *** FIX: Always add acceleration (as rad/s^2 value) to JSON if use_accel is True ***
-        json_params["acceleration"] = accel_val
+        # Randomly choose acceleration unit for text generation
+        use_deg_accel_in_text = random.random() < 0.4  # Slightly higher chance for deg/s^2 in text
+        accel_unit_text = 'deg/s^2' if use_deg_accel_in_text else 'rad/s^2'
+        accel_val, accel_unit_map = random_angular_accel(unit=accel_unit_text)
+        accel_text_suffix = f" with angular acceleration {{accel_val}}{accel_unit_text}"
+        expected_map["acceleration"] = accel_val
+        expected_map["acceleration_unit"] = accel_unit_map  # Unit used in text
 
-    # --- Text Generation (Use Radians) ---
-    template_base = random.choice(random.choice(ROTATE_SUBGROUPS))
+    components = {
+        "verb": random.choice(verbs_rotate),
+        "direction": chosen_direction,
+        "angle": angle_val,
+        "unit": angle_unit_text,  # Unit for angle in text
+        "accel_val": accel_val,
+        "accel_unit_text": accel_unit_text if use_accel else ""  # Unit for accel in text
+    }
+    template = choose_template(ROTATE_SUBGROUPS) + accel_text_suffix
+    command_text = full_text_processing(fill_template(template, components)) + "."
 
-    # Use radians for angle in text
-    angle_val_text = angle_rad
-    angle_unit_text = " rad"
-
-    # Add acceleration part to template if needed
-    if use_accel:
-        template = template_base + " with angular acceleration {accel_val}{accel_unit_text}"
-    else:
-        template = template_base
-
-    # Format the text command
-    text_cmd = template.format(
-        verb=random.choice(ROTATE_VERBS),
-        direction=direction,
-        angle=angle_val_text,  # Use radian value
-        unit=angle_unit_text,  # Use " rad" unit
-        accel_val=accel_val if use_accel else None,
-        accel_unit_text=accel_unit_text if use_accel else ""
-    )
-    text_cmd = full_text_processing(text_cmd) + "."
-
-    # --- JSON Final ---
-    json_data = {"command": json_command, "parameters": json_params}
-    json_string = json.dumps(json_data)
-
-    return text_cmd, json_string
+    return command_text, expected_map
 
 
 def generate_stop_labeled():
-    # --- Text Generation ---
-    text_cmd = random.choice(random.choice(STOP_SUBGROUPS))
-    text_cmd = full_text_processing(text_cmd) + "."
-
-    # --- JSON Generation ---
-    json_params = {}
-    json_command = "stop"
-    json_data = {"command": json_command, "parameters": json_params}
-    json_string = json.dumps(json_data)
-
-    return text_cmd, json_string
+    phrase = random.choice(random.choice(STOP_SUBGROUPS))
+    command_text = full_text_processing(phrase) + "."
+    expected_map = {"command": "stop"}
+    return command_text, expected_map
 
 
-# =============================================================================
-# 3) Master Function to Select Command Type
-# =============================================================================
-
-def generate_labeled_command(command_type):
+def generate_labeled_command_and_map(command_type):
+    """Dispatches to the correct generator function."""
     if command_type == "forward":
         return generate_forward_labeled()
     elif command_type == "back":
@@ -321,43 +342,94 @@ def generate_labeled_command(command_type):
         return generate_rotate_labeled()
     elif command_type == "stop":
         return generate_stop_labeled()
+    # Removed 'strafing' case
     else:
-        # Default to stop command if type is unrecognized
-        return generate_stop_labeled()
+        print(f"Warning: Unknown command type '{command_type}' requested.")
+        return generate_stop_labeled()  # Default to stop
 
 
-# =============================================================================
-# 4) Main Script - Labeled Data Generation
-# =============================================================================
+# =========================================================================================
+#    4. High-Level Dispatch and Data Generation (3 Files)
+# =========================================================================================
 
 if __name__ == "__main__":
-    num_samples = 10_000  # Adjust number of samples as needed
+    num_samples = 10_000  # Number of samples to generate
+    # Adjusted valid types - removed 'strafing'
     valid_command_types = ["forward", "back", "left", "right", "rotate", "stop"]
 
-    commands_text = []
-    commands_json = []
+    # Output file names
+    text_output_file = "synthetic_accel_labeled_commands.txt"
+    map_output_file = "synthetic_accel_labeled_commands_map.jsonl"  # JSON Lines format
+    final_json_output_file = "synthetic_accel_labeled_commands_final.jsonl"  # JSON Lines format
 
-    print(f"Generating {num_samples} labeled samples...")
-    for i in range(num_samples):
-        ctype = random.choice(valid_command_types)
-        txt, js = generate_labeled_command(ctype)
-        commands_text.append(txt)
-        commands_json.append(js)
-        if (i + 1) % 1000 == 0:
-            print(f"Generated {i + 1}/{num_samples} samples...")
+    # Instantiate the processor ONCE
+    try:
+        processor = CommandProcessor()
+    except Exception as e:
+        print(f"FATAL: Could not initialize CommandProcessor: {e}")
+        exit(1)
 
-    # Define output filenames
-    txt_filename = "synthetic_labeled_robot_commands_with_accel.txt"
-    json_filename = "synthetic_labeled_robot_commands_with_accel_json.txt"
+    print(f"Generating {num_samples} samples with acceleration...")
 
-    print(f"Writing text commands to {txt_filename}...")
-    with open(txt_filename, "w", encoding="utf-8") as f_txt:
-        for text_cmd in commands_text:
-            f_txt.write(text_cmd + "\n")
+    # Use 'with' statements for automatic file closing
+    try:
+        with open(text_output_file, "w", encoding="utf-8") as f_text, \
+                open(map_output_file, "w", encoding="utf-8") as f_map, \
+                open(final_json_output_file, "w", encoding="utf-8") as f_final:
 
-    print(f"Writing JSON commands to {json_filename}...")
-    with open(json_filename, "w", encoding="utf-8") as f_js:
-        for json_cmd in commands_json:
-            f_js.write(json_cmd + "\n")
+            processed_count = 0
+            error_count = 0
+            generation_errors = 0
 
-    print("Data generation complete.")
+            for i in range(num_samples):
+                try:
+                    cmd_type = random.choice(valid_command_types)
+                    command_text, expected_map = generate_labeled_command_and_map(cmd_type)
+
+                    # Process the map to get the final JSON
+                    final_json_str, error_msg = processor.process_command(expected_map)
+
+                    # Write the command text
+                    f_text.write(command_text + "\n")
+
+                    # Write the expected map (as a JSON line)
+                    f_map.write(json.dumps(expected_map) + "\n")
+
+                    # Write the final JSON or an error object
+                    if error_msg:
+                        error_count += 1
+                        error_obj = {"error": error_msg, "input_map": expected_map}
+                        f_final.write(json.dumps(error_obj) + "\n")
+                        if error_count < 10:
+                            print(f"Error processing sample {i + 1}: {error_msg} for map: {expected_map}")
+                    else:
+                        f_final.write(final_json_str + "\n")
+                        processed_count += 1
+
+                except Exception as gen_e:
+                    generation_errors += 1
+                    print(f"ERROR generating sample {i + 1} (type: {cmd_type}): {gen_e}")
+                    try:  # Try to log generation error to files
+                        f_text.write(f"GENERATION_ERROR: {gen_e}\n")
+                        f_map.write(json.dumps({"error": "Generation failed", "details": str(gen_e)}) + "\n")
+                        f_final.write(json.dumps({"error": "Generation failed", "details": str(gen_e)}) + "\n")
+                    except Exception as write_e:
+                        print(f"ERROR writing generation error to file: {write_e}")
+
+                if (i + 1) % 1000 == 0:
+                    print(f"  ... processed {i + 1}/{num_samples} samples.")
+
+            print("\nData generation complete.")
+            print(f"Successfully generated text/map pairs for {num_samples - generation_errors} samples.")
+            print(f"Successfully processed map to final JSON for {processed_count} samples.")
+            print(f"Encountered generation errors in {generation_errors} samples.")
+            print(f"Encountered processing errors in {error_count} samples (see {final_json_output_file} for details).")
+            print("Output files:")
+            print(f" - Command Text: {text_output_file}")
+            print(f" - Expected LLM Map (JSON Lines): {map_output_file}")
+            print(f" - Final Validated JSON / Errors (JSON Lines): {final_json_output_file}")
+
+    except IOError as e:
+        print(f"FATAL: An error occurred writing to output files: {e}")
+    except Exception as e:
+        print(f"FATAL: An unexpected error occurred during generation loop: {e}")
