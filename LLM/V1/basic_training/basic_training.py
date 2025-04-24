@@ -10,7 +10,7 @@ from datasets import (
     collate_fn_labeled,
     collate_fn_distilled
 )
-from tokenizer.bpe_tokenizer import HFTokenizerWrapper
+from V1.tokenizer.bpe_tokenizer import HFTokenizerWrapper
 
 
 # If your custom tokenizer is in a separate file/module, import it here:
@@ -191,12 +191,12 @@ def train(tokenizer, labeled_json_path, distilled_json_path, batch_size=4, epoch
 
 if __name__ == "__main__":
     # Instantiate my custom BPE tokenizer from the JSON file.
-    tokenizer_path = "..\\tokenizer\\bpe_tokenizer.json"
+    tokenizer_path = "../tokenizer/bpe_tokenizer.json"
     tokenizer = HFTokenizerWrapper(tokenizer_path)
 
     # File paths to your datasets (update these paths as needed)
     labeled_json_path = "../training_data/synthetic_basic_labeled_robot_commands.json"
-    distilled_json_path = "../training_data/basic_data/synthetic_basic_unlabeled_robot_commands.txt"
+    distilled_json_path = "../../training_data/basic_data/synthetic_basic_unlabeled_robot_commands.txt"
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = train(

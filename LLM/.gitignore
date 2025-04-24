@@ -12,3 +12,4 @@ teacher_v2/finetuned_teacher
 artefacts/teacher_outputs
 artefacts/tokenizer_v2
 teacher_v2/.cache
+V1/teacher/*.json
