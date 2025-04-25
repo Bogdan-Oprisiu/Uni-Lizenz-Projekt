@@ -12,6 +12,7 @@ tokenizers>=0.13.0 # Ensure tokenizer version compatibility if issues arise
 sentencepiece
 safetensors
 transformers accelerate
+tensorboardX
 
 # --- PINNED PEFT VERSION ---
 peft==0.8.2 # Pinning to a specific stable version
