@@ -10,6 +10,8 @@ transformers==4.38.2
 datasets>=2.10.0
 tokenizers>=0.13.0 # Ensure tokenizer version compatibility if issues arise
 sentencepiece
+safetensors
+transformers accelerate
 
 # --- PINNED PEFT VERSION ---
 peft==0.8.2 # Pinning to a specific stable version
@@ -23,7 +25,7 @@ accelerate>=0.20.0 # Ensure accelerate is compatible
 tqdm
 
 # Optional: For 8-bit quantization of the base model
-# bitsandbytes>=0.41.0
+bitsandbytes>=0.41.0
 
 # Optional: If using pre-processing steps from previous pipeline
-# pyspellchecker
+pyspellchecker

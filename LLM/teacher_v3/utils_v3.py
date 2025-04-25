@@ -1,4 +1,4 @@
-# ----------------------------- teacher_v3/utils_v3.py (MODIFIED) -----------------------------
+# ----------------------------- teacher_v3/utils_v3.py (MODIFIED FOR OFFLOAD) -----------------------------
 """Utility functions for the LoRA-based teacher pipeline (v3)."""
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-# 1. Tokenizer Loader (MODIFIED LOADING ORDER)
+# 1. Tokenizer Loader (Modified Loading Order - Unchanged from previous fix)
 # ---------------------------------------------------------------------------
 
 def load_tokenizer(use_fast: bool = True):
@@ -42,29 +42,24 @@ def load_tokenizer(use_fast: bool = True):
     base_model_id = config_v3.BASE_MODEL_ID
     explicit_tokenizer_path = config_v3.TOKENIZER_PATH.resolve()
 
-    # <<< MODIFIED: Attempt 1: Load from Explicit Path First >>>
+    # <<< Attempt 1: Load from Explicit Path First >>>
     if explicit_tokenizer_path.exists():
         print(f"Attempting to load tokenizer from explicit path: {explicit_tokenizer_path}")
         try:
             if explicit_tokenizer_path.is_dir():
-                # If it's a directory containing tokenizer files (config.json, etc.)
                 tokenizer = AutoTokenizer.from_pretrained(str(explicit_tokenizer_path), use_fast=use_fast)
                 print(f"✅ Tokenizer loaded from explicit directory path: {explicit_tokenizer_path}")
                 return tokenizer
             elif explicit_tokenizer_path.is_file() and explicit_tokenizer_path.suffix == ".json":
-                # If it's a single .json file (likely from tokenizers library)
                 print("   (Detected .json file, attempting to wrap with PreTrainedTokenizerFast)")
                 raw_tok = TokenizersTokenizer.from_file(str(explicit_tokenizer_path))
-                # Use special tokens common for T5, adjust if your tokenizer uses different ones
                 tokenizer = PreTrainedTokenizerFast(
                     tokenizer_object=raw_tok,
-                    bos_token="<s>",  # Or whatever your tokenizer uses
-                    eos_token="</s>",  # T5 uses this
-                    unk_token="<unk>",  # T5 uses this
-                    pad_token="<pad>",  # T5 uses this
+                    bos_token="<s>",
+                    eos_token="</s>",
+                    unk_token="<unk>",
+                    pad_token="<pad>",
                 )
-                # Add any other special tokens if needed
-                # tokenizer.add_special_tokens({'additional_special_tokens': ['<extra_id_0>', ...]})
                 print(f"✅ Tokenizer loaded and wrapped from explicit file path: {explicit_tokenizer_path}")
                 return tokenizer
             else:
@@ -105,7 +100,7 @@ def load_tokenizer(use_fast: bool = True):
 
 
 # ---------------------------------------------------------------------------
-# 2. Teacher Model Loader (Base + LoRA Adapter) (Unchanged from your version)
+# 2. Teacher Model Loader (MODIFIED FOR OFFLOAD)
 # ---------------------------------------------------------------------------
 
 def load_teacher_model(
@@ -114,6 +109,7 @@ def load_teacher_model(
 ) -> torch.nn.Module:
     """
     Loads the base model and applies the LoRA adapter if available and not loading for training start.
+    Includes offload_folder when using device_map='auto'.
     """
     from transformers import AutoModelForSeq2SeqLM, BitsAndBytesConfig
     from peft import PeftModel
@@ -166,6 +162,14 @@ def load_teacher_model(
     if target_device == "cpu":
         device_map = "cpu"
 
+    # <<< --- ADDED OFFLOAD FOLDER --- >>>
+    # Define a folder for accelerate to offload weights if needed when device_map="auto"
+    # Place it within the artefacts directory for organization
+    offload_folder = config_v3.ARTIFACTS_DIR / "model_offload"
+    offload_folder.mkdir(parents=True, exist_ok=True)  # Ensure the folder exists
+    print(f"Using offload folder: {offload_folder}")
+    # <<< --- END ADDED SECTION --- >>>
+
     print(f"Calculated device_map: {device_map}")
 
     print(f"🔄 Loading base model: {base_model_id}")
@@ -176,6 +180,7 @@ def load_teacher_model(
             device_map=device_map,
             torch_dtype=torch_dtype if not use_bnb else None,
             low_cpu_mem_usage=True if device_map == "auto" else False,
+            offload_folder=str(offload_folder) if device_map == "auto" else None,  # <<< ADDED ARGUMENT
         )
         print("✅ Base model loaded.")
     except Exception as e:
@@ -193,9 +198,7 @@ def load_teacher_model(
         print(f"🔄 Found LoRA adapter config at: {adapter_path}")
         try:
             print("   Applying LoRA adapter...")
-            # Ensure device_map aligns if base model used it
-            model = PeftModel.from_pretrained(base_model, str(adapter_path),
-                                              is_trainable=False)  # , device_map=device_map)
+            model = PeftModel.from_pretrained(base_model, str(adapter_path), is_trainable=False)
             print("✅ LoRA adapter loaded and applied successfully.")
             model.eval()
             return model
@@ -245,21 +248,19 @@ def extract_topk(
         warnings.warn(f"Temperature must be positive, got {temperature}. Setting to 1.0.")
         temperature = 1.0
 
-    # Ensure logits are on CPU and float32 for stable softmax/topk
     logits_cpu = logits.detach().float().cpu()
     scaled_logits = logits_cpu / temperature
     probs = torch.softmax(scaled_logits, dim=-1)
     top_k_probs, top_k_indices = torch.topk(probs, k)
 
-    # Return indices as int and probabilities possibly converted back to half for storage efficiency
     return [
-        (int(idx_item.item()), float(prob_item.half().item()))  # Convert prob back to float16 (via float() for item())
+        (int(idx_item.item()), float(prob_item.half().item()))
         for idx_item, prob_item in zip(top_k_indices, top_k_probs)
     ]
 
 
 # ---------------------------------------------------------------------------
-# 5. Lightweight I/O Helpers (Unchanged from your version)
+# 5. Lightweight I/O Helpers (Unchanged)
 # ---------------------------------------------------------------------------
 def open_writable(path: Path, binary: bool = False, compress: bool = False) -> Any:
     """Opens a file for writing, creating parent dirs, handling gzip."""
@@ -274,7 +275,7 @@ def open_writable(path: Path, binary: bool = False, compress: bool = False) -> A
     elif not compress and resolved_path.name.endswith(".gz"):
         warnings.warn(
             f"File path '{resolved_path}' ends with .gz but compression is False. Saving uncompressed to path without .gz.")
-        target_path = resolved_path.with_suffix('')  # Remove .gz if not compressing
+        target_path = resolved_path.with_suffix('')
 
     if target_path.name.endswith(".gz"):
         return gzip.open(target_path, mode=mode, encoding=encoding)
