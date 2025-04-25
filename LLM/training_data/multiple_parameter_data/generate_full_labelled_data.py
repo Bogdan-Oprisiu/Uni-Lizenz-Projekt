@@ -362,7 +362,7 @@ if __name__ == "__main__":
 
     # Output file names
     text_output_file = "synthetic_accel_labeled_commands.txt"
-    map_output_file = "synthetic_accel_labeled_commands_map.jsonl"  # JSON Lines format
+    map_output_file = "synthetic_accel_labeled_command_smap.jsonl"  # JSON Lines format
     final_json_output_file = "synthetic_accel_labeled_commands_final.jsonl"  # JSON Lines format
 
     # Instantiate the processor ONCE
