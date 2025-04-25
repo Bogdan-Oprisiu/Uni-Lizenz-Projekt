@@ -1,22 +1,22 @@
 #!/usr/bin/env python
-# ----------------------------- teacher_v3/fine_tune_teacher_v3.py -----------------------------
+# ----------------------------- teacher_v3/fine_tune_v3.py (CORRECTED AGAIN) -----------------------------
 """
 Fine-tunes a base sequence-to-sequence model (e.g., T5) using LoRA (PEFT)
 to translate natural language robot commands into abstract map JSON strings.
 Combines both basic and multi-parameter labeled datasets for training.
 """
 
-import argparse
+import argparse  # <<< RESTORED IMPORT
 import json
 import sys
 import warnings
 from pathlib import Path
-from typing import List  # Added Dict
+from typing import List  # <<< RESTORED Dict
 
 # Keep top-level imports used directly in this script
 import datasets
-import torch
-import transformers
+import torch  # <<< RESTORED IMPORT
+import transformers  # <<< RESTORED IMPORT
 
 # --- Make sure local modules are importable ---
 MODULE_DIR = Path(__file__).resolve().parent
@@ -34,17 +34,15 @@ except ImportError:
 
 # --- Library Imports ---
 # Specific imports from datasets and transformers
-from datasets import Dataset, Features, Value, concatenate_datasets
-from transformers import (
+from datasets import Dataset, Features, Value, concatenate_datasets  # <<< RESTORED Value
+from transformers import (  # <<< RESTORED IMPORT BLOCK
     DataCollatorForSeq2Seq,
     Seq2SeqTrainer,
     Seq2SeqTrainingArguments,
     set_seed,
-    # Explicitly import AutoTokenizer
-    # Explicitly import AutoModelForSeq2SeqLM
 )
 # Specific imports from peft
-from peft import (
+from peft import (  # <<< RESTORED IMPORT BLOCK
     LoraConfig,
     get_peft_model,
     TaskType,
@@ -57,7 +55,7 @@ warnings.filterwarnings("ignore", category=UserWarning, message=".*Loading a dat
 
 
 # ---------------------------------------------------------------------------
-# Argument Parsing (remains mostly the same)
+# Argument Parsing <<< RESTORED FUNCTION >>>
 # ---------------------------------------------------------------------------
 def parse_args() -> argparse.Namespace:
     """Parses command-line arguments, using config_v3 for defaults."""
@@ -97,7 +95,8 @@ def parse_args() -> argparse.Namespace:
                    help="Checkpoint saving strategy ('steps' or 'epoch').")
     p.add_argument("--save_steps", type=int, default=config_v3.SAVE_STEPS,
                    help="Save checkpoint every N steps (if save_strategy='steps').")
-    p.add_argument("--seed", type=int, default=config_v3.SEED, help="Random seed for reproducibility.")
+    p.add_argument("--seed", type=int, default=config_v3.SEED,
+                   help="Random seed for reproducibility.")  # <<< --seed IS DEFINED HERE
     p.add_argument("--max_input_length", type=int, default=config_v3.MAX_INPUT_LENGTH,
                    help="Max sequence length for inputs.")
     p.add_argument("--max_target_length", type=int, default=config_v3.MAX_TARGET_LENGTH,
@@ -117,6 +116,8 @@ def parse_args() -> argparse.Namespace:
     parsed_args = p.parse_args()
 
     # --- Update config from args ---
+    # This section might be redundant if config_v3 is the main source, but we'll keep it
+    # It ensures the args passed override config defaults for this run.
     config_v3.BASE_MODEL_ID = parsed_args.base_model_id
     config_v3.LORA_ADAPTER_DIR = Path(parsed_args.adapter_output_dir)
     config_v3.LORA_R = parsed_args.lora_r
@@ -125,38 +126,35 @@ def parse_args() -> argparse.Namespace:
     config_v3.LORA_TARGET_MODULES = parsed_args.lora_target_modules
     config_v3.USE_BNB_INT8_BASE = parsed_args.use_bnb
     config_v3.MODEL_DTYPE = parsed_args.dtype
-    config_v3.SEED = parsed_args.seed
+    config_v3.SEED = parsed_args.seed  # Assign seed to config as well
 
     return parsed_args
 
 
 # ---------------------------------------------------------------------------
-# Helper Function for Data Loading
+# Helper Function for Data Loading (keep as is - check Value import)
 # ---------------------------------------------------------------------------
 def load_and_prepare_data(text_path: Path, map_json_path: Path) -> Dataset:
     """Loads text and map_jsonl files into a Hugging Face Dataset."""
-    # Resolve paths immediately for clarity
     resolved_text_path = text_path.resolve()
     resolved_map_path = map_json_path.resolve()
     print(f"   Attempting to load text from: {resolved_text_path}")
     print(f"   Attempting to load map JSONL from: {resolved_map_path}")
 
-    # Use utils which includes checks and better error messages
-    texts = utils_v3.load_text_file(resolved_text_path)  # Pass resolved path
-    maps = utils_v3.load_jsonl_file(resolved_map_path)  # Pass resolved path
+    texts = utils_v3.load_text_file(resolved_text_path)
+    maps = utils_v3.load_jsonl_file(resolved_map_path)
 
     if len(texts) != len(maps):
-        # Error message now more specific about which pair failed
         raise ValueError(
             f"Line count mismatch for dataset in {resolved_text_path.parent.name}: "
             f"{len(texts)} text lines in '{resolved_text_path.name}' vs "
             f"{len(maps)} map JSON lines in '{resolved_map_path.name}'."
         )
 
-    # Ensure map is a compact JSON string for the label
     paired_data = [{"text": txt, "label": json.dumps(m, separators=(",", ":"), ensure_ascii=False)}
                    for txt, m in zip(texts, maps)]
 
+    # Ensure Value is imported correctly from datasets
     features = Features({"text": Value("string"), "label": Value("string")})
     return Dataset.from_list(paired_data, features=features)
 
@@ -166,16 +164,15 @@ def load_and_prepare_data(text_path: Path, map_json_path: Path) -> Dataset:
 # ---------------------------------------------------------------------------
 def main():
     """Main function to execute the fine-tuning process."""
-    args = parse_args()
-    set_seed(args.seed)
+    args = parse_args()  # Now calls the local parse_args function
+    set_seed(args.seed)  # Should now work as args.seed is defined
     output_dir = Path(args.adapter_output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("--- Starting LoRA Fine-tuning (v3) ---")
-    # Print configuration details
     print(f"Configuration:")
     print(f"  Base Model: {args.base_model_id}")
-    print(f"  Adapter Output Dir: {output_dir.resolve()}")  # Show resolved path
+    print(f"  Adapter Output Dir: {output_dir.resolve()}")
     print(f"  LoRA R: {args.lora_r}, Alpha: {args.lora_alpha}, Dropout: {args.lora_dropout}")
     print(f"  Target Modules: {args.lora_target_modules}")
     print(f"  Use 8-bit Base: {args.use_bnb}")
@@ -183,32 +180,25 @@ def main():
     print(f"  Epochs: {args.epochs}, Batch Size: {args.batch_size}, LR: {args.lr}")
     print("-" * 36)
 
-    # --- Define Data Paths Explicitly ---
-    # These paths are constructed based on config_v3.TRAINING_DATA_DIR
-    # Ensure TRAINING_DATA_DIR itself points to the correct base directory
-    basic_text_path = config_v3.TRAINING_DATA_DIR / "basic_data" / "synthetic_labeled_robot_commands_with_accel.txt"
-    basic_map_path = config_v3.TRAINING_DATA_DIR / "basic_data" / "synthetic_labeled_robot_commands_with_accel_MAP.jsonl"
-    multi_text_path = config_v3.TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_labeled_robot_commands_with_accel.txt"
-    multi_map_path = config_v3.TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_labeled_robot_commands_with_accel_MAP.jsonl"
+    # Using the correct filenames provided by the user.
+    basic_text_path = config_v3.TRAINING_DATA_DIR / "basic_data" / "synthetic_basic_labeled_commands.txt"
+    basic_map_path = config_v3.TRAINING_DATA_DIR / "basic_data" / "synthetic_basic_labeled_commands_map.jsonl"
+    multi_text_path = config_v3.TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_accel_labeled_commands.txt"
+    multi_map_path = config_v3.TRAINING_DATA_DIR / "multiple_parameter_data" / "synthetic_accel_labeled_command_smap.jsonl"
 
-    # --- Load and Combine Datasets ---
     print("\n📚 Loading and preparing datasets...")
     all_datasets: List[Dataset] = []
     try:
-        # --- Added Debug Prints ---
         print(f"DEBUG: Attempting to load BASIC dataset pair:")
         print(f"       Text: {basic_text_path.resolve()}")
         print(f"       Map:  {basic_map_path.resolve()}")
-        # --- End Debug Prints ---
         basic_dataset = load_and_prepare_data(basic_text_path, basic_map_path)
         all_datasets.append(basic_dataset)
         print(f"    -> Loaded {len(basic_dataset)} 'basic' examples.")
 
-        # --- Added Debug Prints ---
         print(f"DEBUG: Attempting to load MULTI dataset pair:")
         print(f"       Text: {multi_text_path.resolve()}")
         print(f"       Map:  {multi_map_path.resolve()}")
-        # --- End Debug Prints ---
         multi_dataset = load_and_prepare_data(multi_text_path, multi_map_path)
         all_datasets.append(multi_dataset)
         print(f"    -> Loaded {len(multi_dataset)} 'multi-parameter' examples.")
@@ -234,11 +224,10 @@ def main():
             print(f"   Eval size: {len(eval_dataset)}")
 
     except FileNotFoundError as e:
-        # The error message from utils_v3.load_text/jsonl_file should be specific now
         print(f"❌ ERROR: Could not load required data file: {e}")
         print("       Please verify the file exists at the specified path with the exact name.")
         sys.exit(1)
-    except ValueError as e:  # Catch line count mismatch
+    except ValueError as e:
         print(f"❌ ERROR: Problem processing data files: {e}")
         sys.exit(1)
     except Exception as e:
@@ -247,14 +236,12 @@ def main():
         traceback.print_exc()
         sys.exit(1)
 
-    # --- Load Tokenizer ---
     print("\n🔄 Loading tokenizer...")
     tokenizer = utils_v3.load_tokenizer(use_fast=True)
     task_prefix = "translate English command to robot JSON map: "
     if task_prefix:
         print(f"   Using task prefix: '{task_prefix}'")
 
-    # --- Preprocessing Function ---
     def preprocess_function(examples):
         """Tokenizes inputs and labels for the seq2seq model."""
         inputs = [task_prefix + doc for doc in examples["text"]]
@@ -263,7 +250,6 @@ def main():
             max_length=args.max_input_length,
             padding="max_length",
             truncation=True,
-            # return_tensors="pt" # Trainer handles tensor conversion
         )
         with tokenizer.as_target_tokenizer():
             labels = tokenizer(
@@ -271,7 +257,6 @@ def main():
                 max_length=args.max_target_length,
                 padding="max_length",
                 truncation=True,
-                # return_tensors="pt"
             )
         processed_labels = [
             [(l if l != tokenizer.pad_token_id else -100) for l in label]
@@ -284,13 +269,12 @@ def main():
     tokenized_train_dataset = None
     tokenized_eval_dataset = None
     try:
-        # Use the already split datasets
         tokenized_train_dataset = train_dataset.map(
             preprocess_function,
             batched=True,
             remove_columns=train_dataset.column_names,
             desc="Tokenizing Training Set",
-            num_proc=4  # Adjust based on system cores
+            num_proc=4
         )
         if eval_dataset:
             tokenized_eval_dataset = eval_dataset.map(
@@ -298,7 +282,7 @@ def main():
                 batched=True,
                 remove_columns=eval_dataset.column_names,
                 desc="Tokenizing Evaluation Set",
-                num_proc=4  # Adjust based on system cores
+                num_proc=4
             )
         print("✅ Tokenization complete.")
 
@@ -308,7 +292,6 @@ def main():
         traceback.print_exc()
         sys.exit(1)
 
-    # --- Data Collator ---
     data_collator = DataCollatorForSeq2Seq(
         tokenizer,
         model=None,
@@ -317,11 +300,9 @@ def main():
     )
     print("   Data collator initialized.")
 
-    # --- Load Base Model ---
     print(f"\n🧠 Loading base model: {args.base_model_id} for training...")
     model = utils_v3.load_teacher_model(for_training=True)
 
-    # --- Prepare for PEFT (LoRA) ---
     if args.use_bnb:
         print("🔧 Preparing model for k-bit training (quantization)...")
         model = prepare_model_for_kbit_training(
@@ -347,9 +328,7 @@ def main():
     print("✅ LoRA adapter applied.")
     model.print_trainable_parameters()
 
-    # --- Training Arguments ---
     print("\n⚙️ Configuring training arguments...")
-    # Determine if evaluation is possible
     do_eval = tokenized_eval_dataset is not None
     training_args = Seq2SeqTrainingArguments(
         output_dir=str(output_dir),
@@ -370,56 +349,48 @@ def main():
         fp16=torch.cuda.is_available() and args.dtype == "float16",
         bf16=torch.cuda.is_bf16_supported() and args.dtype == "bfloat16",
         gradient_checkpointing=args.gradient_checkpointing and not args.use_bnb,
-        # Grad checkpointing needs careful use with BNB
-        evaluation_strategy="epoch" if do_eval else "no",  # Evaluate only if eval set exists
-        predict_with_generate=True if do_eval else False,  # Generate predictions during eval
+        evaluation_strategy="epoch" if do_eval else "no",
+        predict_with_generate=True if do_eval else False,
         generation_max_length=args.max_target_length,
         seed=args.seed,
         report_to=args.report_to.split(','),
-        load_best_model_at_end=True if do_eval else False,  # Load best model if evaluating
+        load_best_model_at_end=True if do_eval else False,
         metric_for_best_model="eval_loss" if do_eval else None,
         greater_is_better=False,
         push_to_hub=False,
     )
 
-    # --- Initialize Trainer ---
     print("🚀 Initializing Trainer...")
     trainer = Seq2SeqTrainer(
         model=model,
         args=training_args,
         train_dataset=tokenized_train_dataset,
-        eval_dataset=tokenized_eval_dataset,  # Pass eval dataset (can be None)
+        eval_dataset=tokenized_eval_dataset,
         tokenizer=tokenizer,
         data_collator=data_collator,
-        # compute_metrics=compute_metrics, # Define metrics if needed
     )
-    # Silence progress bars from underlying libraries
     transformers.logging.set_verbosity_warning()
     datasets.logging.set_verbosity_warning()
 
-    # --- Train ---
     print("\n🚂 Starting training...")
     try:
         train_result = trainer.train()
         print("✅ Training completed.")
 
-        # --- Save Final Model (Adapter) & Stats ---
         print("\n💾 Saving final LoRA adapter and training state...")
-
-        trainer.save_model()  # Saves the adapter (best if load_best_model_at_end=True)
+        trainer.save_model()
         trainer.save_state()
         metrics = train_result.metrics
 
-        # Log final evaluation metrics if evaluation was performed
         if do_eval and training_args.load_best_model_at_end:
             print("   Evaluating best model...")
             eval_metrics = trainer.evaluate()
-            metrics.update(eval_metrics)  # Add eval metrics to final metrics
+            metrics.update(eval_metrics)
             trainer.log_metrics("eval", eval_metrics)
             trainer.save_metrics("eval", eval_metrics)
 
-        trainer.log_metrics("train", metrics)  # Log combined train/eval metrics
-        trainer.save_metrics("train", metrics)  # Save combined train/eval metrics
+        trainer.log_metrics("train", metrics)
+        trainer.save_metrics("train", metrics)
 
         print(f"   Adapter saved to: {output_dir}")
         tokenizer.save_pretrained(str(output_dir))

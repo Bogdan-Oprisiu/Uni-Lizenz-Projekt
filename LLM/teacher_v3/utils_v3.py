@@ -1,4 +1,4 @@
-# ----------------------------- teacher_v3/utils_v3.py -----------------------------
+# ----------------------------- teacher_v3/utils_v3.py (MODIFIED) -----------------------------
 """Utility functions for the LoRA-based teacher pipeline (v3)."""
 from __future__ import annotations
 
@@ -27,21 +27,55 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-# 1. Tokenizer Loader
+# 1. Tokenizer Loader (MODIFIED LOADING ORDER)
 # ---------------------------------------------------------------------------
 
 def load_tokenizer(use_fast: bool = True):
     """
-    Loads the tokenizer, prioritizing the one saved with the LoRA adapter.
+    Loads the tokenizer, prioritizing the explicit path in config_v3.TOKENIZER_PATH,
+    then the one saved with the LoRA adapter, and finally the base model's.
     """
     from transformers import AutoTokenizer, PreTrainedTokenizerFast
-    from tokenizers import Tokenizer as TokenizersTokenizer
+    from tokenizers import Tokenizer as TokenizersTokenizer  # type: ignore # Ignore potential import error hint
 
     adapter_path = config_v3.LORA_ADAPTER_DIR.resolve()
     base_model_id = config_v3.BASE_MODEL_ID
     explicit_tokenizer_path = config_v3.TOKENIZER_PATH.resolve()
 
-    # --- Attempt 1: Load from Adapter Directory ---
+    # <<< MODIFIED: Attempt 1: Load from Explicit Path First >>>
+    if explicit_tokenizer_path.exists():
+        print(f"Attempting to load tokenizer from explicit path: {explicit_tokenizer_path}")
+        try:
+            if explicit_tokenizer_path.is_dir():
+                # If it's a directory containing tokenizer files (config.json, etc.)
+                tokenizer = AutoTokenizer.from_pretrained(str(explicit_tokenizer_path), use_fast=use_fast)
+                print(f"✅ Tokenizer loaded from explicit directory path: {explicit_tokenizer_path}")
+                return tokenizer
+            elif explicit_tokenizer_path.is_file() and explicit_tokenizer_path.suffix == ".json":
+                # If it's a single .json file (likely from tokenizers library)
+                print("   (Detected .json file, attempting to wrap with PreTrainedTokenizerFast)")
+                raw_tok = TokenizersTokenizer.from_file(str(explicit_tokenizer_path))
+                # Use special tokens common for T5, adjust if your tokenizer uses different ones
+                tokenizer = PreTrainedTokenizerFast(
+                    tokenizer_object=raw_tok,
+                    bos_token="<s>",  # Or whatever your tokenizer uses
+                    eos_token="</s>",  # T5 uses this
+                    unk_token="<unk>",  # T5 uses this
+                    pad_token="<pad>",  # T5 uses this
+                )
+                # Add any other special tokens if needed
+                # tokenizer.add_special_tokens({'additional_special_tokens': ['<extra_id_0>', ...]})
+                print(f"✅ Tokenizer loaded and wrapped from explicit file path: {explicit_tokenizer_path}")
+                return tokenizer
+            else:
+                print(
+                    f"INFO: Explicit tokenizer path '{explicit_tokenizer_path}' exists but is neither a valid directory nor a .json file. Skipping.")
+        except Exception as e:
+            print(f"WARNING: Error loading/wrapping tokenizer from explicit path '{explicit_tokenizer_path}': {e}")
+    else:
+        print(f"INFO: Explicit tokenizer path not found: {explicit_tokenizer_path}")
+
+    # --- Attempt 2: Load from Adapter Directory ---
     try:
         if adapter_path.exists() and (adapter_path / "tokenizer_config.json").exists():
             print(f"Attempting to load tokenizer from adapter directory: {adapter_path}")
@@ -53,7 +87,7 @@ def load_tokenizer(use_fast: bool = True):
     except Exception as e:
         print(f"WARNING: Error loading tokenizer from adapter dir '{adapter_path}': {e}")
 
-    # --- Attempt 2: Load from Base Model ID ---
+    # --- Attempt 3: Load from Base Model ID ---
     try:
         print(f"Attempting to load tokenizer from base model: {base_model_id}")
         tokenizer = AutoTokenizer.from_pretrained(base_model_id, use_fast=use_fast)
@@ -62,41 +96,16 @@ def load_tokenizer(use_fast: bool = True):
     except Exception as e:
         print(f"WARNING: Error loading tokenizer from base model ID '{base_model_id}': {e}")
 
-    # --- Attempt 3: Load from Explicit Path ---
-    if explicit_tokenizer_path.exists():
-        print(f"Attempting fallback to explicit path: {explicit_tokenizer_path}")
-        try:
-            if explicit_tokenizer_path.is_dir():
-                tokenizer = AutoTokenizer.from_pretrained(str(explicit_tokenizer_path), use_fast=use_fast)
-                print(f"✅ Tokenizer loaded from explicit directory path: {explicit_tokenizer_path}")
-                return tokenizer
-            elif explicit_tokenizer_path.is_file() and explicit_tokenizer_path.suffix == ".json":
-                print("   (Detected .json file, attempting to wrap with PreTrainedTokenizerFast)")
-                raw_tok = TokenizersTokenizer.from_file(str(explicit_tokenizer_path))
-                tokenizer = PreTrainedTokenizerFast(
-                    tokenizer_object=raw_tok,
-                    bos_token="<s>",
-                    eos_token="</s>",
-                    unk_token="<unk>",
-                    pad_token="<pad>",
-                )
-                print(f"✅ Tokenizer loaded and wrapped from explicit file path: {explicit_tokenizer_path}")
-                return tokenizer
-            else:
-                print(
-                    f"WARNING: Explicit tokenizer path '{explicit_tokenizer_path}' is neither a valid directory nor a .json file.")
-        except Exception as wrap_e:
-            print(f"ERROR: Failed to load/wrap tokenizer from explicit path '{explicit_tokenizer_path}': {wrap_e}")
-    else:
-        print(f"INFO: Explicit tokenizer path not found: {explicit_tokenizer_path}")
-
     # --- Final Error ---
     print("\n❌ ERROR: Failed to load tokenizer using all available methods.")
+    print(f"       Checked explicit path: {explicit_tokenizer_path}")
+    print(f"       Checked adapter path: {adapter_path}")
+    print(f"       Checked base model: {base_model_id}")
     sys.exit(1)
 
 
 # ---------------------------------------------------------------------------
-# 2. Teacher Model Loader (Base + LoRA Adapter)
+# 2. Teacher Model Loader (Base + LoRA Adapter) (Unchanged from your version)
 # ---------------------------------------------------------------------------
 
 def load_teacher_model(
@@ -141,7 +150,7 @@ def load_teacher_model(
     quantization_config = None
     if use_bnb:
         try:
-            import bitsandbytes
+            import bitsandbytes  # type: ignore # Ignore potential import error hint
             quantization_config = BitsAndBytesConfig(load_in_8bit=True)
             print("INFO: BitsAndBytes 8-bit quantization enabled for base model loading.")
             if target_device == "cpu":
@@ -184,7 +193,9 @@ def load_teacher_model(
         print(f"🔄 Found LoRA adapter config at: {adapter_path}")
         try:
             print("   Applying LoRA adapter...")
-            model = PeftModel.from_pretrained(base_model, str(adapter_path), is_trainable=False)
+            # Ensure device_map aligns if base model used it
+            model = PeftModel.from_pretrained(base_model, str(adapter_path),
+                                              is_trainable=False)  # , device_map=device_map)
             print("✅ LoRA adapter loaded and applied successfully.")
             model.eval()
             return model
@@ -200,7 +211,7 @@ def load_teacher_model(
 
 
 # ---------------------------------------------------------------------------
-# 3. Batching Helper
+# 3. Batching Helper (Unchanged)
 # ---------------------------------------------------------------------------
 def batched(iterable: Iterable[Any], n: int) -> Iterator[List[Any]]:
     """Yield successive n-sized chunks from iterable."""
@@ -222,7 +233,7 @@ def batched(iterable: Iterable[Any], n: int) -> Iterator[List[Any]]:
 
 
 # ---------------------------------------------------------------------------
-# 4. Soft Probabilities Helper
+# 4. Soft Probabilities Helper (Unchanged)
 # ---------------------------------------------------------------------------
 def extract_topk(
         logits: torch.Tensor,
@@ -234,19 +245,21 @@ def extract_topk(
         warnings.warn(f"Temperature must be positive, got {temperature}. Setting to 1.0.")
         temperature = 1.0
 
+    # Ensure logits are on CPU and float32 for stable softmax/topk
     logits_cpu = logits.detach().float().cpu()
     scaled_logits = logits_cpu / temperature
     probs = torch.softmax(scaled_logits, dim=-1)
     top_k_probs, top_k_indices = torch.topk(probs, k)
 
+    # Return indices as int and probabilities possibly converted back to half for storage efficiency
     return [
-        (int(idx_item.item()), float(prob_item.half().item()))
+        (int(idx_item.item()), float(prob_item.half().item()))  # Convert prob back to float16 (via float() for item())
         for idx_item, prob_item in zip(top_k_indices, top_k_probs)
     ]
 
 
 # ---------------------------------------------------------------------------
-# 5. Lightweight I/O Helpers
+# 5. Lightweight I/O Helpers (Unchanged from your version)
 # ---------------------------------------------------------------------------
 def open_writable(path: Path, binary: bool = False, compress: bool = False) -> Any:
     """Opens a file for writing, creating parent dirs, handling gzip."""
